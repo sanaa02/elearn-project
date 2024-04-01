@@ -1,0 +1,813 @@
+@import url("https://fonts.googleapis.com/css2?family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Work+Sans:wght@200;300;400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Work+Sans:wght@200;300;400;500;600;700;800&display=swap");
+
+body {
+  background-color: #f0eeee;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  display: flex;
+}
+
+nav {
+  padding: 0 15px;
+  width: 100%;
+  background-color: #f5f5f5;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  position: sticky;
+  top: 0;
+  z-index: 99;
+}
+
+.blurred-nav {
+  padding: 0 15px;
+  width: 100%;
+  background-color: #f5f5f5;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  position: sticky;
+  top: 0;
+  z-index: 99;
+  filter: blur(5px) !important; 
+  backdrop-filter: blur(5px) !important;
+  -webkit-filter: blur(5px) !important ;
+  transition: filter 0.3s ease-in-out !important; 
+}
+
+.navbar-menu-container {
+  display: none;
+}
+.navbar-links-container a {
+  margin-right: 3rem;
+  text-decoration: none;
+  color: #000066;
+  font-size: 1.1rem;
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.3s ease;
+}
+
+.navbar-links-container a:hover {
+  color: #007bff;
+}
+.navbar-links-container a:active {
+  color: #ff0000;
+  font-weight: bold;
+}
+
+.primary-button {
+  padding: 0.9rem 1.75rem;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  font-family: Montserrat;
+  font-weight: 600;
+  font-size: 1.1rem;
+  line-height: 21.94px;
+  cursor: pointer;
+  transition: 0.2s;
+  color: #000066;
+  position: absolute;
+  right: 39px;
+
+}
+.primary-button:hover {
+  background-color: #000066;
+  color: #fff;
+}
+
+.menu-icon {
+  display: none;
+}
+
+.home-root{
+  position: relative;
+}
+
+.home-root-container {
+  /* display: grid;
+    grid-template-rows: 1fr;
+    /* Take all available space *
+    min-height: 100vh; */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+}
+
+.nav-logo-container{
+  position: absolute;
+  left: -54px
+}
+
+.something{
+  border: 2px solid #ff0000;
+}
+.login-active {
+  border: 2px solid yellow;
+}
+
+.login-active {  /* Use same class as login trigger */
+    filter: blur(5px) !important; 
+    backdrop-filter: blur(5px) !important;
+    -webkit-filter: blur(5px) !important ;
+    transition: filter 0.3s ease-in-out !important; 
+    /* display: flex;
+    position: relative;
+   
+    height: 100%;
+    width: auto;
+     top: 0;
+    left: 0;
+  */
+    z-index: -1;
+}
+
+#Home .home-container {
+  /* Marge à droite */
+  margin-top: 75px;
+  margin-bottom: 400px;
+}
+
+#Home .circles {
+  position: absolute;
+  top: 350px;
+  left: -59px;
+}
+
+#Home .home-banner-container {
+  margin-left: 8rem;
+  /* Marge à gauche */
+  margin-right: 8rem;
+  position: relative;
+  display: flex;
+  align-items: center; /* Centrer verticalement les éléments */
+  justify-content: center;
+  text-align: left;
+}
+
+#Home .home-text-section {
+  flex: 1; /* Faire en sorte que le texte occupe tout l'espace disponible */
+  display: flex;
+  padding-right: 2rem;
+  max-width: 410px;
+  text-align: left;
+  align-items: stretch;
+  justify-content: space-between;
+
+  flex-direction: column;
+}
+
+#Home h1 {
+  font-family: Sansita;
+  font-size: 64px;
+  font-weight: 900;
+  color: black;
+  width: 100%;
+  line-height: 76.8px;
+  text-align: left;
+  display: inline-block;
+  position: relative;
+  margin: 5px;
+  white-space: nowrap;
+}
+#Home .last-two h1:nth-child(1) {
+  margin-inline-end: 30px;
+  width: max-content;
+
+  /* Set the order of the second h1 to 2 */
+}
+#Home .primary-heading span::before {
+  content: "";
+  position: absolute;
+  top: 1px;
+  right: 20px;
+  width: 100%;
+  height: 100%;
+
+  background-image: url("../../assets/esi-back.png");
+  background-size: cover;
+  /* Ensure the image covers the entire area */
+  z-index: -1;
+  /* Place the background behind the text */
+  border: 2px solid #ff0000;
+}
+#Home .back-text {
+  color: #000066;
+}
+
+#Home .back-text::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  width: 100%;
+  height: 110%;
+
+  background-image: url("../../assets/esi-back.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  /* Ensure the image covers the entire area */
+  z-index: -1;
+  /* Place the background behind the text */
+}
+#Home .votre-back::before {
+  content: "";
+  position: absolute;
+  top: 30px;
+  right: 50px;
+  width: 100%;
+  height: 100%;
+
+  background-image: url("../../assets/votre.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  /* Ensure the image covers the entire area */
+  z-index: -2;
+  /* Place the background behind the text */
+}
+#Home .last-two {
+  display: flex;
+}
+
+#Home .primary-text {
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(1rem, 3vw, 1.5rem);
+  max-width: 700px;
+  color: #6a6a6a;
+  margin: 1.5rem 0rem;
+}
+
+#Home .secondary-button {
+  padding: 1rem 2.5rem;
+  background-color: #000066;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  font-weight: 600;
+  color: white;
+  transition: background-color 0.2s, color 0.2s, border 0.2s; /* Ajout de la transition pour la bordure */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#Home .secondary-button svg {
+  margin-left: 0.75rem;
+  font-size: 1.5rem;
+}
+
+#Home .secondary-button:hover {
+  background-color: #fff;
+  color: #000066;
+  border: 1px solid #000066;
+}
+
+#Home .home-image {
+  max-width: 500px; /* Taille maximale de l'image */
+}
+
+#Home .three-lines{
+  position: relative;
+ 
+}
+
+#Home .line1 {
+  position: absolute;
+  top: 0px;
+  right: 197px;
+}
+
+#Home .line2 {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+
+#Home .line3 {
+  position: absolute;
+  top: 0px;
+  right: 49px;
+}
+
+#About .about-section-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+#About .about-section-logo {
+  /* Adjust the width of the image as needed */
+
+  /* Add spacing between the image and text */
+}
+#About .about-section-text-container {
+  flex: 1;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  padding-right: 129px;
+}
+#About .about-section-text-container h1,
+#About .about-section-text-container p {
+  margin: 0;
+  /* Remove default margins */
+}
+
+#About .about-section-text-container h1 {
+  font-size: 64px;
+  font-weight: 700;
+  font-family: Montserrat;
+  color: #000066;
+  line-height: 78.02px;
+  text-align: center;
+  padding-bottom: 35px;
+}
+#About .about-section-text-container p {
+  font-size: 32px;
+  font-weight: 400;
+  font-family: Montserrat;
+  line-height: 59.65px;
+  text-align: right;
+}
+
+#About .about-buttons-container {
+  margin-top: 2rem;
+  display: flex;
+}
+
+/* Contact section */
+#contact {
+  padding: 40px 0;
+}
+
+#contact h2 {
+  text-align: center;
+  color: #000066;
+  margin-bottom: 30px;
+  font-size: 50px;
+}
+#contact p {
+  font-family: "Montserrat", sans-serif;
+  text-align: center;
+  color: #333;
+  font-size: 30px;
+}
+
+#contact form {
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+#contact label {
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+#contact input,
+#contact textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  font-size: 1rem;
+  resize: none;
+}
+
+#contact input:focus,
+#contact textarea:focus {
+  outline: none;
+  box-shadow: 0 0 2px 1px rgba(0, 127, 255, 0.5);
+}
+
+#contact .button-container {
+  text-align: center;
+}
+
+#contact .button-container button {
+  padding: 10px 20px;
+  background-color: #000066;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+#contact .button-container button:hover {
+  background-color: #0056b3;
+}
+
+footer {
+  background-color: #000066;
+  padding: 0px; /* Réduire le rembourrage */
+  color: #fff;
+  display: inline-block;
+  height: 526px;
+  position: relative;
+  width: 100%;
+  bottom: 0px;
+  z-index: 9;
+
+  /* padding: 20px; */
+}
+
+#Footer .footer-line-container {
+  position: relative;
+  padding: 10px;
+}
+
+#Footer .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+  color: white;
+}
+
+#Footer .down-line {
+  position: absolute;
+  top: 0;
+  right: 81px;
+}
+
+#Footer .up-line {
+  position: absolute;
+  top: 155px;
+  right: 100px;
+}
+
+#Footer .title {
+  font-size: 24px; /* Réduire la taille de la police */
+  font-weight: bold;
+  text-align: center; /* Centrer le texte */
+}
+
+#Footer .title span {
+  margin: 0 5px; /* Réduire l'espace autour du texte */
+}
+
+#Footer .contact-info {
+  display: flex;
+  flex-wrap: wrap; /* Permettre aux éléments de s'enrouler sur les petits écrans */
+  justify-content: space-between; /* Répartir les éléments horizontalement */
+  align-items: center; /* Centrer verticalement les éléments */
+  padding-top: 10px; /* Réduire l'espace en haut */
+  margin-bottom: 20px;
+}
+
+#Footer .contact-info div {
+  flex: 1 1 30%;
+  margin-bottom: 10px;
+}
+
+#Footer .contact-info label {
+  font-weight: bold;
+}
+
+#Footer .contact-info a {
+  color: #fff;
+  text-decoration: none;
+}
+
+#Footer .social-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px; /* Ajouter un peu d'espace en haut */
+  margin-bottom: 50px;
+}
+
+#Footer .social-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px; /* Réduire la taille des icônes */
+  height: 30px; /* Réduire la taille des icônes */
+  border-radius: 50%;
+  background-color: transparent;
+  margin-right: 5px; /* Réduire l'espace entre les icônes */
+  text-decoration: none;
+  color: #fff;
+}
+
+#Footer .social-links a:hover {
+  background-color: #0056b3;
+}
+
+/* Media Query pour les écrans de taille moyenne (tablettes) */
+
+/* @media screen and (max-width: 960px) {
+  
+  .navbar-links-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 60vh;
+    position: absolute;
+    top: 80px;
+    left: -100%;
+    opacity: 1;
+    transition: all 0.5s ease;
+  }
+
+  .navbar-links-container.active {
+    background: #fff;
+    left: 0;
+    opacity: 1;
+    transition: all 0.6s ease;
+    z-index: 1;
+  }
+
+  .navbar-links-container a {
+    position: relative;
+    text-align: center;
+    padding: 2rem;
+    width: 100%;
+    display: table;
+  }
+
+  .navbar-links-container a:hover {
+    color: #379cf4;
+    transform: scale(1.2);
+    transition: all 0.3s ease;
+  }
+
+  .menu-icon {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(-100%, 60%);
+    font-size: 1.8rem;
+    cursor: pointer;
+  }
+
+  .fa-times {
+    color: #fff;
+    font-size: 2rem;
+  }
+
+  .primary-button {
+    text-align: center;
+  width: 30%;
+  padding: 8px 16px; /* Réduire la taille du bouton *
+  margin-top: 20px; /* Ajouter une marge en haut *
+  margin-left: 39%; /* Centrer horizontalement *
+  margin-right: auto; /* Décaler légèrement vers la gauche *
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .home-banner-container {
+    margin-left: 2rem; /* Réduire encore la marge à gauche *
+    margin-bottom: 0.5rem; /* Réduire encore la marge en bas *
+  }
+
+  .primary-heading {
+    font-size: clamp(1.5rem, 4vw, 3rem); /* Ajuster la taille de la police du titre principal *
+    max-width: 500px; /* Réduire la largeur maximale du titre principal *
+  }
+
+  .primary-text {
+    font-size: clamp(0.8rem, 3vw, 1.2rem); /* Ajuster la taille de la police du texte principal *
+    max-width: 600px; /* Réduire la largeur maximale du texte principal *
+    margin: 1rem 0rem; /* Réduire les marges supérieure et inférieure du texte principal *
+  }
+
+  .secondary-button {
+    padding: 0.8rem 2rem; /* Réduire le rembourrage du bouton secondaire *
+    font-size: 1rem; /* Réduire la taille de la police du bouton secondaire *
+  }
+
+  .secondary-button svg {
+    font-size: 1.3rem; /* Réduire la taille de l'icône à l'intérieur du bouton secondaire *
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .home-banner-container {
+    margin-left: 1rem; /* Réduire encore la marge à gauche *
+  }
+
+  .primary-heading {
+    font-size: clamp(1.2rem, 3vw, 2rem); /* Ajuster encore la taille de la police du titre principal *
+    max-width: 400px; /* Réduire encore la largeur maximale du titre principal *
+  }
+
+  .primary-text {
+    font-size: clamp(0.6rem, 2.5vw, 1rem); /* Ajuster encore la taille de la police du texte principal *
+    max-width: 500px; /* Conserver la largeur maximale du texte principal *
+    margin: 0.5rem 0rem; /* Réduire encore les marges supérieure et inférieure du texte principal *
+  }
+
+  .secondary-button {
+    padding: 0.6rem 1.5rem; /* Réduire encore le rembourrage du bouton secondaire *
+    font-size: 0.9rem; /* Réduire encore la taille de la police du bouton secondaire *
+  }
+
+  .secondary-button svg {
+    font-size: 1.1rem; /* Réduire encore la taille de l'icône à l'intérieur du bouton secondaire *
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .about-section-container {
+    flex-direction: column; /* Afficher les éléments en colonne *
+    align-items: center; /* Centrer les éléments horizontalement *
+  }
+
+  .about-section-text-container {
+    text-align: center; /* Centrer le texte *
+    margin-bottom: 2rem; /* Ajouter une marge en bas *
+  }
+
+  .about-buttons-container {
+    margin-top: 1rem; /* Réduire la marge en haut *
+    justify-content: center; /* Centrer les boutons horizontalement *
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .about-section-container {
+    padding: 0 2rem; /* Ajouter un espace sur les côtés *
+  }
+
+  .about-section-text-container {
+    margin-bottom: 1rem; /* Réduire la marge en bas *
+  }
+
+  .about-buttons-container {
+    margin-top: 0.5rem; /* Réduire la marge en haut *
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .about-section-container {
+    padding: 0 1rem; /* Réduire l'espace sur les côtés *
+  }
+
+  .about-buttons-container {
+    flex-direction: column; /* Afficher les boutons en colonne *
+    align-items: center; /* Centrer les boutons horizontalement *
+    margin-top: 0.5rem; /* Réduire la marge en haut *
+  }
+}
+
+@media screen and (max-width: 960px) {
+  #contact {
+    padding: 20px 0; /* Réduire le rembourrage *
+  }
+
+  #contact h2 {
+    font-size: 40px; /* Réduire la taille de la police *
+    margin-bottom: 20px; /* Réduire la marge en bas *
+  }
+
+  #contact p {
+    font-size: 24px; /* Réduire la taille de la police *
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #contact {
+    padding: 10px 0; /* Réduire encore le rembourrage *
+  }
+
+  #contact h2 {
+    font-size: 30px; /* Réduire encore la taille de la police *
+    margin-bottom: 15px; /* Réduire encore la marge en bas *
+  }
+
+  #contact p {
+    font-size: 20px; /* Réduire encore la taille de la police *
+  }
+}
+
+@media screen and (max-width: 480px) {
+  #contact {
+    padding: 0; /* Supprimer le rembourrage *
+  }
+
+  #contact h2 {
+    font-size: 24px; /* Réduire encore la taille de la police *
+    margin-bottom: 10px; /* Réduire encore la marge en bas *
+  }
+
+  #contact p {
+    font-size: 16px; /* Réduire encore la taille de la police *
+  }
+
+  #contact form {
+    max-width: 90%; /* Ajuster la largeur du formulaire *
+    margin: 0 auto; /* Centrer le formulaire horizontalement *
+  }
+
+  #contact label {
+    font-size: 1rem; /* Réduire la taille de la police des étiquettes *
+  }
+
+  #contact input,
+  #contact textarea {
+    padding: 8px; /* Réduire le rembourrage des champs de saisie *
+    font-size: 0.9rem; /* Réduire la taille de la police des champs de saisie *
+  }
+
+  #contact .button-container button {
+    padding: 8px 16px; /* Réduire le rembourrage du bouton *
+    font-size: 0.9rem; /* Réduire la taille de la police du bouton *
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .container {
+    padding: 0 10px; /* Réduire le padding sur les côtés *
+  }
+
+  .title {
+    font-size: 28px; /* Réduire la taille de la police *
+  }
+
+  .contact-info div {
+    flex: 1 1 100%; /* Ajuster la largeur des éléments à 100% *
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .title {
+    font-size: 24px; /* Réduire encore la taille de la police *
+  }
+
+  .contact-info {
+    flex-direction: column; /* Afficher les informations de contact en colonne *
+  }
+
+  .contact-info div {
+    flex: 1 1 100%; /* Ajuster la largeur des éléments à 100% *
+    margin-bottom: 15px; /* Réduire la marge en bas *
+  }
+
+  .social-links {
+    justify-content: center; /* Centrer les liens sociaux horizontalement *
+  }
+
+  .social-links p {
+    margin-right: 5px; /* Réduire la marge à droite *
+  }
+
+  .social-links a {
+    width: 30px; /* Réduire la taille des icônes sociales *
+    height: 30px; /* Réduire la taille des icônes sociales *
+    font-size: 16px; /* Réduire la taille de la police des icônes sociales *
+  }
+}
+
+@media screen and (max-width: 480px) {
+  footer {
+    margin-top: 20px; /* Ajouter une marge en haut *
+  }
+
+  .title {
+    font-size: 18px; /* Réduire encore la taille de la police *
+  }
+
+  .contact-info label {
+    font-size: 12px; /* Réduire la taille de la police des étiquettes *
+  }
+
+  .social-links a {
+    width: 24px; /* Réduire encore la taille des icônes sociales *
+    height: 24px; /* Réduire encore la taille des icônes sociales *
+    font-size: 12px; /* Réduire encore la taille de la police des icônes sociales *
+    margin-right: 5px; /* Réduire la marge à droite *
+  }
+}
+@media screen and (max-width: 768px) {
+  .primary-button {
+    font-size: 0.9rem;
+    margin-left: 39%; /* Réduire la taille de la police *
+  }
+}
+
+/* Styles pour les écrans plus petits que 576px 
+@media screen and (max-width: 576px) {
+  .primary-button {
+    font-size: 0.8rem; /* Réduire encore la taille de la police *
+    padding: 8px 16px;
+    margin-left: 42%;
+  }
+}
+
+ */
