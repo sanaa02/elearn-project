@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import  { useState } from "react";
 import {
   Table,
@@ -16,16 +17,15 @@ import {
   Select,
 } from "@mui/material";
 
-function createData(n, id, Module, name, email, role) {
-  return { n, id, Module, name, email, role };
+function createData(n, id, Module, name, email) {
+  return { n, id, Module, name, email };
 }
 
 const initialRows = [
-  createData(1, 1, "Analyse", "Maroua Djili", "m.djili@esi-sba.dz", "charge de cours"),
-  createData(2, 2, "Analyse", "Maroua Djili", "m.djili@esi-sba.dz", "charge de cours"),
-  createData(3, 3, "Analyse", "Maroua Djili", "m.djili@esi-sba.dz", "charge de cours"),
-  createData(4, 4, "Analyse", "Maroua Djili", "m.djili@esi-sba.dz", "charge de cours"),
-  createData(5, 5, "Analyse", "Inas Chaala", "c.chaala@esi-sba.dz", "charge de cours"),
+  createData(1, 1, "Analyse", "Maroua Djili", "m.djili@esi-sba.dz"),
+  createData(2, 2, "Analyse", "Maroua Djili", "m.djili@esi-sba.dz"),
+  createData(3, 3, "Analyse", "Maroua Djili", "m.djili@esi-sba.dz"),
+  createData(4, 4, "Analyse", "Maroua Djili", "m.djili@esi-sba.dz"),
 ];
 
 function EnseignantPage() {
@@ -37,7 +37,7 @@ function EnseignantPage() {
   const [editedRow, setEditedRow] = useState(null);
   const [editedName, setEditedName] = useState("");
   const [editedModule, setEditedModule] = useState("");
-  const [editedRole, setEditedRole] = useState("");
+  
   const [editedEmail, setEditedEmail] = useState("");
   const [rows, setRows] = useState(initialRows);
   const [cohortFile, setCohortFile] = useState(null);
@@ -69,6 +69,7 @@ function EnseignantPage() {
       setOpenLotModal(true); // Ouvrir le modal d'insertion par lot
     } else {
       console.log("Option sélectionnée :", option);
+      handleOpenOneproftModal();
       setOpenNewEnseignantModal(false)}}
       const handleUploadCohort = () => {
         
@@ -97,7 +98,7 @@ function EnseignantPage() {
     setEditedName(row.name);
     setEditedEmail(row.email);
     setEditedModule(row.Module);
-    setEditedRole(row.role);
+    
 
     setOpenEditModal(true);
   };
@@ -115,7 +116,7 @@ function EnseignantPage() {
               Module: editedModule,
               name: editedName,
               email: editedEmail,
-              role: editedRole,
+              
             }
           : row
       );
@@ -123,6 +124,55 @@ function EnseignantPage() {
       setOpenEditModal(false);
     }
   };
+  ///////////////////////////adding just one teacher/////////////////////////////////////////////////
+  const [showOneProftModal, setShowOneProftModal] = useState(false);
+  const [formData, setFormData] = useState({
+    mail: "",
+    nomp: "",
+    Matricule: "",
+    module:"",
+  });
+  const handleOpenOneproftModal = () => {
+    setShowOneProftModal(true);
+  };
+  const handleCloseOneProfModal = () => {
+    setShowOneProftModal(false);
+  };
+  const handleAddOneprof =()=> {
+    setShowOneProftModal(true);
+  }
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = (Empty) => {
+    if (Empty == true) {
+      const newRow = createData(
+        rows.length + 1,
+        rows.length + 1,
+        formData.module,
+        formData.nomp,
+        formData.mail,
+        formData.Matricule,
+
+      );
+
+      setRows([...rows, newRow]);
+      setShowOneProftModal(false);
+      setFormData({
+        mail: "",
+        nomp: "",
+        Matricule: "",
+        module:"",
+      });
+    }
+  }
+  ///////////
 
   return (
     <Box>
@@ -171,7 +221,7 @@ function EnseignantPage() {
               <TableCell sx={{ textAlign: "center" }}>Module</TableCell>
               <TableCell sx={{ textAlign: "center" }}>Nom et Prénom</TableCell>
               <TableCell sx={{ textAlign: "center" }}>Email</TableCell>
-              <TableCell sx={{ textAlign: "center" }}>Role</TableCell>
+              
               <TableCell sx={{ textAlign: "center" }}>
                 <Button
                   onClick={handleNewEnseignant}
@@ -202,7 +252,7 @@ function EnseignantPage() {
                 <TableCell style={{ textAlign: "center" }}>{row.Module}</TableCell>
                 <TableCell style={{ textAlign: "center" }}>{row.name}</TableCell>
                 <TableCell style={{ textAlign: "center" }}>{row.email}</TableCell>
-                <TableCell style={{ textAlign: "center" }}>{row.role}</TableCell>
+                
                 <TableCell style={{ textAlign: "center" }}>
                   <Button
                     onClick={() => handleOpenEditModal(row)}
@@ -398,24 +448,7 @@ function EnseignantPage() {
               width: "100%",
             }}
           />
-          <TextField
-            label="Role"
-            variant="outlined"
-            size="small"
-            value={editedRole}
-            onChange={(e) => setEditedRole(e.target.value)}
-            InputLabelProps={{
-              shrink: true,
-              style: {
-                fontSize: "0.8rem",
-              },
-            }}
-            sx={{
-              marginBottom: "10px",
-              display: "block",
-              width: "100%",
-            }}
-          />
+       
           <Button onClick={handleSaveEdit} color="primary" autoFocus>
             enregistrer
           </Button>
@@ -514,6 +547,203 @@ function EnseignantPage() {
         </div>
       </Box>
     </Modal>
+    
+
+
+
+
+
+
+
+    <Modal open={showOneProftModal} onClose={handleCloseOneProfModal}>
+        <Box
+          sx={{
+            position: "relative",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 820,
+            height: 650,
+
+            p: 4,
+            borderRadius: "15px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            backgroundImage: `url('/src/assets/ajouter.png')`,
+            backgroundSize: "cover",
+            filter: "drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))",
+          }}
+        >
+          <form >
+            <div className="form">
+            <input 
+            autoFocus
+              required
+              type="email"
+              placeholder="Mail"
+              name="mail"
+              value={formData.mail}
+              onChange={handleInputChange}
+              style={{
+                  height: "40px",
+                  width: "200px",
+                  border: "none",
+                  borderBottom: "0.5px solid #000066",
+                  outline: "none",
+                  padding: "10px",
+                  background: "none",
+                  marginLeft: "-80px",
+                  marginTop: "150px",
+                  transition: "height 0.3s",
+                  position:"absolute",
+              }}
+              onKeyDown={e => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  document.getElementsByName('nomp')[0].focus(); // Passer au champ promo
+                }}}
+            />
+           
+            <input
+              required
+              type="text"
+              placeholder="Nom et prenom"
+              name="nomp"
+              value={formData.nomp}
+              onChange={handleInputChange}
+              style={{
+                height: "40px",
+                width: "200px",
+                border: "none",
+                borderBottom: "0.5px solid #000066",
+                outline: "none",
+                padding: "10px",
+                marginLeft: "-80px",
+                marginTop: "227px",
+                background: "none",
+                position: "absolute",
+              }}
+              onKeyDown={e => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  document.getElementsByName('Matricule')[0].focus(); 
+                }
+              }}
+            />
+           
+           
+            <input
+             required
+              type="text"
+              placeholder="Matricule"
+              name="Matricule"
+              value={formData.Matricule}
+              onChange={handleInputChange}
+              style={{
+                height: "40px",
+                width: "200px",
+                border: "none",
+                borderBottom: "0.5px solid #000066",
+                outline: "none",
+                padding: "10px",
+                marginLeft: "-80px",
+                background: "none",
+                marginTop: "300px",
+                position:"absolute"
+                
+                
+              }}
+              onKeyDown={e => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  document.getElementsByName('module')[0].focus(); 
+                }
+              }}
+              />
+              <input required
+              type="text"
+              placeholder="Module"
+              name="module"
+              value={formData.module}
+              onChange={handleInputChange}
+              style={{
+                height: "40px",
+                width: "200px",
+                border: "none",
+                borderBottom: "0.5px solid #000066",
+                outline: "none",
+                padding: "10px",
+                marginTop: "145px",
+                marginLeft: "200px",
+                background: "none",
+                position: "absolute",
+              }}
+              onKeyDown={e => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  document.getElementsByName('abc')[0].focus(); 
+                }
+              }}
+             
+            />
+            <div className="button-container"
+            style={{
+              textAlign:' center',
+              cursor: 'pointer',
+              justifyContent: 'center',
+              alignItems:' center',
+               }}
+            >
+              <button
+              style={{position:'absolute',
+                fontSize:' 16px',
+                fontWeight:'bold',
+                height:' 45px',
+                width:' 120px',  
+                marginLeft: '-230px',
+                marginTop:'400px',
+                borderRadius:'6px',
+                color:'#000066' ,
+                border:' none',
+                backgroundColor: ' #0000665C',
+                zIndex:' 2',
+            }}
+                className="button-submit"
+                type="submit"
+                onClick={(
+                 )=>
+                { handleSubmit ( (formData.mail!==''&&formData.Matricule!==''&&formData.module!==''&&formData.nomp!==''))}}
+              >
+                Confirmer
+              </button>
+
+              <button
+              style={{position:'absolute',
+              fontSize:' 16px',
+              fontWeight:'bold',
+              height:' 45px',
+              width:' 120px',  
+              marginLeft: '65px',
+              marginTop:'300px',
+              borderRadius:'6px',
+              color:'#000066' ,
+              border:' none',
+              backgroundColor: ' #0000665C',
+              zIndex:' 2',
+          }}
+                className="button-cancel"
+                type="submit"
+                onClick={handleCloseOneProfModal}
+              >
+                Annuler
+              </button>
+            </div>
+            </div>
+            
+          </form>
+        </Box>
+      </Modal>
     </Box>
   );
 }
