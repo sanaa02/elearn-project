@@ -7,6 +7,7 @@ body {
   padding: 0;
   box-sizing: border-box;
   display: flex;
+  
 }
 
 nav {
@@ -117,8 +118,8 @@ nav {
 
 .login-active {  /* Use same class as login trigger */
     filter: blur(5px) !important; 
-    backdrop-filter: blur(5px) !important;
-    -webkit-filter: blur(5px) !important ;
+    backdrop-filter: blur(2px) !important;
+    -webkit-filter: blur(2px) !important ;
     transition: filter 0.3s ease-in-out !important; 
     /* display: flex;
     position: relative;

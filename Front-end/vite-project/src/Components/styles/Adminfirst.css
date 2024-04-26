@@ -1,0 +1,105 @@
+.adminhome{
+    
+    
+    }
+    .Carde {
+    width: 130px;
+    height: 130px;
+    padding: 20px;
+    border: 1px solid #000066;
+    border-radius: 10px;
+    background-color:#000066;;
+    box-shadow: 5px 5px 5px rgb(209, 206, 206);
+    display: inline-block;
+    margin: 10px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  
+    
+    }
+    .card-container{
+      margin-left: 190px;
+    }
+    .Card-img {
+      width:60px ;
+      padding-left: 35px;
+    
+    }
+    .Card-title {
+      color:white ;
+      font-size: 13px;
+      padding-left: 30px;
+     
+    }
+    .Card-stat {
+      color:white ;
+      font-size: 15px;
+      padding-left: 25px; 
+    }
+    .dessin {
+      width:50px ;
+      position:absolute ;
+      margin-top: 20px ;
+      padding-left: 100px;
+    }
+    .adminhome {
+   margin-top: -80px;
+     
+    }
+    .Home-text {
+    
+    }
+    
+    .notification-image {width:30px ;
+      border-radius: 10px;
+      height:50px ;
+    
+    }
+    .right {
+        overflow-y: auto;
+        overflow-x: hidden;
+        margin-left:900px;
+        margin-top: -640px;
+        width: 300px;
+        height:610px;
+        max-height: 610px;
+        background-color: #8FBDE8;
+        color:white ;
+        position: relative
+    }
+    .notifiactions-back {
+        width:150px ;
+        height:180px ;
+        padding-top:-90px;
+        padding-left: 100px;
+        margin-top: -60px;
+    }
+    .notification-image {width:50px ;
+        border-radius: 10px;
+        height:50px ;
+        overflow: auto;
+        padding-top: 15px;
+      }
+      .notification{
+       
+        margin-left: -30px;
+        margin-right: 45px;
+        display: flex;
+        margin-bottom: 5px;
+      
+      }
+      .notification-description {
+      color:white ;
+      
+      }
+    
+      .notification-content{
+     padding-left: 10px;
+     
+      }
+     
+      .notification:hover{
+        background-color: rgb(180, 222, 240);
+        cursor: pointer;
+        border-radius: 10px;
+      }
+    

@@ -1,57 +1,46 @@
-import React, { useState } from 'react';
+// import { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Navbar from './Components/Navbar';
-import Footer from './Components/Footer';
-import Home from './Components/Home';
+
 import Landing from "./Components/Landing";
 import About from './Components/About';
 import Contact from './Components/Contact';
-import AdminPage from './Components/pages/AdminPage'; // Importez la page d'administration
-import TeacherPage from './Components/pages/TeacherPage'; // Importez la page d'enseignant
-import StudentPage from './Components/pages/StudentPage'; // Importez la page d'étudiant
-import { LoginProvider } from "./Components/LoginContext";
+import AdminPage from './Components/pages/admin/AdminPage'; 
+import TeacherPage from './Components/pages/TeacherPage';
+import StudentPage from './Components/pages/StudentPage'; 
+import ApprenantPage from './Components/pages/admin/ApprenantPage';
+import EnseignantPage from './Components/pages/admin/EnseignantPage';
+import ModulePage from './Components/pages/admin/ModulePage';
+import EspaceCommunicationPage from './Components/pages/admin/EspaceCommunicationPage';
+import Adminhome from './Components/pages/admin/Adminhome'
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Initialisez l'état de connexion à false
-  const [userRole, setUserRole] = useState(null); // Initialisez le rôle de l'utilisateur à null
-  console.log("page something happened");
-  // Fonction pour changer le rôle de l'utilisateur
-  const handleUserRoleChange = (role) => {
-    setUserRole(role);
-    setIsLoggedIn(true); // Définir l'état de connexion à true lors de la connexion de l'utilisateur
-  };
+  // const [isLoggedIn, setIsLoggedIn] = useState(false); 
+  // const [userRole, setUserRole] = useState(null); 
 
-  // Fonction pour déterminer quelle page afficher en fonction du rôle de l'utilisateur
-  const getPageForUserRole = () => {
-    switch (userRole) {
-      case 'admin':
-        return <AdminPage />;
-      case 'teacher':
-        return <TeacherPage />;
-      case 'student':
-        return <StudentPage />;
-      default:
-        return null; // Afficher une page vide si le rôle de l'utilisateur n'est pas encore défini
-    }
-    
-  };
+  // const handleUserRoleChange = (role) => {
+  //   setUserRole(role);
+  //   setIsLoggedIn(true); 
+  // };
 
   return (
     <Router>
-      
-        <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/admin" element={<AdminPage />} />
-          <Route path="/teacher" element={<TeacherPage />} />
-          <Route path="/student" element={<StudentPage />} />
-        </Routes>
-     
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/admin" element={<AdminPage />}> 
+          
+          <Route path="Adminhome" element={<Adminhome />} />
+          <Route path="ApprenantPage" element={<ApprenantPage />} />
+          <Route path="EnseignantPage" element={<EnseignantPage />} />
+          <Route path="ModulePage" element={<ModulePage />} />
+          <Route path="EspaceCommunicationPage" element={<EspaceCommunicationPage />} />
+        </Route>
+        
+        <Route path="/teacher" element={<TeacherPage />} />
+        <Route path="/student" element={<StudentPage />} />
+      </Routes>
     </Router>
   );
 }
 
 export default App;
-
-
-
