@@ -1,5 +1,5 @@
 import React from "react";
-import big from "../assets/big-logo.png";
+import big from "../assets/about-logo.png";
 import "./styles/landing.css";
 
 const About = () => {

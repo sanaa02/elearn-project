@@ -1,9 +1,16 @@
 import React from 'react'
+import "../styles/student.css";
+import Navbar from '../Navbar';
 
-function StudentPage() {
+const StudentPage = () => {
   return (
-    <div>StudentPage</div>
-  )
-}
+      <div className="student-root">
+        <Navbar />
+
+
+      </div>
+
+)
+};
 
 export default StudentPage

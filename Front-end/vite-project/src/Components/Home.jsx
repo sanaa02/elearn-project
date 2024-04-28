@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { FiArrowRight } from "react-icons/fi";
 import "./styles/landing.css";
 import "./styles/login.css";
+import "./styles/navbar.css"
 import "./About";
 import circles from "../assets/circles.png";
 import line1 from "../assets/point1.png";

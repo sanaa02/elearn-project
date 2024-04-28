@@ -6,6 +6,17 @@ from django.dispatch import receiver
 
 # Create your models here.
 
+
+
+
+class File(models.Model):
+    email = models.CharField(primary_key=True, max_length=6)
+    password = models.CharField(max_length=100)
+   
+    def __str__(self):
+        return self.staff_name
+
+
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:
