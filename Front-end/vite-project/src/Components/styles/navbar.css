@@ -1,0 +1,53 @@
+nav {
+  padding: 0 15px;
+  width: 100%;
+  background-color: #f5f5f5;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  position: sticky;
+  top: 0;
+  z-index: 99;
+}
+
+.blurred-nav {
+  padding: 0 15px;
+  width: 100%;
+  background-color: #f5f5f5;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  position: sticky;
+  top: 0;
+  z-index: 99;
+  filter: blur(5px) !important; 
+  backdrop-filter: blur(5px) !important;
+  -webkit-filter: blur(5px) !important ;
+  transition: filter 0.3s ease-in-out !important; 
+}
+
+.navbar-menu-container {
+  display: none;
+}
+.navbar-links-container a {
+  margin-right: 3rem;
+  text-decoration: none;
+  color: #000066;
+  font-size: 1.1rem;
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.3s ease;
+}
+
+.navbar-links-container a:hover {
+  color: #007bff;
+}
+.navbar-links-container a:active {
+  color: #ff0000;
+  font-weight: bold;
+}
