@@ -5,13 +5,14 @@ import Landing from "./Components/Landing";
 import About from './Components/About';
 import Contact from './Components/Contact';
 import AdminPage from './Components/pages/admin/AdminPage'; 
-import TeacherPage from './Components/pages/TeacherPage';
+import TeacherPage from './Components/pages/Enseignant/Enseignant'
 import StudentPage from './Components/pages/StudentPage'; 
 import ApprenantPage from './Components/pages/admin/ApprenantPage';
 import EnseignantPage from './Components/pages/admin/EnseignantPage';
 import ModulePage from './Components/pages/admin/ModulePage';
 import EspaceCommunicationPage from './Components/pages/admin/EspaceCommunicationPage';
 import Adminhome from './Components/pages/admin/Adminhome'
+import MesCours from './Components/pages/Enseignant/MesCours';
 function App() {
   // const [isLoggedIn, setIsLoggedIn] = useState(false); 
   // const [userRole, setUserRole] = useState(null); 
@@ -36,7 +37,9 @@ function App() {
           <Route path="EspaceCommunicationPage" element={<EspaceCommunicationPage />} />
         </Route>
         
-        <Route path="/teacher" element={<TeacherPage />} />
+        <Route path="/Enseignant" element={<TeacherPage />} >
+          <Route path="MesCours" element={<MesCours /> }/>
+          </Route>
         <Route path="/student" element={<StudentPage />} />
       </Routes>
     </Router>

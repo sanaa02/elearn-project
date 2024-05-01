@@ -1,5 +1,4 @@
-
-import { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import {
   CssBaseline,
   AppBar,
@@ -17,41 +16,35 @@ import {
   Button,
   Fade,
   Backdrop,
+  Collapse,
   TextField,
+  Avatar
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import SchoolIcon from '@mui/icons-material/School';
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import BookIcon from '@mui/icons-material/Book';
 import ChatIcon from '@mui/icons-material/Chat';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import AssessmentIcon from '@mui/icons-material/Assessment';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Link } from 'react-router-dom';
-import { Avatar } from '@mui/material';
+import logo1 from '../assets/logo1.png';
 
-import Nlogo from '../assets/Nlogo.png';
+const drawerWidth = 240;
 
-const drawerWidth = 220;
-
-const SideBar = () => {
+const TeacherSideBar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openProfileModal, setOpenProfileModal] = useState(false);
   const [openLogoutModal, setOpenLogoutModal] = useState(false);
-  const [name, setName] = useState(localStorage.getItem('name') || 'Mohammed AD');
-  const [email, setEmail] = useState(localStorage.getItem('email') || 'mohammed.ad@example.com');
+  const [openAssessmentSubMenu, setOpenAssessmentSubMenu] = useState(false); 
+  const [userName] = useState("Nom de l'utilisateur");
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [bio, setBio] = useState('');
   const [avatar, setAvatar] = useState(localStorage.getItem('avatar') || 'img4.png');
-  const [bio, setBio] = useState(localStorage.getItem('bio') || '');
-  const [location, setLocation] = useState(localStorage.getItem('location') || 'Algiers, Algeria');
+  const [location, setLocation] = useState('');
   
-
-  useEffect(() => {
-    localStorage.setItem('name', name);
-    localStorage.setItem('email', email);
-    localStorage.setItem('avatar', avatar);
-    localStorage.setItem('bio', bio);
-    localStorage.setItem('location', location);
-    
-  }, [name, email, avatar, bio, location]);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -74,41 +67,7 @@ const SideBar = () => {
   };
 
   const handleLogout = () => {
-    // Ajoutez ici la logique pour se déconnecter
-    // par exemple, en effaçant les données de connexion
-    // localStorage.clear();
-    // Redirigez vers la page de connexion ou la page d'accueil
-    // history.push('/landingpage');
     console.log("Déconnexion");
-  };
-
-  const saveProfile = () => {
-    // Simulate an API call to save the profile data
-    console.log('Name:', name);
-    console.log('Email:', email);
-    console.log('Bio:', bio);
-    console.log('Avatar:', avatar);
-    console.log('Location:', location);
-    
-
-    // Close the modal
-    handleProfileModalClose();
-  };
-
-  const iconMapping = {
-    'Apprenant': <SchoolIcon style={{ color: 'white' }} />,
-    'Enseignant': <PersonOutlineIcon style={{ color: 'white' }} />,
-    'Module': <BookIcon style={{ color: 'white' }} />,
-    'Espace de communication': <ChatIcon style={{ color: 'white' }} />,
-    'Dashboard': <DashboardIcon style={{ color: 'white' }} />,
-  };
-
-  const linkMapping = {
-    'Apprenant': 'ApprenantPage',
-    'Enseignant': 'EnseignantPage',
-    'Module': 'ModulePage',
-    'Espace de communication': 'EspaceCommunicationPage',
-    'Dashboard': 'Adminhome',
   };
 
   const modalStyle = {
@@ -118,107 +77,162 @@ const SideBar = () => {
     transform: 'translate(-50%, -50%)',
     width: 800,
     height: '600px',
-    
-    
     p: 4,
     borderRadius: 2,
     display: 'flex',
-   
     alignItems: 'center',
     textAlign: 'center',
-    backgroundImage: `url('/src/assets/logout.png')`, // Définissez votre image de fond ici
-    backgroundSize: 'cover', // Ajustez la taille de l'image pour couvrir toute la modal
+    backgroundImage: `url('/src/assets/logout.png')`,
+    backgroundSize: 'cover', 
   };
 
   const drawer = (
     <div>
-      
-      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mt: '30px', mb: '20px',mr:'80px' }}>
-        <img src={Nlogo} alt="logo" style={{ width: '40px', marginRight: '20px' }} />
-        <Typography variant="h6" sx={{ color: 'White',fontWeight:400 }}>E-Learn</Typography>
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mt: '10px', mb: '20px',ml:'-150px' }}>
+        <img src={logo1} alt="logo" style={{ width: '150px', marginRight: '10px' }} />
+        <Typography variant="h6" sx={{ color: '#000066',fontWeight:'bold',marginLeft:'-60px' }}>E-Learn</Typography>
       </Box>
-      
-      <List className="nav-menu-items" sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '100%', marginTop: '60px' }}>
+      <List className="nav-menu-items" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', height: '100%', marginTop: '60px' }}>
+
         <ListItem disablePadding className="list-item">
           <Link to="Adminhome" style={{ textDecoration: 'none', color: 'inherit' }}>
             <ListItemButton>
               <ListItemIcon>
-                {iconMapping['Dashboard']}
+                <DashboardIcon style={{ color: '#000066' }} />
               </ListItemIcon>
-              <ListItemText primary="Dashboard" sx={{ color: 'white' }} />
+              <ListItemText primary="Dashboard" sx={{ color: '#000066' }} />
             </ListItemButton>
           </Link>
         </ListItem>
-        {['Apprenant', 'Enseignant', 'Module', 'Espace de communication'].map((text) => (
-          <ListItem key={text} disablePadding className="list-item">
-            <Link to={linkMapping[text]} style={{ textDecoration: 'none', color: 'inherit' }}>
-              <ListItemButton>
-                <ListItemIcon>
-                  {iconMapping[text]}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ color: 'white' }} />
+        <ListItem disablePadding className="list-item">
+          <Link to="MesCours" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <ListItemButton>
+              <ListItemIcon>
+                <BookIcon style={{ color: '#000066' }} />
+              </ListItemIcon>
+              <ListItemText primary="Mes Cours" sx={{ color: '#000066' }} />
+            </ListItemButton>
+          </Link>
+        </ListItem>
+        <ListItem disablePadding className="list-item">
+          <ListItemButton onClick={() => setOpenAssessmentSubMenu(!openAssessmentSubMenu)}>
+            <ListItemIcon>
+              <AssessmentIcon style={{ color: '#000066' }} />
+            </ListItemIcon>
+            <ListItemText primary="Assessment" sx={{ color: '#000066' }} />
+            {openAssessmentSubMenu ? <ExpandMoreIcon style={{ color: '#000066' }} /> : <ExpandMoreIcon style={{ color: '#000066' }} />}
+          </ListItemButton>
+          <Collapse in={openAssessmentSubMenu} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItemButton sx={{ pl: 4 }}>
+                <Link to="Devoirs" style={{ textDecoration: 'none', color: 'inherit' }}>
+                  <ListItemText primary="Devoirs" sx={{ color: '#000066' }} />
+                </Link>
               </ListItemButton>
-            </Link>
-          </ListItem>
-        ))}
+              <ListItemButton sx={{ pl: 4 }}>
+                <Link to="Quizzes" style={{ textDecoration: 'none', color: 'inherit' }}>
+                  <ListItemText primary="Quizzes" sx={{ color: '#000066' }} />
+                </Link>
+              </ListItemButton>
+            </List>
+          </Collapse>
+        </ListItem>
+        <ListItem disablePadding className="list-item">
+          <Link to="Messages" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <ListItemButton>
+              <ListItemIcon>
+                <ChatIcon style={{ color: '#000066' }} />
+              </ListItemIcon>
+              <ListItemText primary="Messages" sx={{ color: '#000066' }} />
+            </ListItemButton>
+          </Link>
+        </ListItem>
+        <ListItem disablePadding className="list-item">
+          <Link to="Notifications" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <ListItemButton>
+              <ListItemIcon>
+                <NotificationsIcon style={{ color: '#000066' }} />
+              </ListItemIcon>
+              <ListItemText primary="Notifications" sx={{ color: '#000066' }} />
+            </ListItemButton>
+          </Link>
+        </ListItem>
       </List>
       <List className="nav-menu-items">
         <ListItem disablePadding className="list-item">
           <ListItemButton onClick={handleLogoutModalOpen}>
             <ListItemIcon>
-              <ExitToAppIcon sx={{ color: 'white' }} />
+              <ExitToAppIcon sx={{ color: '#000066' }} />
             </ListItemIcon>
-            <ListItemText primary="Se déconnecter" sx={{ color: 'white' }} />
+            <ListItemText primary="Se déconnecter" sx={{ color: '#000066' }} />
           </ListItemButton>
         </ListItem>
       </List>
     </div>
   );
 
+  const saveProfile = () => {
+    // Simulate an API call to save the profile data
+    console.log('Name:', name);
+    console.log('Email:', email);
+    console.log('Bio:', bio);
+    console.log('Avatar:', avatar);
+    console.log('Location:', location);
+   
+    handleProfileModalClose();
+  };
+
+  useEffect(() => {
+    localStorage.setItem('name', name);
+    localStorage.setItem('email', email);
+    localStorage.setItem('avatar', avatar);
+    localStorage.setItem('bio', bio);
+    localStorage.setItem('location', location);
+   
+  }, [name, email, avatar, bio, location]);
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar
-  position="fixed"
-  sx={{
-    width: { sm: `calc(100% - ${drawerWidth}px)` },
-    ml: { sm: `${drawerWidth}px` },
-    backgroundColor: 'white',
-    boxShadow: 'none',
-    height: '80px',
-    borderBottom: '0.2px solid #001d4f'
-  }}
->
-  <Toolbar>
-    <IconButton
-      color="inherit"
-      aria-label="open drawer"
-      edge="start"
-      onClick={handleDrawerToggle}
-      sx={{ mr: 2, display: { sm: 'none' } }}
-    >
-      <MenuIcon style={{ color: '#000066' }} />
-    </IconButton>
-    {/* Ajout de "Bienvenue" et du nom d'utilisateur */}
-    <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: '#000066',fontWeight:500 }}>
-      Bienvenue {name}
-    </Typography>
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <Button
-        onClick={handleProfileModalOpen}
+        position="fixed"
         sx={{
-          textTransform: 'none',
-          color: '#000066',
-          mr: 2,
+          width: { sm: `calc(100% - ${drawerWidth}px)` },
+          ml: { sm: `${drawerWidth}px` },
+          backgroundColor: 'white',
+          boxShadow: 'none',
+          height: '100px',
         }}
       >
-        <Avatar alt="Profile" src={avatar} sx={{ width: 48, height: 48, mr: 1 }} />
-        {name}
-      </Button>
-    </Box>
-  </Toolbar>
-</AppBar>
-
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2, display: { sm: 'none' } }}
+          >
+            <MenuIcon style={{ color: '#000066' }} />
+          </IconButton>
+          <Box sx={{ display: 'flex', alignItems: 'center', flex: 1 }}>
+            <Typography variant="h6" sx={{ color: '#000066' }}>
+              Bienvenue, {userName}
+            </Typography>
+          </Box>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Button
+              onClick={handleProfileModalOpen}
+              sx={{
+                textTransform: 'none',
+                color: '#000066',
+                mr: 2,
+              }}
+            >
+              <Avatar alt="Profile" src={avatar} sx={{ width: 48, height: 48, mr: 1 }} />
+            </Button>
+          </Box>
+        </Toolbar>
+      </AppBar>
       <Box
         component="nav"
         sx={{
@@ -231,32 +245,14 @@ const SideBar = () => {
         }}
         aria-label="mailbox folders"
       >
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-        <Drawer
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{ keepMounted: true }}
-          sx={{
-            display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': {
-              boxSizing: 'border-box',
-              width: drawerWidth,
-              background:"#001D4F",
-              backgroundSize: 'cover',
-            },
-          }}
-        >
-          {drawer}
-        </Drawer>
         <Drawer
           variant="permanent"
           sx={{
-            display: { xs: 'none', sm: 'block' },
             '& .MuiDrawer-paper': {
+              position: 'fixed',
               boxSizing: 'border-box',
               width: drawerWidth,
-              background:"#001D4F",
+              background:'#e1e1ff',
               backgroundSize: 'cover',
             },
           }}
@@ -385,35 +381,8 @@ const SideBar = () => {
           </Box>
         </Fade>
       </Modal>
-      <Modal
-        open={openLogoutModal}
-        onClose={handleLogoutModalClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-      >
-        <Fade in={openLogoutModal}>
-        
-
-        <Box sx={{ ...modalStyle, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-  <Typography variant="h6" gutterBottom sx={{ color: 'white', marginBottom: '20px',marginLeft:'70px' }}>
-    Vous voulez vraiment vous déconnecter de ce compte ?
-  </Typography>
-  <Box sx={{ display: 'flex', justifyContent: 'space-between',marginLeft:'70px' }}>
-    <Button onClick={handleLogoutModalClose} color="primary" variant="outlined" sx={{width:'45%', mr: 2,background:'#F5F5F5' , color:'#000066',fontWeight:'bold','&:hover': {border:'1px solid white',color:'white',background:'#000066'} }}>
-      Annuler
-    </Button>
-    <Button onClick={handleLogout} color="error" variant="contained" sx={{width:'45%',background:'#F5F5F5' , color:'#000066',fontWeight:'bold','&:hover': {border:'1px solid white',color:'white',background:'#000066'}}}>
-      Confirmer
-    </Button>
-  </Box>
-</Box>
-        </Fade>
-      </Modal>
     </Box>
   );
 }
 
-export default SideBar;
+export default TeacherSideBar;
