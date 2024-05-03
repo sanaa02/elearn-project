@@ -1,28 +1,38 @@
 from django.db import models
 from module.models import Module
+from django.core.exceptions import ValidationError
+
 
 class QuizQuestion(models.Model):
     resource = models.ForeignKey('Resource', on_delete=models.CASCADE)
     question = models.TextField()
-    option_1 = models.CharField(max_length=100, blank=True)
-    option_2 = models.CharField(max_length=100, blank=True)
-    option_3 = models.CharField(max_length=100, blank=True)
-    option_4 = models.CharField(max_length=100, blank=True)
-    correct_option = models.IntegerField(choices=((1, 'Option 1'), (2, 'Option 2'), (3, 'Option 3'), (4, 'Option 4')), blank=True, null=True)
+    score = models.DecimalField(max_digits=5, decimal_places=2, help_text="The score or percentage this question is worth.")
+    
+class QuizOption(models.Model):
+    MAX_OPTIONS_PER_QUESTION = 4
+    question = models.ForeignKey(QuizQuestion, related_name='options', on_delete=models.CASCADE)
+    text = models.CharField(max_length=100)
+    is_correct = models.BooleanField(default=False)
+    def clean(self):
+        # Check if the number of options for the question exceeds the maximum limit
+        if self.question.options.count() >= self.MAX_OPTIONS_PER_QUESTION:
+            raise ValidationError(
+                _('A question cannot have more than %(max_options)d options.') % {'max_options': self.MAX_OPTIONS_PER_QUESTION}
+            )
 
 class Resource(models.Model):
     COURSE = 'C'
     TUTORIAL = 'TD'
     PRACTICAL_WORK = 'TP'
-    ASSIGNMENT = 'A'
+    HOMEWORK= 'H'
     QUIZ = 'Q'
 
     RESOURCE_TYPES = [
         (COURSE, 'Course'),
         (TUTORIAL, 'Tutorial'),
         (PRACTICAL_WORK, 'Practical Work'),
-        (ASSIGNMENT, 'Assignment'),
-         (QUIZ, 'Quiz'),
+        (HOMEWORK, 'Homework'),
+        (QUIZ, 'Quiz'),
     ]
 
     title = models.CharField(max_length=100)

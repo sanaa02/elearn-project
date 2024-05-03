@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from resource.models import Resource, QuizQuestion
+from resource.models import Resource, QuizQuestion,QuizOption
 
 
 class ResourceSerializer(serializers.ModelSerializer):
@@ -10,7 +10,14 @@ class ResourceSerializer(serializers.ModelSerializer):
         model = Resource
         fields = ['id', 'title', 'description', 'resource_type', 'file', 'module_id']
 
+class QuizOptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = QuizOption
+        fields = ['id','question_id','text', 'is_correct']
+
 class QuizQuestionSerializer(serializers.ModelSerializer):
+    options = QuizOptionSerializer(many=True, read_only=True)
+
     class Meta:
         model = QuizQuestion
-        fields = '__all__'        
+        fields = ['id', 'resource', 'question', 'score', 'options']    
