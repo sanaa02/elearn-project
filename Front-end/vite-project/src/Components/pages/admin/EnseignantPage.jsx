@@ -293,7 +293,7 @@ function EnseignantPage() {
           </TableBody>
         </Table>
       </TableContainer>
-
+{/* ////////////////////////////////////////////modal d'ajoutert un seul enseignant /////////////////////////////////////////////// */}
       <Modal
         open={openNewEnseignantModal}
         onClose={() => setOpenNewEnseignantModal(false)}
@@ -383,7 +383,7 @@ function EnseignantPage() {
           </Button>
         </Box>
       </Modal>
-
+  {/* ////////////////////////////////////////////modal de modifier un enseignant /////////////////////////////////////////////// */}
       <Modal
         open={openEditModal}
         onClose={handleCloseEditModal}
@@ -520,7 +520,7 @@ function EnseignantPage() {
           </div>
         </Box>
       </Modal>
-
+{/* ////////////////////////////////////////////modal d'ajoutert un seul enseignant /////////////////////////////////////////////// */}
       <Modal open={showOneProftModal} onClose={handleCloseOneProfModal}>
         <Box className="Modal-seul-prof">
           <Typography variant="h5" gutterBottom>
@@ -591,6 +591,7 @@ function EnseignantPage() {
           <div className="button-container">
             <button
               type="submit"
+              className="button-submit"
               onClick={() => {
                 handleSubmit(
                   formData.mail !== "" &&
@@ -604,7 +605,7 @@ function EnseignantPage() {
             </button>
 
             <button
-              className="button-cancel"
+              className="button-submit"
               type="submit"
               onClick={handleCloseOneProfModal}
             >

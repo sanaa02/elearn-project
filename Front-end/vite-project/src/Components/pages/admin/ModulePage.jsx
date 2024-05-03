@@ -13,7 +13,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-import '../../styles/ModulePage.css'
+import "../../styles/ModulePage.css";
 
 function createData(n, id, name, enseignant, promo, coefficient, actions) {
   return { n, id, name, enseignant, promo, coefficient, actions };
@@ -57,8 +57,6 @@ function ModulePage() {
   const [cohortFile, setCohortFile] = useState(null);
   const [openLotModal, setOpenLotModal] = useState(false);
 
-  
-  
   const [showModal, setShowModal] = useState(false);
   const handleOpenModal = () => {
     setShowModal(true);
@@ -155,7 +153,7 @@ function ModulePage() {
   const handleCloseEditModal = () => {
     setOpenEditModal(false);
   };
-
+////////////////////////////fonction de modification ///////////////////////////////////
   const handleSaveEdit = () => {
     if (editedRow) {
       const updatedRows = initialRows.map((row) =>
@@ -309,7 +307,7 @@ function ModulePage() {
           </TableBody>
         </Table>
       </TableContainer>
-
+    {/* ///////cette modal est pour supprimer un module ///////////////////////////////////// */}
       <Modal
         open={selectedRow !== null}
         onClose={handleCloseDeleteModal}
@@ -347,14 +345,14 @@ function ModulePage() {
           </Button>
         </Box>
       </Modal>
-
+       {/* ////////////////////cette modal est pour afficher le choix de l'ajout des modules //////////////////////////////// */}
       <Modal
         open={openNewModuleModal}
         onClose={() => setOpenNewModuleModal(false)}
         aria-labelledby="modal-title"
         aria-describedby="modal-description"
       >
-        <Box 
+        <Box
           sx={{
             position: "absolute",
             top: "51.5%",
@@ -399,6 +397,8 @@ function ModulePage() {
           </Box>
         </Box>
       </Modal>
+          {/* ////////////////////cette modal est pour afficher le choix de l'ajout des modules //////////////////////////////// */}
+              {/* ////////////////////cette modal est pour modifier un module  ////////// //////////////////////////////// */}
       <Modal
         open={openEditModal}
         onClose={handleCloseEditModal}
@@ -506,58 +506,49 @@ function ModulePage() {
           </Button>
         </Box>
       </Modal>
+        {/* ////////////////////cette modal est pour modifier un module  ////////// //////////////////////////////// */}
+      {/* //////////////////cette modale est pour ajouter des modules par lots///////////////// */}
       <Modal
         open={openLotModal}
-        onClose={()=> setOpenLotModal(false)}
+        onClose={() => setOpenLotModal(false)}
         aria-labelledby="modal-title"
         aria-describedby="modal-description"
       >
         <Box className="lot-modal">
-        <Typography variant="h5" gutterBottom>
+          <Typography variant="h5" gutterBottom>
             Ajouter des modules par lots
           </Typography>
-         <form>
-         <div className="file-container"
-           
-           >
-             <input className="file"
-               type="file"
-               accept=".csv"
-               onChange={(e) => setCohortFile(e.target.files[0])}
-             
-             />
-             <div className="file-place"
-               
-             >
-               {cohortFile
-                 ? cohortFile.name
-                 : "ajouter des modules par lot/fichie csv"}
-             </div>
-           </div>
-         </form>
-
-          <div className="button-container">
-            <Button
-              onClick={() => setOpenLotModal(false)}
-              autoFocus
-             
-            >
+          <form>
+            <div className="file-container">
+              <input required
+                className="file"
+                type="file"
+                accept=".csv"
+                onChange={(e) => setCohortFile(e.target.files[0])}
+              />
+              <div className="file-place">
+                {cohortFile
+                  ? cohortFile.name
+                  : "ajouter des modules par lot/fichie csv"}
+              </div>
+            </div>
+            <div className="button-container">
+            <Button onClick={() => setOpenLotModal(false)} autoFocus>
               Annuler
             </Button>
-            <Button
-              onClick={handleUploadCohort}
-              autoFocus
-            >
+            <Button onClick={handleUploadCohort} autoFocus>
               Confirmer
             </Button>
           </div>
+          </form>
+
+         
         </Box>
       </Modal>
+      {/* /////////////////////cette modal est pour ajouter un seul module //////////////////////// */}
       <Modal open={showModal} onClose={handleCloseModal}>
-        <Box
-         className="Modal-seul-module"
-        >
-           <Typography variant="h5" gutterBottom>
+        <Box className="Modal-seul-module">
+          <Typography variant="h5" gutterBottom>
             Ajouter une seule module
           </Typography>
           <form>
@@ -594,21 +585,17 @@ function ModulePage() {
                 onChange={handleInputChange}
               />
 
-              <div className="file-container"
-               
-              >
+              <div className="file-container">
                 <div>
                   {cohortFile ? cohortFile.name : "Ajouter des enseignants"}
                 </div>
-                <input className="file"
+                <input
+                  className="file"
                   type="file"
                   accept=".csv"
                   onChange={(e) => setCohortFile(e.target.files[0])}
-                
                 />
-                
               </div>
-
               <input
                 required
                 type="text"
@@ -617,6 +604,16 @@ function ModulePage() {
                 value={formData.Matricule}
                 onChange={handleInputChange}
               />
+              <select 
+                required
+                name="SelectOption"
+                value={formData.SelectOption}
+                onChange={handleInputChange}
+              >
+             
+                <option value="s1">semestre1</option>
+                <option value="s2">semestre2</option>
+              </select>
               <div
                 className="button-container"
                 style={{
@@ -627,7 +624,7 @@ function ModulePage() {
                 }}
               >
                 <button
-                  className="button-submit"
+                className="button-submit"
                   type="submit"
                   onClick={() => {
                     handleSubmit(
@@ -637,13 +634,12 @@ function ModulePage() {
                         formData.Matricule !== ""
                     );
                   }}
-                
                 >
                   Confirmer
                 </button>
 
                 <button
-                  className="button-cancel"
+                     className="button-submit"
                   type="submit"
                   onClick={handleCloseModal}
                 >

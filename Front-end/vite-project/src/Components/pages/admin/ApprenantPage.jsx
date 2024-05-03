@@ -309,6 +309,7 @@ function ApprenantPage() {
           </TableBody>
         </Table>
       </TableContainer>
+      {/* /////////////////////////////////modal de choix d'ajout ////////////////////////////////////////// */}
       <Modal
         open={openNewApprenantModal}
         onClose={() => setOpenNewApprenantModal(false)}
@@ -409,6 +410,7 @@ function ApprenantPage() {
           </Button>
         </Box>
       </Modal>
+      {/* //////////////////////////////////////////////////modal de modification////////////////////////////////////////////////// */}
       <Modal
         open={openEditModal}
         onClose={handleCloseEditModal}
@@ -578,52 +580,29 @@ function ApprenantPage() {
                 </div>
               </div>
            
-          </form>
+         
 
           <div
             className="button-container"
-            style={{ marginTop: "80px", position: "relative" }}
+         
           >
             <Button
               onClick={handleUploadCohort}
               color="primary"
               autoFocus
-              style={{
-                fontSize: " 16px",
-                height: " 45px",
-                width: " 120px",
-                borderRadius: "6px",
-                color: "white",
-                border: " none",
-                backgroundColor: " #000066",
-                zIndex: " 2",
-                cursor: "pointer",
-                marginLeft: "35px",
-                marginRight: "35px",
-              }}
+              className="button-submit"
             >
               Confirmer
             </Button>
             <Button
               onClick={() => setOpenLotModal(false)}
               autoFocus
-              style={{
-                fontSize: " 16px",
-                height: " 45px",
-                width: " 120px",
-                borderRadius: "6px",
-                color: "white",
-                border: " none",
-                backgroundColor: " #000066",
-                zIndex: " 2",
-                cursor: "pointer",
-                marginLeft: "35px",
-                marginRight: "35px",
-              }}
+             className="button-submit"
             >
               Annuler
             </Button>
           </div>
+          </form>
         </Box>
       </Modal>
       {/* this part is about  adding one student ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
@@ -645,7 +624,7 @@ function ApprenantPage() {
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     e.preventDefault();
-                    document.getElementsByName("promo")[0].focus(); // Passer au champ promo
+                    document.getElementsByName("promo")[0].focus(); 
                   }
                 }}
               />
@@ -728,7 +707,7 @@ function ApprenantPage() {
                   Confirmer
                 </button>
 
-                <button type="submit" onClick={handleCloseModal}>
+                <button type="submit" onClick={handleCloseModal} className="button-submit">
                   Annuler
                 </button>
               </div>
