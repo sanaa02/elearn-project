@@ -29,7 +29,8 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import { Link } from 'react-router-dom';
 import { Avatar } from '@mui/material';
 
-import Nlogo from '../assets/Nlogo.png';
+
+import logos from '../assets/Logos.png'
 
 const drawerWidth = 220;
 
@@ -74,11 +75,7 @@ const SideBar = () => {
   };
 
   const handleLogout = () => {
-    // Ajoutez ici la logique pour se déconnecter
-    // par exemple, en effaçant les données de connexion
-    // localStorage.clear();
-    // Redirigez vers la page de connexion ou la page d'accueil
-    // history.push('/landingpage');
+    
     console.log("Déconnexion");
   };
 
@@ -133,9 +130,12 @@ const SideBar = () => {
   const drawer = (
     <div>
       
-      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mt: '30px', mb: '20px',mr:'80px' }}>
-        <img src={Nlogo} alt="logo" style={{ width: '40px', marginRight: '20px' }} />
-        <Typography variant="h6" sx={{ color: 'White',fontWeight:400 }}>E-Learn</Typography>
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mt: '30px', mb: '20px',mr:'30px' }}>
+        <img src={logos} alt="logo" style={{ width: '40px', marginRight: '20px' }} />
+        <Box>
+          <Typography variant="h6" sx={{ color: 'white', fontWeight: 500, width: '100px', fontSize: '18px' }}>Elearning</Typography>
+          <Typography variant="h6" sx={{ color: 'white', fontWeight: 500, width: '100px', fontSize: '18px' }}> Plateform</Typography>
+          </Box>
       </Box>
       
       <List className="nav-menu-items" sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '100%', marginTop: '60px' }}>
@@ -186,7 +186,7 @@ const SideBar = () => {
     backgroundColor: 'white',
     boxShadow: 'none',
     height: '80px',
-    borderBottom: '0.2px solid #001d4f'
+    borderBottom: '1px solid #000066'
   }}
 >
   <Toolbar>
@@ -242,7 +242,7 @@ const SideBar = () => {
             '& .MuiDrawer-paper': {
               boxSizing: 'border-box',
               width: drawerWidth,
-              background:"#001D4F",
+              background:"#000066",
               backgroundSize: 'cover',
             },
           }}
@@ -256,7 +256,7 @@ const SideBar = () => {
             '& .MuiDrawer-paper': {
               boxSizing: 'border-box',
               width: drawerWidth,
-              background:"#001D4F",
+              background:"#000066",
               backgroundSize: 'cover',
             },
           }}

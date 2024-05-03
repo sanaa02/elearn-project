@@ -328,21 +328,22 @@ function ModulePage() {
             boxShadow: 24,
             p: 4,
             textAlign: "center",
-            backgroundImage: `url('/src/assets/dialog.png')`,
+            background:'white',
             backgroundSize: "cover",
             backgroundPosition: "center",
             borderRadius: "15px",
+            
           }}
         >
-          <h2 id="modal-title">Confirmer la suppression</h2>
-          <p id="modal-description">
+          <h2 id="modal-title" style={{color:'#000066',marginBottom:'50px'}}>Confirmer la suppression</h2>
+          <p id="modal-description" style={{marginBottom:'50px'}}>
             {selectedRow &&
               `Voulez-vous vraiment supprimer Module : ${selectedRow.name} ?.`}
           </p>
-          <Button onClick={handleDelete} color="error" autoFocus>
+          <Button onClick={handleDelete}  autoFocus style={{color:'white',background:'#000066',width:'100px',marginLeft:'10px'}}>
             Supprimer
           </Button>
-          <Button onClick={handleCloseDeleteModal} autoFocus>
+          <Button onClick={handleCloseDeleteModal} autoFocus style={{color:'white',background:'#000066',width:'100px',marginLeft:'10px'}}>
             Annuler
           </Button>
         </Box>
@@ -417,91 +418,69 @@ function ModulePage() {
             boxShadow: 24,
             p: 4,
             textAlign: "center",
-            backgroundImage: `url('/src/assets/dialog.png')`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
+            background:'white',
             borderRadius: "15px",
           }}
         >
-          <h2 id="modal-title">Modifier Module</h2>
-          <TextField
-            label="nom"
-            variant="outlined"
-            size="small"
-            value={editedName}
-            onChange={(e) => setEditedName(e.target.value)}
-            InputLabelProps={{
-              shrink: true,
-              style: {
-                fontSize: "0.8rem",
-              },
-            }}
-            sx={{
-              marginBottom: "10px",
-              display: "block",
-              width: "100%",
-            }}
-          />
-
-          <TextField
-            label="enseignant"
-            variant="outlined"
-            size="small"
-            value={editedEnseignant}
-            onChange={(e) => setEditedEnseignant(e.target.value)}
-            InputLabelProps={{
-              shrink: true,
-              style: {
-                fontSize: "0.8rem",
-              },
-            }}
-            sx={{
-              marginBottom: "10px",
-              display: "block",
-              width: "100%",
-            }}
-          />
-
-          <TextField
-            label="promo"
-            variant="outlined"
-            size="small"
-            value={editedPromo}
-            onChange={(e) => setEditedPromo(e.target.value)}
-            InputLabelProps={{
-              shrink: true,
-              style: {
-                fontSize: "0.8rem",
-              },
-            }}
-            sx={{
-              marginBottom: "10px",
-              display: "block",
-              width: "100%",
-            }}
-          />
-          <TextField
-            label="coefficient"
-            variant="outlined"
-            size="small"
-            value={editedcoefficient}
-            onChange={(e) => setEditedcoefficient(e.target.value)}
-            InputLabelProps={{
-              shrink: true,
-              style: {
-                fontSize: "0.8rem",
-              },
-            }}
-            sx={{
-              marginBottom: "10px",
-              display: "block",
-              width: "100%",
-            }}
-          />
-          <Button onClick={handleSaveEdit} color="primary" autoFocus>
-            enregistrer
+          <h2 id="modal-title" style={{color:'#000066',marginBottom:'40px'}}>Modifier Module</h2>
+          <form  style={{display:'flex',flexDirection:'column',alignItems:'center', marginBottom:'20px'}}>
+          <input
+        type="text"
+        placeholder="Nom"
+        value={editedName}
+        onChange={(e) => setEditedName(e.target.value)}
+        style={{
+          marginBottom: "8px",
+          width: "60%",
+          padding: "8px",
+          border: "1px solid #000066",
+          borderRadius: "4px",
+        }}
+      />
+      <input
+        type="text"
+        placeholder="Enseignant"
+        value={editedEnseignant}
+        onChange={(e) => setEditedEnseignant(e.target.value)}
+        style={{
+          marginBottom: "8px",
+          width: "60%",
+          padding: "8px",
+          border: "1px solid #000066",
+          borderRadius: "4px",
+        }}
+      />
+      <input
+        type="text"
+        placeholder="Promo"
+        value={editedPromo}
+        onChange={(e) => setEditedPromo(e.target.value)}
+        style={{
+          marginBottom: "8px",
+          width: "60%",
+          padding: "8px",
+          border: "1px solid #000066",
+          borderRadius: "4px",
+        }}
+      />
+      <input
+        type="text"
+        placeholder="Coefficient"
+        value={editedcoefficient}
+        onChange={(e) => setEditedcoefficient(e.target.value)}
+        style={{
+          marginBottom: "8px",
+          width: "60%",
+          padding: "8px",
+          border: "1px solid #000066",
+          borderRadius: "4px",
+        }}
+      />
+      </form>
+          <Button onClick={handleSaveEdit}  autoFocus style={{color:'white',background:'#000066',width:'100px',marginLeft:'10px'}}>
+            Confirmer
           </Button>
-          <Button onClick={handleCloseEditModal} autoFocus>
+          <Button onClick={handleCloseEditModal} autoFocus style={{color:'white',background:'#000066',width:'100px',marginLeft:'10px'}}>
             Annuler
           </Button>
         </Box>

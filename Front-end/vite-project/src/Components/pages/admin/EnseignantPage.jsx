@@ -337,7 +337,7 @@ function EnseignantPage() {
         aria-labelledby="modal-title"
         aria-describedby="modal-description"
       >
-        <Box
+       <Box
           sx={{
             position: "absolute",
             top: "50%",
@@ -349,21 +349,22 @@ function EnseignantPage() {
             boxShadow: 24,
             p: 4,
             textAlign: "center",
-            backgroundImage: `url('/src/assets/dialog.png')`,
+            background:'white',
             backgroundSize: "cover",
             backgroundPosition: "center",
             borderRadius: "15px",
+            
           }}
         >
-          <h2 id="modal-title">Confirmer la suppression</h2>
-          <p id="modal-description">
+          <h2 id="modal-title" style={{color:'#000066',marginBottom:'50px'}}>Confirmer la suppression</h2>
+          <p id="modal-description" style={{marginBottom:'50px'}}>
             {selectedRow &&
-              `Voulez-vous vraiment supprimer l'enseignant : ${selectedRow.name} ?.`}
+              `Voulez-vous vraiment supprimer l'Enseignant : ${selectedRow.name} ?.`}
           </p>
-          <Button onClick={handleDelete} color="error" autoFocus>
+          <Button onClick={handleDelete}  autoFocus style={{color:'white',background:'#000066',width:'100px',marginLeft:'10px'}}>
             Supprimer
           </Button>
-          <Button onClick={handleCloseDeleteModal} autoFocus>
+          <Button onClick={handleCloseDeleteModal} autoFocus style={{color:'white',background:'#000066',width:'100px',marginLeft:'10px'}}>
             Annuler
           </Button>
         </Box>
@@ -387,72 +388,58 @@ function EnseignantPage() {
             boxShadow: 24,
             p: 4,
             textAlign: "center",
-            backgroundImage: `url('/src/assets/dialog.png')`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
+            background:'white',
             borderRadius: "15px",
           }}
         >
-          <h2 id="modal-title">Modifier apprenant</h2>
-          <TextField
-            label="Module"
-            variant="outlined"
-            size="small"
-            value={editedModule}
-            onChange={(e) => setEditedModule(e.target.value)}
-            InputLabelProps={{
-              shrink: true,
-              style: {
-                fontSize: "0.8rem",
-              },
-            }}
-            sx={{
-              marginBottom: "10px",
-              display: "block",
-              width: "100%",
-            }}
-          />
-          <TextField
-            label="Nom et Prénom"
-            variant="outlined"
-            size="small"
-            value={editedName}
-            onChange={(e) => setEditedName(e.target.value)}
-            InputLabelProps={{
-              shrink: true,
-              style: {
-                fontSize: "0.8rem",
-              },
-            }}
-            sx={{
-              marginBottom: "10px",
-              display: "block",
-              width: "100%",
-            }}
-          />
-          <TextField
-            label="Email"
-            variant="outlined"
-            size="small"
-            value={editedEmail}
-            onChange={(e) => setEditedEmail(e.target.value)}
-            InputLabelProps={{
-              shrink: true,
-              style: {
-                fontSize: "0.8rem",
-              },
-            }}
-            sx={{
-              marginBottom: "10px",
-              display: "block",
-              width: "100%",
-            }}
-          />
+          <h2 id="modal-title" style={{color:'#000066',marginBottom:'50px'}}>Modifier Enseignant</h2>
+          <form style={{display:'flex',flexDirection:'column',alignItems:'center', marginBottom:'20px'}}>
+          <input
+        type="text"
+        placeholder="Module"
+        value={editedModule}
+        onChange={(e) => setEditedModule(e.target.value)}
+        style={{
+          marginBottom: "8px",
+          
+          width: "60%",
+          padding: "8px",
+          border: "1px solid #ccc",
+          borderRadius: "4px",
+        }}
+      />
+      <input
+        type="text"
+        placeholder="Nom et Prénom"
+        value={editedName}
+        onChange={(e) => setEditedName(e.target.value)}
+        style={{
+          marginBottom: "8px",
+          width: "60%",
+          padding: "8px",
+          border: "1px solid #ccc",
+          borderRadius: "4px",
+        }}
+      />
+      <input
+        type="email"
+        placeholder="Email"
+        value={editedEmail}
+        onChange={(e) => setEditedEmail(e.target.value)}
+        style={{
+          marginBottom: "8px",
+          width: "60%",
+          padding: "8px",
+          border: "1px solid #ccc",
+          borderRadius: "4px",
+        }}
+      />
+      </form>
        
-          <Button onClick={handleSaveEdit} color="primary" autoFocus>
-            enregistrer
+          <Button onClick={handleSaveEdit}  autoFocus style={{color:'white',background:'#000066',width:'100px',marginLeft:'10px'}}>
+            confirmer
           </Button>
-          <Button onClick={handleCloseEditModal} autoFocus>
+          <Button onClick={handleCloseEditModal} autoFocus style={{color:'white',background:'#000066',width:'100px',marginLeft:'10px'}}>
             Annuler
           </Button>
         </Box>
