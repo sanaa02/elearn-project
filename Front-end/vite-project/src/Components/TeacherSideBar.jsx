@@ -1,3 +1,4 @@
+
 import  { useState, useEffect } from 'react';
 import {
   CssBaseline,
@@ -16,29 +17,28 @@ import {
   Button,
   Fade,
   Backdrop,
-  Collapse,
   TextField,
-  Avatar
+  Avatar,
+  InputAdornment
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import BookIcon from '@mui/icons-material/Book';
 import ChatIcon from '@mui/icons-material/Chat';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import AssessmentIcon from '@mui/icons-material/Assessment';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Link } from 'react-router-dom';
-import logo1 from '../assets/logo1.png';
+import SearchIcon from '@mui/icons-material/Search';
 
-const drawerWidth = 240;
+import { Link } from 'react-router-dom';
+import logos from '../assets/Logos.png';
+
+const drawerWidth = 210;
 
 const TeacherSideBar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openProfileModal, setOpenProfileModal] = useState(false);
   const [openLogoutModal, setOpenLogoutModal] = useState(false);
-  const [openAssessmentSubMenu, setOpenAssessmentSubMenu] = useState(false); 
-  const [userName] = useState("Nom de l'utilisateur");
+ 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [bio, setBio] = useState('');
@@ -88,83 +88,64 @@ const TeacherSideBar = () => {
 
   const drawer = (
     <div>
-      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mt: '10px', mb: '20px',ml:'-150px' }}>
-        <img src={logo1} alt="logo" style={{ width: '150px', marginRight: '10px' }} />
-        <Typography variant="h6" sx={{ color: '#000066',fontWeight:'bold',marginLeft:'-60px' }}>E-Learn</Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mt: '10px', mb: '20px',mr:'30px' }}>
+        <img src={logos} alt="logo" style={{ width: '40px', marginRight: '20px' }} />
+        <Box>
+          <Typography variant="h6" sx={{ color: '#000066', fontWeight: 500, width: '100px', fontSize: '18px' }}>Elearning</Typography>
+          <Typography variant="h6" sx={{ color: '#000066', fontWeight: 500, width: '100px', fontSize: '18px' }}> Plateform</Typography>
+          </Box>
+          
       </Box>
-      <List className="nav-menu-items" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', height: '100%', marginTop: '60px' }}>
+      <List className="nav-menu-items" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', height: '100%', marginTop: '40px',justifyContent:'center' }}>
 
         <ListItem disablePadding className="list-item">
-          <Link to="Adminhome" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <Link to="TableauDeBord" style={{ textDecoration: 'none', color: 'inherit' }}>
             <ListItemButton>
               <ListItemIcon>
                 <DashboardIcon style={{ color: '#000066' }} />
               </ListItemIcon>
-              <ListItemText primary="Dashboard" sx={{ color: '#000066' }} />
+              <ListItemText primary="Tableau de bord" sx={{ color: '#000066' }} />
             </ListItemButton>
           </Link>
         </ListItem>
         <ListItem disablePadding className="list-item">
-          <Link to="MesCours" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <Link to="Modules" style={{ textDecoration: 'none', color: 'inherit' }}>
             <ListItemButton>
               <ListItemIcon>
                 <BookIcon style={{ color: '#000066' }} />
               </ListItemIcon>
-              <ListItemText primary="Mes Cours" sx={{ color: '#000066' }} />
+              <ListItemText primary="Modules" sx={{ color: '#000066' }} />
             </ListItemButton>
           </Link>
         </ListItem>
         <ListItem disablePadding className="list-item">
-          <ListItemButton onClick={() => setOpenAssessmentSubMenu(!openAssessmentSubMenu)}>
-            <ListItemIcon>
-              <AssessmentIcon style={{ color: '#000066' }} />
-            </ListItemIcon>
-            <ListItemText primary="Assessment" sx={{ color: '#000066' }} />
-            {openAssessmentSubMenu ? <ExpandMoreIcon style={{ color: '#000066' }} /> : <ExpandMoreIcon style={{ color: '#000066' }} />}
-          </ListItemButton>
-          <Collapse in={openAssessmentSubMenu} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              <ListItemButton sx={{ pl: 4 }}>
-                <Link to="Devoirs" style={{ textDecoration: 'none', color: 'inherit' }}>
-                  <ListItemText primary="Devoirs" sx={{ color: '#000066' }} />
-                </Link>
-              </ListItemButton>
-              <ListItemButton sx={{ pl: 4 }}>
-                <Link to="Quizzes" style={{ textDecoration: 'none', color: 'inherit' }}>
-                  <ListItemText primary="Quizzes" sx={{ color: '#000066' }} />
-                </Link>
-              </ListItemButton>
-            </List>
-          </Collapse>
-        </ListItem>
-        <ListItem disablePadding className="list-item">
-          <Link to="Messages" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <Link to="DevoirEtQuizze" style={{ textDecoration: 'none', color: 'inherit' }}>
             <ListItemButton>
               <ListItemIcon>
                 <ChatIcon style={{ color: '#000066' }} />
               </ListItemIcon>
-              <ListItemText primary="Messages" sx={{ color: '#000066' }} />
+              <ListItemText primary="Devoir & Quizze" sx={{ color: '#000066' }} />
             </ListItemButton>
           </Link>
         </ListItem>
         <ListItem disablePadding className="list-item">
-          <Link to="Notifications" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <Link to="Forums" style={{ textDecoration: 'none', color: 'inherit' }}>
             <ListItemButton>
               <ListItemIcon>
                 <NotificationsIcon style={{ color: '#000066' }} />
               </ListItemIcon>
-              <ListItemText primary="Notifications" sx={{ color: '#000066' }} />
+              <ListItemText primary="Forums" sx={{ color: '#000066' }} />
             </ListItemButton>
           </Link>
         </ListItem>
       </List>
-      <List className="nav-menu-items">
-        <ListItem disablePadding className="list-item">
-          <ListItemButton onClick={handleLogoutModalOpen}>
+      <List className="nav-menu-items" >
+        <ListItem disablePadding className="list-item" >
+          <ListItemButton onClick={handleLogoutModalOpen} sx={{mt:'50px'}}>
             <ListItemIcon>
-              <ExitToAppIcon sx={{ color: '#000066' }} />
+              <ExitToAppIcon sx={{ color: 'red' }} />
             </ListItemIcon>
-            <ListItemText primary="Se déconnecter" sx={{ color: '#000066' }} />
+            <ListItemText primary="Se déconnecter" sx={{ color: 'red' }} />
           </ListItemButton>
         </ListItem>
       </List>
@@ -201,7 +182,9 @@ const TeacherSideBar = () => {
           ml: { sm: `${drawerWidth}px` },
           backgroundColor: 'white',
           boxShadow: 'none',
-          height: '100px',
+          height: '80px',
+          display:'flex',
+          justifyContent:'center'
         }}
       >
         <Toolbar>
@@ -214,10 +197,21 @@ const TeacherSideBar = () => {
           >
             <MenuIcon style={{ color: '#000066' }} />
           </IconButton>
-          <Box sx={{ display: 'flex', alignItems: 'center', flex: 1 }}>
-            <Typography variant="h6" sx={{ color: '#000066' }}>
-              Bienvenue, {userName}
-            </Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center', flex: 1,mt:'10px'}}>
+          <TextField
+        
+        placeholder="Rechercher"
+        variant="outlined"
+        size="small"
+        style={{ width: "300px" }}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          ),
+        }}
+      />
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Button
@@ -252,7 +246,7 @@ const TeacherSideBar = () => {
               position: 'fixed',
               boxSizing: 'border-box',
               width: drawerWidth,
-              background:'#e1e1ff',
+              background:'white',
               backgroundSize: 'cover',
             },
           }}

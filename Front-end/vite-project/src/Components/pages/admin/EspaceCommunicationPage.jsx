@@ -160,7 +160,7 @@ function EspaceCommunicationPage() {
         aria-labelledby="modal-title"
         aria-describedby="modal-description"
       >
-        <Box
+       <Box
           sx={{
             position: "absolute",
             top: "50%",
@@ -172,19 +172,21 @@ function EspaceCommunicationPage() {
             boxShadow: 24,
             p: 4,
             textAlign: "center",
+            background:'white',
+            backgroundSize: "cover",
+            backgroundPosition: "center",
             borderRadius: "15px",
+            
           }}
         >
           <h2 id="modal-title">Confirmer la suppression</h2>
           <p id="modal-description">
             {selectedRow && `Voulez-vous vraiment supprimer l'espace : ${selectedRow.name} ?`}
           </p>
-          <Button 
-          onClick={handleDelete} color="error" 
-          autoFocus>
+          <Button onClick={handleDelete}  autoFocus style={{color:'white',background:'#000066',width:'100px',marginLeft:'10px'}}>
             Supprimer
           </Button>
-          <Button onClick={handleCloseDeleteModal} autoFocus>
+          <Button onClick={handleCloseDeleteModal} autoFocus style={{color:'white',background:'#000066',width:'100px',marginLeft:'10px'}}>
             Annuler
           </Button>
         </Box>

@@ -80,11 +80,7 @@ const SideBar = () => {
   };
 
   const handleLogout = () => {
-    // Ajoutez ici la logique pour se déconnecter
-    // par exemple, en effaçant les données de connexion
-    // localStorage.clear();
-    // Redirigez vers la page de connexion ou la page d'accueil
-    // history.push('/landingpage');
+    
     console.log("Déconnexion");
   };
 

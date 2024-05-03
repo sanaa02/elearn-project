@@ -352,7 +352,7 @@ function ModulePage() {
         aria-labelledby="modal-title"
         aria-describedby="modal-description"
       >
-        <Box
+        <Box 
           sx={{
             position: "absolute",
             top: "51.5%",
@@ -510,7 +510,7 @@ function ModulePage() {
       {/* //////////////////cette modale est pour ajouter des modules par lots///////////////// */}
       <Modal
         open={openLotModal}
-        onClose={() => setOpenLotModal(false)}
+        onClose={()=> setOpenLotModal(false)}
         aria-labelledby="modal-title"
         aria-describedby="modal-description"
       >

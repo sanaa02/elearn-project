@@ -2,6 +2,7 @@
 import { Box } from '@mui/material';
 import { Outlet } from 'react-router-dom'; 
 import TeacherSideBar from '../../TeacherSideBar';
+import './Enseignant.css'
 function Enseignant() {
   return (
     <Box sx={{ display: 'flex', marginTop: '150px' }}> 
