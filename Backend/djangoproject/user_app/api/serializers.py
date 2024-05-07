@@ -1,3 +1,5 @@
+import random
+import string
 from user_app.models import MyUser, File
 from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
@@ -31,30 +33,40 @@ class UserTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
-     password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
-     password2 = serializers.CharField(write_only=True, required=True)
+    #  password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
+    #  password2 = serializers.CharField(write_only=True, required=True)
+     role = serializers.CharField(write_only=True, required=True)
     
     
      class Meta:
         model = MyUser
-        fields = ['email', 'password', 'password2']
+        fields = ['email', 'role']
 
-     def validate(self, attrs):
-         if attrs['password'] != attrs['password2']:
-             raise serializers.ValidationError(
-                 {"password": "Password fields didn't match."})
+    #  def validate(self, attrs):
+    #      if attrs['password'] != attrs['password2']:
+    #          raise serializers.ValidationError(
+    #              {"password": "Password fields didn't match."})
 
-         return attrs
+    #      return attrs
      def create(self, validated_data):
-         user = MyUser.objects.create(
+        #  user = MyUser.objects.create(
+        #      email=validated_data['email'],
+        # )
+         email = validated_data['email']
+         role = validated_data['role']
          
-             email=validated_data['email'],
+         if MyUser.objects.filter(email=email).exists():
+            raise serializers.ValidationError({"email": "Email address already used."})
 
-        )
+         # Generate a random password
+         password = ''.join(random.choices(string.ascii_letters + string.digits, k=12))
+         
+         user = MyUser.objects.create_user(email=email, password=password)
+         
         
-         user.set_password(validated_data['password'])
+        #  user.set_password(validated_data['password'])
         
-         user.save()
+        #  user.save()
         
          return user
             

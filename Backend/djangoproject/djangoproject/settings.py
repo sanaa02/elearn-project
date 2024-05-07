@@ -40,14 +40,17 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'user_app',
-    'module',
-    'resource'
+    'module_app',
+    'ressources_app',
+    'forums_app',
+    'professor_app',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',

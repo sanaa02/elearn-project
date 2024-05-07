@@ -6,13 +6,10 @@ from django.dispatch import receiver
 
 # Create your models here.
 
-
-
-
 class File(models.Model):
     email = models.CharField(primary_key=True, max_length=6)
-    password = models.CharField(max_length=100)
-   
+    role = models.CharField(max_length=100)
+    
     def __str__(self):
         return self.staff_name
 
@@ -43,9 +40,10 @@ class MyUser(PermissionsMixin, AbstractBaseUser):
     # first_name = models.CharField(max_length=100)
     # last_name = models.CharField(max_length=200)
     email = models.EmailField(unique=True)
-    
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
+    is_professor = models.BooleanField(default=False)
+    is_student = models.BooleanField(default=False)
     
     
     USERNAME_FIELD = 'email'
@@ -59,25 +57,32 @@ class MyUser(PermissionsMixin, AbstractBaseUser):
         
 
 class Profile(models.Model):
-    user = models.OneToOneField(MyUser, on_delete=models.CASCADE)
+    user = models.OneToOneField(MyUser, on_delete=models.CASCADE, related_name='profile')
     name = models.CharField(max_length=100)
     bio = models.TextField(blank=True)
     
 # # #     #image = models.ImageField(upload_to='user_images', default='default.jpg')
 
 
-@receiver(post_save, sender=MyUser)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
+# @receiver(post_save, sender=MyUser, dispatch_uid='save_new_user_profile')
+# def save_profile(sender, instance, created, **kwargs):
+#     user = instance
+#     if created:
+#         profile = UserProfile(user=user)
+#         profile.save()
+    
+# @receiver(post_save, sender=MyUser)
+# def create_user_profile(sender, instance, created, **kwargs):
+#     if created:
+#         Profile.objects.create(user=instance)
         
      
-@receiver(post_save, sender=MyUser)   
-def save_user_profile(sender, instance, **kwargs):
-    print("Save user profile signal received")
-    instance.profile.save()
+# @receiver(post_save, sender=MyUser)   
+# def save_user_profile(sender, instance, **kwargs):
+#     print("Save user profile signal received")
+#     instance.profile.save()
     
-post_save.connect(create_user_profile, sender=MyUser)
-post_save.connect(save_user_profile, sender=MyUser)
+# post_save.connect(create_user_profile, sender=MyUser)
+# post_save.connect(save_user_profile, sender=MyUser)
 
 

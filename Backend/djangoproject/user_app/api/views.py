@@ -1,3 +1,6 @@
+import string
+import random
+from django.http import HttpResponse, JsonResponse
 import io, csv, pandas as pd
 from rest_framework.exceptions import ParseError
 from django.core.files.base import ContentFile
@@ -20,32 +23,108 @@ from django.core.files.storage import FileSystemStorage
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.hashers import make_password
 # Create your views here.
-
+  
+  
 class UploadFileView(generics.CreateAPIView):
     serializer_class = FileUploadSerializer
-    
+
     def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        file = serializer.validated_data['file']
-        
+        file = request.FILES.get('file')
+
         try:
             reader = pd.read_csv(file)
             user_list = []
-            
+            response_data = []
+
             for index, row in reader.iterrows():
                 email = row['email']
-                password = str(row['password']) 
-                
-                # Assuming MyUser model has 'email' and 'password' fields
-                user_list.append(MyUser(email=email, password=make_password(password)))
-            
-            MyUser.objects.bulk_create(user_list)
-            
-            return Response({"status": "success"}, status=status.HTTP_201_CREATED)
-        
+                password = ''.join(random.choices(string.ascii_letters + string.digits, k=12))
+                hashed_password = make_password(password)
+                role = row.get('role', '').lower()
+
+                if role == 'professor':
+                    user = MyUser(email=email, password=hashed_password, is_professor=True)
+                elif role == 'student':
+                    user = MyUser(email=email, password=hashed_password, is_student=True)
+                else:
+                    # Skip rows with invalid role values
+                    continue
+
+                user.save()
+                user_list.append(user)
+                response_data.append({'email': email, 'password': password, 'role': role})
+
+            response = self.create_csv_response(response_data)
+            return response
+
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+    def create_csv_response(self, data):
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="user_passwords.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow(['email', 'password', 'role'])
+
+        for item in data:
+            writer.writerow([item['email'], item['password'], item['role']])
+
+        return response
+
+  
+  
+  
+# class UploadFileView(generics.CreateAPIView):
+#     serializer_class = FileUploadSerializer
+    
+#     def post(self, request, *args, **kwargs):
+#         file = request.FILES.get('file')
+        
+#         # serializer = self.get_serializer(data=request.data)
+#         # serializer.is_valid(raise_exception=True)
+#         # file = serializer.validated_data['file']
+        
+#         try:
+#             reader = pd.read_csv(file)
+#             user_list = []
+#             response_data = []
+            
+#             for index, row in reader.iterrows():
+#                 email = row['email']
+#                 # password = str(row['password']) 
+#                 password = ''.join(random.choices(string.ascii_letters + string.digits, k=12))
+#                 hashed_password = make_password(password)
+#                 # MyUser model has 'email' fields
+#                 user_list.append(MyUser(email=email, password=hashed_password))
+                
+#                 response_data.append({'email': email, 'password': password})
+            
+#             MyUser.objects.bulk_create(user_list)
+#             response = self.create_csv_response(response_data)
+#             # return Response({"status": "success"}, status=status.HTTP_201_CREATED)
+#             return response
+        
+#         except Exception as e:
+#             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        
+
+
+#     def create_csv_response(request, data):
+#     # Create CSV response with users' emails and passwords
+#         response = HttpResponse(content_type='text/csv')
+#         response['Content-Disposition'] = 'attachment; filename="user_passwords.csv"'
+
+#         writer = csv.writer(response)
+#         writer.writerow(['email', 'password'])
+    
+#         for item in data:
+#            writer.writerow([item['email'], item['password']])
+        
+      
+#         return response
+
+
 # fs = FileSystemStorage(location='tmp/')
 
 # class UserViewSet(viewsets.ModelViewSet):
@@ -113,6 +192,47 @@ class RegistrationView(generics.CreateAPIView):
         else:
             # Raise a permission denied exception if the user doesn't have permission
             raise PermissionDenied("You do not have permission to modify this user's information.")
+        
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        
+        # return the generated password in the response
+        response_data = {
+            "email": user.email,
+            "role": user.role,
+            "password": user.password  # Note: This password is hashed in the database
+        }
+
+        return Response(response_data, status=status.HTTP_201_CREATED)    
+    def create(self, request, *args, **kwargs):
+        role = request.data.get('role')
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        
+        response_data = {
+            "email": user.email,
+            "role": user.role,
+            "password": user.password  # Note: This password is hashed in the database
+        }
+        
+        return Response(response_data, status=status.HTTP_201_CREATED)
+    
+
+ # Import your custom user model
+@api_view (['GET'])
+def list_users(request):
+    # Query all users and retrieve their IDs
+    users = MyUser.objects.all().values('id', 'email', 'is_professor', 'is_student')  # You can include other fields as needed
+
+    # Serialize the query results into JSON format
+    serialized_users = list(users)
+
+    # Return the serialized data as a JSON response
+    return Response(serialized_users)
+
     
 @api_view (['GET'])
 def getRoutes(request):
@@ -123,8 +243,7 @@ def getRoutes(request):
     ]
     return Response(routes)
     
-    
-    
+
 @api_view (['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def testEndPoint(request):
@@ -137,3 +256,5 @@ def testEndPoint(request):
         data = "Congratulations your API just responded to POST request with text: ${text}"
         return Response({'response': data}, status = status.HTTP_200_OK)
     return Response({}, status.HTTP_400_BAD_REQUEST)
+
+
