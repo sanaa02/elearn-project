@@ -3,6 +3,7 @@ from module.models import Module
 from django.core.exceptions import ValidationError
 
 
+
 class QuizQuestion(models.Model):
     resource = models.ForeignKey('Resource', on_delete=models.CASCADE)
     question = models.TextField()
@@ -17,7 +18,7 @@ class QuizOption(models.Model):
         # Check if the number of options for the question exceeds the maximum limit
         if self.question.options.count() >= self.MAX_OPTIONS_PER_QUESTION:
             raise ValidationError(
-                _('A question cannot have more than %(max_options)d options.') % {'max_options': self.MAX_OPTIONS_PER_QUESTION}
+                ('A question cannot have more than %(max_options)d options.') % {'max_options': self.MAX_OPTIONS_PER_QUESTION}
             )
 
 class Resource(models.Model):
@@ -40,3 +41,11 @@ class Resource(models.Model):
     resource_type = models.CharField(max_length=2, choices=RESOURCE_TYPES)
     file = models.FileField(upload_to='resources/', blank=True, null=True)
     module = models.ForeignKey(Module, on_delete=models.CASCADE)
+
+class Homework(models.Model):  # Use "models.Model" instead of "models.model"
+    title = models.CharField(max_length=100)
+    file = models.FileField(upload_to='homework/')
+    resource = models.ForeignKey(Resource, on_delete=models.CASCADE, related_name='resource_homeworks') 
+
+    def __str__(self):
+        return self.title

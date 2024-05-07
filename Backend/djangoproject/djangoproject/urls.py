@@ -22,7 +22,7 @@ urlpatterns = [
     path('account/', include('user_app.api.urls')),
     path('forum/', include('forums_app.api.urls')),
     path('modules/', include('module.api.urls')),
-    path('resources/', include('resource.api.urls'))
-    
+    #path('resources/', include('resource.api.urls'))
+    path('student/',include('student.api.urls')),
 ]
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

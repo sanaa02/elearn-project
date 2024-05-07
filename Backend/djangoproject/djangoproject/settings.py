@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'module',
     'resource',
     'professor_app',
-    'forums_app'
+    'forums_app',
+    'student'
 ]
 
 MIDDLEWARE = [
