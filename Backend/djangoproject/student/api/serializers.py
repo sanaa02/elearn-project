@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from resource.models import Resource, Homework, QuizQuestion, QuizOption
+from student.models import Resource, Homework, QuizQuestion, QuizOption
 
 class ResourceSerializer(serializers.ModelSerializer):
     class Meta:
