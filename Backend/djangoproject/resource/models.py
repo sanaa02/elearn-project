@@ -17,7 +17,7 @@ class QuizOption(models.Model):
         # Check if the number of options for the question exceeds the maximum limit
         if self.question.options.count() >= self.MAX_OPTIONS_PER_QUESTION:
             raise ValidationError(
-                _('A question cannot have more than %(max_options)d options.') % {'max_options': self.MAX_OPTIONS_PER_QUESTION}
+            ('A question cannot have more than %(max_options)d options.') % {'max_options': self.MAX_OPTIONS_PER_QUESTION}
             )
 
 class Resource(models.Model):
