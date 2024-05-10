@@ -16,6 +16,7 @@ import {
   MenuItem,
   Select,
 } from "@mui/material";
+import './E.css'
 
 function createData(n, id, Module, name, email) {
   return { n, id, Module, name, email };
@@ -445,95 +446,53 @@ function EnseignantPage() {
         </Box>
       </Modal>
       <Modal
-      open={openLotModal}
-      onClose={() => setOpenLotModal(false)}
-      aria-labelledby="modal-title"
-      aria-describedby="modal-description"
-    >
-      <Box
-        sx={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: 820,
-          height: 650,
-          p: 4,
-          borderRadius: "15px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          backgroundImage: `url('/src/assets/ajouter1.png')`,
-          backgroundSize: "cover",
-          filter: "drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))",
-        }}
+        open={openLotModal}
+        onClose={() => setOpenLotModal(false)}
+        aria-labelledby="modal-title"
+        aria-describedby="modal-description"
       >
-        <div style={{ width: "50%", marginBottom: "10px", position: "relative", marginTop:'25%'}}>
-          <input
-            type="file"
-            accept=".csv"
-            onChange={(e) => setCohortFile(e.target.files[0])}
+        <Box className="lot-modal">
+          <Typography variant="h5" gutterBottom>
+            Ajouter des enseignants par cohorte
+          </Typography>
+          <div className="file-container"
             style={{
-              opacity: 0,
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              cursor: "pointer",
-              
+            
             }}
-          />
-          <div style={{
-            padding: "8px 12px",
-            fontSize: "0.8rem",
-            whiteSpace: "nowrap",
-            textAlign: "center",
-            borderBottom: "1px solid black",
-            borderTopLeftRadius: "2px",
-            borderTopRightRadius: "2px",
-          }}>
-            {cohortFile ? cohortFile.name : "Ajouter des enseignants par lot/fichier CSV"}
+          >
+            <input
+              type="file"
+              accept=".csv"
+              onChange={(e) => setCohortFile(e.target.files[0])}
+            
+            /> 
+            <div className="file-place"
+              style={{
+               
+              }}
+            >
+              {cohortFile
+                ? cohortFile.name
+                : "Ajouter des enseignants par lot/fichier CSV"}
+            </div>
           </div>
-        </div>
 
-        <div style={{ display: "flex", width: "50%", marginTop:'100px' }}>
-          <Button
-            onClick={() => setOpenLotModal(false)}
-            autoFocus
-            style={{
-              flex: 1,
-              marginRight: "10px",
-              padding: "10px",
-              fontSize: "1rem",
-              backgroundColor: "#000066",
-              color: "white",
-              border: "none",
-              borderRadius: "5px",
-              cursor: "pointer",
-            }}
-          >
-            Annuler
-          </Button>
-          <Button
-            onClick={handleUploadCohort}
-            autoFocus
-            style={{
-              flex: 1,
-              padding: "10px",
-              fontSize: "1rem",
-              backgroundColor: "#000066",
-              color: "white",
-              border: "none",
-              borderRadius: "5px",
-              cursor: "pointer",
-            }}
-          >
-            Confirmer
-          </Button>
-        </div>
-      </Box>
-    </Modal>
+          <div className="button-container" >
+            <Button
+              onClick={() => setOpenLotModal(false)}
+              autoFocus
+            >
+              Confirmer
+            </Button>
+            <Button
+              onClick={handleUploadCohort}
+              autoFocus
+            >
+              Annuler
+            </Button>
+          </div>
+        </Box>
+      </Modal>
     
 
 
@@ -543,193 +502,100 @@ function EnseignantPage() {
 
 
     <Modal open={showOneProftModal} onClose={handleCloseOneProfModal}>
-        <Box
-          sx={{
-            position: "relative",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: 820,
-            height: 650,
-
-            p: 4,
-            borderRadius: "15px",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            backgroundImage: `url('/src/assets/ajouter.png')`,
-            backgroundSize: "cover",
-            filter: "drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))",
-          }}
-        >
-          <form >
-            <div className="form">
-            <input 
-            autoFocus
-              required
-              type="email"
-              placeholder="Mail"
-              name="mail"
-              value={formData.mail}
-              onChange={handleInputChange}
-              style={{
-                  height: "40px",
-                  width: "200px",
-                  border: "none",
-                  borderBottom: "0.5px solid #000066",
-                  outline: "none",
-                  padding: "10px",
-                  background: "none",
-                  marginLeft: "-80px",
-                  marginTop: "150px",
-                  transition: "height 0.3s",
-                  position:"absolute",
-              }}
-              onKeyDown={e => {
-                if (e.key === 'Enter') {
-                  e.preventDefault();
-                  document.getElementsByName('nomp')[0].focus(); // Passer au champ promo
-                }}}
-            />
-           
-            <input
-              required
-              type="text"
-              placeholder="Nom et prenom"
-              name="nomp"
-              value={formData.nomp}
-              onChange={handleInputChange}
-              style={{
-                height: "40px",
-                width: "200px",
-                border: "none",
-                borderBottom: "0.5px solid #000066",
-                outline: "none",
-                padding: "10px",
-                marginLeft: "-80px",
-                marginTop: "227px",
-                background: "none",
-                position: "absolute",
-              }}
-              onKeyDown={e => {
-                if (e.key === 'Enter') {
-                  e.preventDefault();
-                  document.getElementsByName('Matricule')[0].focus(); 
-                }
-              }}
-            />
-           
-           
-            <input
-             required
-              type="text"
-              placeholder="Matricule"
-              name="Matricule"
-              value={formData.Matricule}
-              onChange={handleInputChange}
-              style={{
-                height: "40px",
-                width: "200px",
-                border: "none",
-                borderBottom: "0.5px solid #000066",
-                outline: "none",
-                padding: "10px",
-                marginLeft: "-80px",
-                background: "none",
-                marginTop: "300px",
-                position:"absolute"
-                
-                
-              }}
-              onKeyDown={e => {
-                if (e.key === 'Enter') {
-                  e.preventDefault();
-                  document.getElementsByName('module')[0].focus(); 
-                }
-              }}
+        <Box className="Modal-seul-prof">
+          <Typography variant="h5" gutterBottom>
+            Ajouter un seul enseignant
+          </Typography>
+          <form>
+            
+              <input
+                required
+                type="email"
+                placeholder="Mail"
+                name="mail"
+                value={formData.mail}
+                onChange={handleInputChange}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    document.getElementsByName("nomp")[0].focus(); 
+                  }
+                }}
               />
-              <input required
-              type="text"
-              placeholder="Module"
-              name="module"
-              value={formData.module}
-              onChange={handleInputChange}
-              style={{
-                height: "40px",
-                width: "200px",
-                border: "none",
-                borderBottom: "0.5px solid #000066",
-                outline: "none",
-                padding: "10px",
-                marginTop: "145px",
-                marginLeft: "200px",
-                background: "none",
-                position: "absolute",
-              }}
-              onKeyDown={e => {
-                if (e.key === 'Enter') {
-                  e.preventDefault();
-                  document.getElementsByName('abc')[0].focus(); 
-                }
-              }}
-             
-            />
-            <div className="button-container"
-            style={{
-              textAlign:' center',
-              cursor: 'pointer',
-              justifyContent: 'center',
-              alignItems:' center',
-               }}
-            >
-              <button
-              style={{position:'absolute',
-                fontSize:' 16px',
-                fontWeight:'bold',
-                height:' 45px',
-                width:' 120px',  
-                marginLeft: '-230px',
-                marginTop:'400px',
-                borderRadius:'6px',
-                color:'#000066' ,
-                border:' none',
-                backgroundColor: ' #0000665C',
-                zIndex:' 2',
-            }}
-                className="button-submit"
-                type="submit"
-                onClick={(
-                 )=>
-                { handleSubmit ( (formData.mail!==''&&formData.Matricule!==''&&formData.module!==''&&formData.nomp!==''))}}
-              >
-                Confirmer
-              </button>
 
-              <button
-              style={{position:'absolute',
-              fontSize:' 16px',
-              fontWeight:'bold',
-              height:' 45px',
-              width:' 120px',  
-              marginLeft: '65px',
-              marginTop:'300px',
-              borderRadius:'6px',
-              color:'#000066' ,
-              border:' none',
-              backgroundColor: ' #0000665C',
-              zIndex:' 2',
-          }}
-                className="button-cancel"
-                type="submit"
-                onClick={handleCloseOneProfModal}
-              >
-                Annuler
-              </button>
-            </div>
-            </div>
+              <input
+                required
+                type="text"
+                placeholder="Nom et prenom"
+                name="nomp"
+                value={formData.nomp}
+                onChange={handleInputChange}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    document.getElementsByName("Matricule")[0].focus(); 
+                  }
+                }}
+              />
+
+              <input
+                required
+                type="text"
+                placeholder="Matricule"
+                name="Matricule"
+                value={formData.Matricule}
+                onChange={handleInputChange}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    document.getElementsByName("module")[0].focus(); 
+                  }
+                }}
+              />
+              <input
+                required
+                type="text"
+                placeholder="Module"
+                name="module"
+                value={formData.module}
+                onChange={handleInputChange}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    document.getElementsByName("vide")[0].focus();
+                  }
+                }}
+              
+              />
+         
+          <div className="button-container">
+            <button
+              type="submit"
+              className="button-submit"
+              onClick={() => {
+                handleSubmit(
+                  formData.mail !== "" &&
+                  formData.nomp !== "" &&
+                  formData.Matricule !== "" &&
+                  formData.module !== ""
+                );
+              }}
+            >
+              Confirmer
+            </button>
+
+            <button
+              className="button-submit"
+              type="submit"
+              onClick={handleCloseOneProfModal}
+            >
+              Annuler
+            </button>
+          </div>
             
           </form>
         </Box>
+        
       </Modal>
     </Box>
   );

@@ -1,0 +1,47 @@
+ /*Footer*/
+ .footer{
+    background-color: #000066;
+    padding: 20px;
+  
+  }
+  .footer .container{
+    max-width: 1200px;
+  margin: 80px auto;
+  height: 45px;
+  color: white;
+  
+  
+  
+  }
+  .footer .container .row{
+    display: flex;
+    justify-content: space-between;
+  }
+  .footer .container .first {
+    border-bottom: 1px solid white;
+  }
+  .footer .container .seconde{
+    margin-top: 10px;
+    font-size: 12px;
+   
+  }
+  .footer .container .row .col h5{
+    font-size: 18px;
+    font-weight: 300;
+    margin-bottom: 20px;
+  
+  }
+  .col{
+    margin-bottom: 20px;
+  }
+  ul{
+    list-style: none;
+  }
+  ul li{
+    margin-bottom: 6px;
+    font-weight: 300;
+  }
+  ul li a{
+    text-decoration: none;
+    color: white;
+  }

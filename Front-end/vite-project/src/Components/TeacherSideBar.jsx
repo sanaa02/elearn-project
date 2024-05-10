@@ -1,5 +1,5 @@
-
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import {
   CssBaseline,
   AppBar,
@@ -19,18 +19,21 @@ import {
   Backdrop,
   TextField,
   Avatar,
-  InputAdornment
-} from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import BookIcon from '@mui/icons-material/Book';
-import ChatIcon from '@mui/icons-material/Chat';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import DashboardIcon from '@mui/icons-material/Dashboard';
+  InputAdornment,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import BookIcon from "@mui/icons-material/Book";
+import AssignmentIcon from "@mui/icons-material/Assignment";
+import ForumIcon from "@mui/icons-material/Forum";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import SearchIcon from "@mui/icons-material/Search";
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import SearchIcon from '@mui/icons-material/Search';
+import Badge from "@mui/material/Badge";
 
-import { Link } from 'react-router-dom';
-import logos from '../assets/Logos.png';
+
+import logos from "../assets/Logos.png";
+import "./TeacherSidebar.css";
 
 const drawerWidth = 210;
 
@@ -38,13 +41,14 @@ const TeacherSideBar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openProfileModal, setOpenProfileModal] = useState(false);
   const [openLogoutModal, setOpenLogoutModal] = useState(false);
- 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [bio, setBio] = useState('');
-  const [avatar, setAvatar] = useState(localStorage.getItem('avatar') || 'img4.png');
-  const [location, setLocation] = useState('');
-  
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [bio, setBio] = useState("");
+  const [avatar, setAvatar] = useState(
+    localStorage.getItem("avatar") || "img4.png"
+  );
+  const [location, setLocation] = useState("");
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -71,81 +75,166 @@ const TeacherSideBar = () => {
   };
 
   const modalStyle = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
     width: 800,
-    height: '600px',
+    height: "600px",
     p: 4,
     borderRadius: 2,
-    display: 'flex',
-    alignItems: 'center',
-    textAlign: 'center',
+    display: "flex",
+    alignItems: "center",
+    textAlign: "center",
     backgroundImage: `url('/src/assets/logout.png')`,
-    backgroundSize: 'cover', 
+    backgroundSize: "cover",
   };
 
   const drawer = (
     <div>
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mt: '10px', mb: '20px',mr:'30px' }}>
-        <img src={logos} alt="logo" style={{ width: '40px', marginRight: '20px' }} />
+      <Box
+        className="Box-logo"
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          mr: "30px",
+        }}
+      >
+        <img
+          src={logos}
+          alt="logo"
+          style={{ width: "40px", marginRight: "20px" }}
+        />
         <Box>
-          <Typography variant="h6" sx={{ color: '#000066', fontWeight: 500, width: '100px', fontSize: '18px' }}>Elearning</Typography>
-          <Typography variant="h6" sx={{ color: '#000066', fontWeight: 500, width: '100px', fontSize: '18px' }}> Plateform</Typography>
-          </Box>
-          
+          <Typography
+            variant="h6"
+            sx={{
+              color: "#000066",
+              fontWeight: 500,
+              width: "100px",
+              fontSize: "18px",
+            }}
+          >
+            Elearning
+          </Typography>
+          <Typography
+            variant="h6"
+            sx={{
+              color: "#000066",
+              fontWeight: 500,
+              width: "100px",
+              fontSize: "18px",
+            }}
+          >
+            {" "}
+            Plateform
+          </Typography>
+        </Box>
       </Box>
-      <List className="nav-menu-items" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', height: '100%', marginTop: '40px',justifyContent:'center' }}>
+      <List
+        className="nav-menu-items"
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          textAlign: "center",
+          height: "100%",
+          marginTop: "20px",
+          justifyContent: "center",
+        }}
+      >
+       <ListItem disablePadding className="list-item">
+  <NavLink
+    to="TableauDeBord"
+    style={{
+      textDecoration: "none",
+      color: "inherit",
+      width: '100%',
+    }}
+    className="nav-link"
+    activeClassName="active"
+    exact
+  >
+    <ListItemButton sx={{ width: "100%" }}>
+      <ListItemIcon sx={{ color: "inherit" }}>
+        <DashboardIcon />
+      </ListItemIcon>
+      <ListItemText primary="Tableau de bord" sx={{ color: "#000066" }} />
+    </ListItemButton>
+  </NavLink>
+</ListItem>
 
         <ListItem disablePadding className="list-item">
-          <Link to="TableauDeBord" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <ListItemButton>
-              <ListItemIcon>
-                <DashboardIcon style={{ color: '#000066' }} />
-              </ListItemIcon>
-              <ListItemText primary="Tableau de bord" sx={{ color: '#000066' }} />
-            </ListItemButton>
-          </Link>
-        </ListItem>
+  <NavLink
+    to="Modules"
+    style={{
+      textDecoration: "none",
+      color: "inherit",
+      width: '100%',
+    }}
+    className="nav-link"
+    activeClassName="active"
+    exact
+  >
+    <ListItemButton sx={{ width: "100%" }}>
+    <ListItemIcon sx={{ color: "inherit" }}>
+  <BookIcon />
+</ListItemIcon>
+      <ListItemText primary="Modules" sx={{ color: "#000066" }} />
+    </ListItemButton>
+  </NavLink>
+</ListItem>
+
+
+<ListItem disablePadding className="list-item">
+  <NavLink
+    to="DevoirEtQuizze"
+    style={{
+      textDecoration: "none",
+      color: "inherit",
+      width: '100%',
+    }}
+    className="nav-link"
+    activeClassName="active"
+    exact
+  >
+    <ListItemButton sx={{ width: "100%" }}>
+      <ListItemIcon sx={{ color: "inherit" }}>
+        <AssignmentIcon />
+      </ListItemIcon>
+      <ListItemText primary="Devoir & Quizze" sx={{ color: "#000066" }} />
+    </ListItemButton>
+  </NavLink>
+</ListItem>
+
         <ListItem disablePadding className="list-item">
-          <Link to="Modules" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <ListItemButton>
-              <ListItemIcon>
-                <BookIcon style={{ color: '#000066' }} />
-              </ListItemIcon>
-              <ListItemText primary="Modules" sx={{ color: '#000066' }} />
-            </ListItemButton>
-          </Link>
-        </ListItem>
-        <ListItem disablePadding className="list-item">
-          <Link to="DevoirEtQuizze" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <ListItemButton>
-              <ListItemIcon>
-                <ChatIcon style={{ color: '#000066' }} />
-              </ListItemIcon>
-              <ListItemText primary="Devoir & Quizze" sx={{ color: '#000066' }} />
-            </ListItemButton>
-          </Link>
-        </ListItem>
-        <ListItem disablePadding className="list-item">
-          <Link to="Forums" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <ListItemButton>
-              <ListItemIcon>
-                <NotificationsIcon style={{ color: '#000066' }} />
-              </ListItemIcon>
-              <ListItemText primary="Forums" sx={{ color: '#000066' }} />
-            </ListItemButton>
-          </Link>
-        </ListItem>
+  <NavLink
+    to="Forums"
+    style={{
+      textDecoration: "none",
+      color: "inherit",
+      width: '100%',
+    }}
+    className="nav-link"
+    activeClassName="active"
+  >
+    <ListItemButton sx={{ width: "100%" }}>
+      <ListItemIcon>
+        <ForumIcon style={{ color: "#000066" }} />
+      </ListItemIcon>
+      <ListItemText primary="Forums" sx={{ color: "#000066" }} />
+    </ListItemButton>
+  </NavLink>
+</ListItem>
       </List>
-      <List className="nav-menu-items" >
-        <ListItem disablePadding className="list-item" >
-          <ListItemButton onClick={handleLogoutModalOpen} sx={{mt:'50px'}}>
+      <List className="nav-menu-items">
+        <ListItem disablePadding className="list-item" sx={{ width: "100%" }}>
+          <ListItemButton onClick={handleLogoutModalOpen} sx={{ mt: "50px" }}>
             <ListItemIcon>
-              <ExitToAppIcon sx={{ color: 'red' }} />
+              <ExitToAppIcon sx={{ color: "red" }} />
             </ListItemIcon>
-            <ListItemText primary="Se déconnecter" sx={{ color: 'red' }} />
+            <ListItemText primary="Se déconnecter" sx={{ color: "red" }} />
           </ListItemButton>
         </ListItem>
       </List>
@@ -154,37 +243,36 @@ const TeacherSideBar = () => {
 
   const saveProfile = () => {
     // Simulate an API call to save the profile data
-    console.log('Name:', name);
-    console.log('Email:', email);
-    console.log('Bio:', bio);
-    console.log('Avatar:', avatar);
-    console.log('Location:', location);
-   
+    console.log("Name:", name);
+    console.log("Email:", email);
+    console.log("Bio:", bio);
+    console.log("Avatar:", avatar);
+    console.log("Location:", location);
+
     handleProfileModalClose();
   };
 
   useEffect(() => {
-    localStorage.setItem('name', name);
-    localStorage.setItem('email', email);
-    localStorage.setItem('avatar', avatar);
-    localStorage.setItem('bio', bio);
-    localStorage.setItem('location', location);
-   
+    localStorage.setItem("name", name);
+    localStorage.setItem("email", email);
+    localStorage.setItem("avatar", avatar);
+    localStorage.setItem("bio", bio);
+    localStorage.setItem("location", location);
   }, [name, email, avatar, bio, location]);
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar
         position="fixed"
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
-          backgroundColor: 'white',
-          boxShadow: 'none',
-          height: '80px',
-          display:'flex',
-          justifyContent:'center'
+          backgroundColor: "white",
+          boxShadow: "none",
+          height: "80px",
+          display: "flex",
+          justifyContent: "center",
         }}
       >
         <Toolbar>
@@ -193,37 +281,54 @@ const TeacherSideBar = () => {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
+            sx={{ mr: 2, display: { sm: "none" } }}
           >
-            <MenuIcon style={{ color: '#000066' }} />
+            <MenuIcon style={{ color: "#000066" }} />
           </IconButton>
-          <Box sx={{ display: 'flex', alignItems: 'center', flex: 1,mt:'10px'}}>
-          <TextField
-        
-        placeholder="Rechercher"
-        variant="outlined"
-        size="small"
-        style={{ width: "300px" }}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchIcon />
-            </InputAdornment>
-          ),
-        }}
-      />
+         
+          <Box
+            sx={{ display: "flex", alignItems: "center", flex: 1, mt: "10px" }}
+          >
+            <TextField
+              placeholder="Rechercher"
+              variant="outlined"
+              size="small"
+              style={{ width: "300px" }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
           </Box>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <IconButton
+    color="ddd"
+    aria-label="notifications"
+    sx={{ mr: '20px' }}
+  >
+    <Badge badgeContent={4} color="error">
+      <NotificationsIcon />
+    </Badge>
+  </IconButton>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
             <Button
               onClick={handleProfileModalOpen}
               sx={{
-                textTransform: 'none',
-                color: '#000066',
+                textTransform: "none",
+                color: "#000066",
                 mr: 2,
               }}
             >
-              <Avatar alt="Profile" src={avatar} sx={{ width: 48, height: 48, mr: 1 }} />
+              <Avatar
+                alt="Profile"
+                src={avatar}
+                sx={{ width: 48, height: 48, mr: 1 }}
+              />
             </Button>
+            
+            
           </Box>
         </Toolbar>
       </AppBar>
@@ -232,22 +337,22 @@ const TeacherSideBar = () => {
         sx={{
           width: { sm: drawerWidth },
           flexShrink: { sm: 0 },
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          height: '100vh',
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          height: "100vh",
         }}
         aria-label="mailbox folders"
       >
         <Drawer
           variant="permanent"
           sx={{
-            '& .MuiDrawer-paper': {
-              position: 'fixed',
-              boxSizing: 'border-box',
+            "& .MuiDrawer-paper": {
+              position: "fixed",
+              boxSizing: "border-box",
               width: drawerWidth,
-              background:'white',
-              backgroundSize: 'cover',
+              background: "white",
+              backgroundSize: "cover",
             },
           }}
           open
@@ -265,33 +370,41 @@ const TeacherSideBar = () => {
         }}
       >
         <Fade in={openProfileModal}>
-          <Box sx={{
-            position:'absolute',
-            top:'50%',
-            left:'50%',
-            transform:'translate(-50%, -50%)',
-            padding:'24px',
-            background:'white',
-            borderRadius:'4px',
-            boxShadow:'0 2px 4px rgba(0, 0, 0, 0.2)',
-            width:'100%',
-            maxWidth:'400px'
-          }}>
+          <Box
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              padding: "24px",
+              background: "white",
+              borderRadius: "4px",
+              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
+              width: "100%",
+              maxWidth: "400px",
+            }}
+          >
             <Typography id="profile-modal-title" variant="h5" component="h2">
               Profil
             </Typography>
-            <Avatar alt="Profile" src={avatar} sx={{ width: 120, height: 120, my: 2, border: '2px solid #000066' }} />
-            <Button
-              variant="outlined"
-              component="label"
-              sx={{ mt: 2 }}
-            >
+            <Avatar
+              alt="Profile"
+              src={avatar}
+              sx={{
+                width: 120,
+                height: 120,
+                my: 2,
+                border: "2px solid #000066",
+              }}
+            />
+            <Button variant="outlined" component="label" sx={{ mt: 2 }}>
               Choisir une photo
               <input
                 type="file"
                 style={{ display: "none" }}
-                onChange={(e) => setAvatar(URL.createObjectURL(e.target.files[0]))}
-              
+                onChange={(e) =>
+                  setAvatar(URL.createObjectURL(e.target.files[0]))
+                }
               />
             </Button>
             <TextField
@@ -321,15 +434,7 @@ const TeacherSideBar = () => {
               value={location}
               onChange={(e) => setLocation(e.target.value)}
             />
-            <TextField
-              margin="dense"
-              id="role"
-              label="Role"
-              type="text"
-              fullWidth
-              value="Apprenant"
-              onChange={(e) => console.log(e.target.value)}
-            />
+
             <TextField
               margin="dense"
               id="bio"
@@ -360,15 +465,64 @@ const TeacherSideBar = () => {
         }}
       >
         <Fade in={openLogoutModal}>
-          <Box sx={{ ...modalStyle, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-            <Typography variant="h6" gutterBottom sx={{ color: 'white', marginBottom: '20px', marginLeft: '70px' }}>
+          <Box
+            sx={{
+              ...modalStyle,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Typography
+              variant="h6"
+              gutterBottom
+              sx={{ color: "white", marginBottom: "20px", marginLeft: "70px" }}
+            >
               Vous voulez vraiment vous déconnecter de ce compte ?
             </Typography>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', marginLeft: '70px' }}>
-              <Button onClick={handleLogoutModalClose} color="primary" variant="outlined" sx={{ width: '45%', mr: 2, background: '#F5F5F5', color: '#000066', fontWeight: 'bold', '&:hover': { border: '1px solid white', color: 'white', background: '#000066' } }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginLeft: "70px",
+              }}
+            >
+              <Button
+                onClick={handleLogoutModalClose}
+                color="primary"
+                variant="outlined"
+                sx={{
+                  width: "45%",
+                  mr: 2,
+                  background: "#F5F5F5",
+                  color: "#000066",
+                  fontWeight: "bold",
+                  "&:hover": {
+                    border: "1px solid white",
+                    color: "white",
+                    background: "#000066",
+                  },
+                }}
+              >
                 Annuler
               </Button>
-              <Button onClick={handleLogout} color="error" variant="contained" sx={{ width: '45%', background: '#F5F5F5', color: '#000066', fontWeight: 'bold', '&:hover': { border: '1px solid white', color: 'white', background: '#000066' } }}>
+              <Button
+                onClick={handleLogout}
+                color="error"
+                variant="contained"
+                sx={{
+                  width: "45%",
+                  background: "#F5F5F5",
+                  color: "#000066",
+                  fontWeight: "bold",
+                  "&:hover": {
+                    border: "1px solid white",
+                    color: "white",
+                    background: "#000066",
+                  },
+                }}
+              >
                 Confirmer
               </Button>
             </Box>
@@ -377,6 +531,6 @@ const TeacherSideBar = () => {
       </Modal>
     </Box>
   );
-}
+};
 
 export default TeacherSideBar;

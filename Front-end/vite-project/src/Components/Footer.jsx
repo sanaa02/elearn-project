@@ -1,59 +1,42 @@
-import React from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebookF, faTwitter, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
-import "./styles/landing.css";
-import down from "../assets/down-line.png"
-import up from "../assets/up-line.png"
+import '../Components/styles/footer.css'
 
 const Footer = () => {
-    const SocialLink = ({ icon, href }) => (
-        <a href={href} target="_blank" rel="noopener noreferrer">
-          <FontAwesomeIcon icon={icon} />
-        </a>
-      );
   return (
-    <section id="Footer">
-      <footer>
-        <div className="footer-line-container">
-          <img className="down-line" src={down} alt="" />
-          <img className="up-line" src={up} alt="" />
-        </div>
-
-        <div className="container">
-          <h1 className="title">
-            <span>ESI-SBA</span>
-          </h1>
-          <div className="contact-info">
-            <div>
-              <p>E-mail:</p>
-              <p>contact@esi-sba.dz</p>
-            </div>
-            <div>
-              <p>Tél / Fax:</p>
-              <p>
-                Tél : <a href="tel:+21348749452">+213 48 74 94 52</a>
-                <br />
-                Fax: <a href="tel:+21348749450">+213 48 74 94 50</a>
-              </p>
-            </div>
-            <div>
-              <p>Adresse:</p>
-              <p>
-                BP 73, Bureau de poste EL WIAM
-                <br />
-                Sidi Bel Abbés 22016, Algérie
-              </p>
-            </div>
+    <footer className="footer">
+      <div className="container">
+        <div className='first'>
+        <div className="row">
+          <div className="col">
+            <h5>Tél/Fax</h5>
+            <ul>
+              <li>Tél : +213 48 74 94 52</li>
+              <li>Fax: +213 48 74 94 50</li>
+            </ul>
           </div>
-          <div className="social-links">
-            <p>Suivez-nous:</p>
-            <SocialLink icon={faFacebookF} href="https://www.facebook.com/" />
-            <SocialLink icon={faTwitter} href="https://twitter.com/" />
-            <SocialLink icon={faLinkedinIn} href="https://www.linkedin.com/" />
+          <div className="col">
+            <h5>Adresse</h5>
+            <ul>
+              <li>BP 73, Bureau de poste EL WIAM</li>
+              <li>Sidi Bel Abbés 22016, Algérie</li>
+            </ul>
+          </div>
+          <div className="col">
+            <h5>Email</h5>
+            <ul>
+              <li><a href="mailto:contact@esi-sba.dz">contact@esi-sba.dz</a></li>
+            </ul>
           </div>
         </div>
-      </footer>
-    </section>
+        </div>
+        <div className='seconde'>
+        <div className="row">
+          <div className="col-md-12">
+            <p>@ecole superierure en informatique</p>
+          </div>
+        </div>
+        </div>
+      </div>
+    </footer>
   );
 };
 

@@ -1,28 +1,28 @@
-import React from "react";
-import big from "../assets/big-logo.png";
-import "./styles/landing.css";
+
+import '../Components/styles/About.css'
 
 const About = () => {
+  // Tableau contenant les objectifs réels de la plateforme e-learning et leurs descriptions
+ 
+
   return (
-    <div>
-      <section id="About">
-        <div className="about-section-container">
-          <img className="about-section-logo" src={big} alt="" />
-          <div className="about-section-text-container">
-            <h1 className="primary-heading">ESI SPACE</h1>
-            <p className="primary-text">
-              Plateforme d’enseignement en ligne qui permet de créer des espaces
-              d’apprentissage dans lesquels peuvent etre déposées des ressources
-              et/ou une multitude d’activités pédagogiques incluant des
-              activités d’évalution,de commmunication et/ou de collaboration
-              ;créant ainsi un environnement d’apprentissage n ligne favorisant
-              les échanges et les interactions entre les étudiants et les
-              ensignants de esi sba
-            </p>
-          </div>
-        </div>
-      </section>
+    <div className="about-container">
+    <h1>À propos de la plateforme E-learning</h1>
+    <div className="card-row">
+      <div className="card">
+        <h2>Accessibilité accrue à l'éducation</h2>
+        <p> Offrir une éducation de qualité à tout moment et en tout lieu, éliminant les barrières géographiques et temporelles.</p>
+      </div>
+      <div className="card">
+        <h2>Autonomie des apprenants</h2>
+        <p> Encourager les apprenants à prendre en charge leur propre apprentissage grâce à des cours modulaires et des outils d'auto-évaluation.</p>
+      </div>
+      <div className="card">
+        <h2>Innovation pédagogique</h2>
+        <p>Intégrer des technologies éducatives innovantes pour créer des expériences d'apprentissage interactives et personnalisées.</p>
+      </div>
     </div>
+  </div>
   );
 };
 

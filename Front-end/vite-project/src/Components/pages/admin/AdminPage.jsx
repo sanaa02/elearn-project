@@ -11,11 +11,9 @@ function AdminPage() {
         sx={{ 
           
           p: 3, 
-          width: '100%', 
-          marginLeft:'145px',
-          display: 'flex', // Utiliser flexbox
-          alignItems: 'flex-start', // Centrer verticalement le contenu
-          justifyContent: 'center' // Centrer horizontalement le contenu
+          
+          marginLeft:'80px',
+          // Centrer horizontalement le contenu
         }}
       >
         <Outlet /> 

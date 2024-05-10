@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Work+Sans:wght@200;300;400;500;600;700;800&display=swap');
+*{
+  font-family: "Roboto", sans-serif;
+  
+}
+body {
+ background: #F1F5F9;
+ width: 100%;
+ 
+ 
+ 
+}
+
+.link-modules{
+  width: 350px;
+  height: 150px;
+  background-color: white;
+  border-radius: 10px;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: #000066;
+  transition: .5s;
+}
+.link-modules:hover{
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;
+ 
+
+}
+.title-Modules{
+  color: #000066;
+  margin-bottom: 20px;
+}
+.modules-box {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+.title-of-module{
+  color: #000066;
+  width: 90%;
+  padding: 10px;
+  font-weight: bold;
+  border-bottom: 2px solid #000066;
+}
+.Description{
+  padding: 10px;
+  text-align: center;
+  color: black;
+  font-size: 12px;
+}

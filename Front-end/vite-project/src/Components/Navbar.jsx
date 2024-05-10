@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import "./styles/landing.css";
 import logo from "../assets/small-logo.png";
-import { FaBars, FaTimes } from "react-icons/fa";
+
 import { Link, useNavigate } from "react-router-dom";
 import LoginPage from "../Components/pages/LoginPage";
-import Home from "./Home";
+
 
 const Navbar = ({ showLogin, toggleLogin }) => {
   //  const [showLogin, setShowLogin] = useState(false);

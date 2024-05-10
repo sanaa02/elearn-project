@@ -26,12 +26,13 @@ const initialRows = [
     modify: () => console.log("Modifying row with ID:", 2),
     delete: () => console.log("Deleting row with ID:", 2),
   }),
-  createData(2, 2, "ACSI", "Boughalem feyroz", 35, {
+  createData(3, 3, "ACSI", "Boughalem feyroz", 35, {
     modify: () => console.log("Modifying row with ID:", 2),
     delete: () => console.log("Deleting row with ID:", 2),
   }),
   // Add more initial data if needed
 ];
+
 
 function EspaceCommunicationPage() {
     const [searchQuery, setSearchQuery] = useState("");
@@ -40,7 +41,7 @@ function EspaceCommunicationPage() {
   const [selectedRow, setSelectedRow] = useState(null);
   const filteredRows = rows.filter((row) => {
     return (
-      row.nom.toLowerCase().includes(searchQuery.toLowerCase()) 
+      row.nom.toLowerCase().startsWith(searchQuery.toLowerCase()) 
       
     );
   });

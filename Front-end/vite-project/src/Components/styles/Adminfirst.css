@@ -9,7 +9,7 @@
     padding: 20px;
     display: inline-block;
     border-radius: 10px;
-    background-color:#001d4f;;
+    background-color:#000066;;
     box-shadow: 5px 5px 5px rgb(209, 206, 206);
    
     margin: 10px;
@@ -24,6 +24,7 @@
     }
     .card-container{
       display: inline-block;
+      margin-bottom: 40px;
     }
     .Card-img {
       width:30px ;
@@ -43,7 +44,7 @@
     }
   
     .adminhome {
-   margin-top: -80px;
+   margin-top: -60px;
      
     }
     
