@@ -1,0 +1,128 @@
+.Modal-seul-prof{
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 650px;
+    height: 630px;
+    padding: 16px;
+    border-radius: 15px;
+    background-color: white;
+    background-size: cover;
+   /* filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));*/
+    position:relative;
+    text-align: center;
+}
+.Modal-seul-prof .MuiTypography-root{
+   
+    color: #000066;
+    position: relative;
+    font-size: 28px;
+    font-weight: 700;
+}
+.Modal-seul-prof  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    margin-top: 80px
+  
+}
+.Modal-seul-prof  form input {
+    outline: none;
+    background-color: white;
+    font-size: 0.8rem;
+    height: 40px;
+    width: 350px;
+    position: relative;
+    border: 1px solid #000066;
+    text-align: center;
+    margin:20px;
+    position: relative ;
+}
+
+
+.Modal-seul-prof  button{
+    font-size: 16px;
+  height: 45px;
+  width: 120px;
+  border-radius: 6px;
+  color: white;
+  border: none;
+  background-color: #000066;
+  z-index: 2;
+  cursor: pointer;
+  position:relative;
+ margin-left: 20px;
+ margin-right: 10px;
+}
+.Modal-seul-prof  form input:focus{
+    
+    color:black ;
+}
+/*css of modal  adding just one teacher */
+.lot-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 350px;
+    padding: 16px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    text-align: center;
+}
+.lot-modal .MuiTypography-root{
+    color: #000066;
+    position: relative;
+   
+    font-size: 28px;
+    font-weight: 700;
+}
+.lot-modal  .file-container{
+    margin-bottom: 10px;
+    position: relative;
+    margin-top: 10%;
+    width: 350px;
+    border-radius: 5px;
+}
+.lot-modal input{
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+.lot-modal .file-place{
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    text-align: center;
+    border: 1px solid #000066;
+    width: 350px;
+    cursor: pointer;
+}
+.lot-modal .button-container{
+margin-top:80px;
+
+}
+.lot-modal .button-container button{
+    font-size: 16px;
+    font-weight: bold;
+    height: 45px;
+    width: 120px;
+    border-radius: 6px;
+    color: white;
+    border: none;
+    background-color: #000066;
+    z-index: 2;
+    cursor: pointer;
+    margin-left:53px;
+    margin-right:53px ;
+}

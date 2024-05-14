@@ -1,0 +1,118 @@
+/* Titre des ressources */
+.title{
+  color: #000066;
+  margin-bottom: 20px;
+    
+}
+
+.title-resources {
+    display: flex;
+    /* align-items: center; */
+    margin-bottom: 20px;
+    color: #000066;
+  }
+  
+  .title-resources h3 {
+    flex: 1;
+  }
+  
+  /* Conteneur de chaque ressource */
+  .Box-resources {
+    width: 350px;
+    background: white;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   transition:  .5s;
+    
+  }
+  .Box-resources:hover{
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;
+  }
+  
+  /* Titre de chaque ressource */
+  .title-of-Resource {
+    color: #000066;
+    width: 90%;
+    padding: 10px;
+    font-weight: bold;
+    border-bottom: 2px solid #000066;
+  }
+  
+  /* Description de chaque ressource */
+  .Description {
+    max-width: 200px;
+    padding: 10px;
+    word-wrap: break-word;
+  }
+  
+
+
+
+
+  /*Modal add ressource*/
+
+  .Modal-Add-Resource{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+   background-color: white;
+   box-shadow: rgba(0, 0, 0, 0.2) 0px 60px 40px -7px;
+    padding:  4;
+    text-align: center;
+    width: 455px;
+    height:550px;
+    border-radius: 20px;
+  }
+.Modal-Add-Resource h2{
+  margin-top: 10px;
+  color: #000066;
+  text-decoration: underline;
+}
+
+  .box-input{
+    display: flex;
+    flex-direction: column;
+     align-items: center; 
+     margin-top: 40px;
+     max-width: 100%;
+     padding: 8px;
+     box-sizing: border-box;
+  }
+  
+  .box-input input{
+    margin-bottom: 40px;
+     width: 70%;
+      padding: 8px;
+       border: 1px solid #D0D5DD;
+        border-radius: 7px
+}
+.box-input :first-child{
+  margin-right: 160px;
+}
+.box-input :nth-child(3){
+  margin-right: 90px;
+}
+.Modal-Add-Quizz .button-box{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.button-box .button{
+  border: 1px solid #000066;
+  color: #000066;
+  font-weight: 600;
+  width: 100px;
+      
+  }
+  .button-box :first-child{
+      margin-right: -1px;
+  }
+
+  

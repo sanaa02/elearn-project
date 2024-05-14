@@ -1,0 +1,46 @@
+/* teachersidebar.css */
+/* Assurez-vous que le style est suffisamment spécifique */
+.nav-menu-items .nav-link.active {
+    color: white;
+    background-color: #191970;
+    border-radius: 18px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+.nav-menu-items .nav-link.active .MuiListItemText-primary {
+  color: white;
+}
+.nav-menu-items .nav-link .MuiListItemIcon-root {
+    color: #000066; /* Couleur par défaut */
+  }
+  
+  .nav-menu-items .nav-link.active .MuiListItemIcon-root {
+    color: white; /* Couleur lorsque l'élément est actif */
+  }
+
+
+
+
+
+  /* Styles for active NavLink */
+.nav-menu-items .list-item a.active {
+    color: white;
+    background-color: #191970;
+    border-radius: 18px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+/* Styles for text inside active NavLink */
+.nav-menu-items .list-item a.active .MuiListItemText-primary {
+    color: white;
+}
+
+/* Styles for ListItemIcon inside active NavLink */
+.nav-menu-items .list-item a .MuiListItemIcon-root {
+    color: #000066; /* Couleur par défaut */
+}
+
+/* Styles for active NavLink's ListItemIcon */
+.nav-menu-items .list-item a.active .MuiListItemIcon-root {
+    color: white;
+}

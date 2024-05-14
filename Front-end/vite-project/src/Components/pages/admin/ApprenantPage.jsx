@@ -14,6 +14,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
+import './a.css'
 
 function createData(n, id, promo, name, email, actions) {
   return { n, id, promo, name, email, actions };
@@ -395,21 +396,22 @@ function ApprenantPage() {
             boxShadow: 24,
             p: 4,
             textAlign: "center",
-            backgroundImage: `url('/src/assets/dialog.png')`,
+            background:'white',
             backgroundSize: "cover",
             backgroundPosition: "center",
             borderRadius: "15px",
+            
           }}
         >
-          <h2 id="modal-title">Confirmer la suppression</h2>
-          <p id="modal-description">
+          <h2 id="modal-title" style={{color:'#000066',marginBottom:'50px'}}>Confirmer la suppression</h2>
+          <p id="modal-description" style={{marginBottom:'50px'}}>
             {selectedRow &&
               `Voulez-vous vraiment supprimer l'apprenant : ${selectedRow.name} ?.`}
           </p>
-          <Button onClick={handleDelete} color="error" autoFocus>
+          <Button onClick={handleDelete}  autoFocus style={{color:'white',background:'#000066',width:'100px',marginLeft:'10px'}}>
             Supprimer
           </Button>
-          <Button onClick={handleCloseDeleteModal} autoFocus>
+          <Button onClick={handleCloseDeleteModal} autoFocus style={{color:'white',background:'#000066',width:'100px',marginLeft:'10px'}}>
             Annuler
           </Button>
         </Box>
@@ -432,73 +434,55 @@ function ApprenantPage() {
             boxShadow: 24,
             p: 4,
             textAlign: "center",
-            backgroundImage: `url('/src/assets/dialog.png')`,
+            background:'white',
             backgroundSize: "cover",
             backgroundPosition: "center",
             borderRadius: "15px",
           }}
         >
-          <h2 id="modal-title">Modifier apprenant</h2>
-          <TextField
-            label="Promo"
-            variant="outlined"
-            size="small"
-            value={editedPromo}
-            onChange={(e) => setEditedPromo(e.target.value)}
-            InputLabelProps={{
-              shrink: true,
-              style: {
-                fontSize: "0.8rem",
-              },
-            }}
-            sx={{
-              marginBottom: "10px",
-              display: "block",
-              width: "100%",
-            }}
-          />
-
-          <TextField
-            label="Nom et Prénom"
-            variant="outlined"
-            size="small"
-            value={editedName}
-            onChange={(e) => setEditedName(e.target.value)}
-            InputLabelProps={{
-              shrink: true,
-              style: {
-                fontSize: "0.8rem",
-              },
-            }}
-            sx={{
-              marginBottom: "10px",
-              display: "block",
-              width: "100%",
-            }}
-          />
-
-          <TextField
-            label="Email"
-            variant="outlined"
-            size="small"
-            value={editedEmail}
-            onChange={(e) => setEditedEmail(e.target.value)}
-            InputLabelProps={{
-              shrink: true,
-              style: {
-                fontSize: "0.8rem",
-              },
-            }}
-            sx={{
-              marginBottom: "10px",
-              display: "block",
-              width: "100%",
-            }}
-          />
-          <Button onClick={handleSaveEdit} color="primary" autoFocus>
-            enregistrer
+          <h2 id="modal-title" style={{color:'#000066',marginBottom:'50px'}}>Modifier apprenant</h2>
+          <form style={{display:'flex',flexDirection:'column',alignItems:'center', marginBottom:'20px'}}>
+          <input
+        type="text"
+        placeholder="Promo"
+        value={editedPromo}
+        onChange={(e) => setEditedPromo(e.target.value)}
+        style={{
+          marginBottom: "8px",
+          display: "block",
+          width: "60%",
+          padding: "8px",
+        }}
+      />
+      <input
+        type="text"
+        placeholder="Nom et Prénom"
+        value={editedName}
+        onChange={(e) => setEditedName(e.target.value)}
+        style={{
+          marginBottom: "8px",
+          display: "block",
+          width: "60%",
+          padding: "8px",
+        }}
+      />
+      <input
+        type="email"
+        placeholder="Email"
+        value={editedEmail}
+        onChange={(e) => setEditedEmail(e.target.value)}
+        style={{
+          marginBottom: "8px",
+          display: "block",
+          width: "60%",
+          padding: "8px",
+        }}
+      />
+      </form>
+          <Button onClick={handleSaveEdit}  autoFocus style={{color:'white',background:'#000066',width:'100px',marginLeft:'10px'}}>
+            Confirmer
           </Button>
-          <Button onClick={handleCloseEditModal} autoFocus>
+          <Button onClick={handleCloseEditModal} autoFocus style={{color:'white',background:'#000066',width:'100px',marginLeft:'10px'}}>
             Annuler
           </Button>
         </Box>
@@ -509,301 +493,83 @@ function ApprenantPage() {
         aria-labelledby="modal-title"
         aria-describedby="modal-description"
       >
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: 820,
-            height: 650,
-
-            p: 4,
-            borderRadius: "15px",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            backgroundImage: `url('/src/assets/ajouter.png')`,
-            backgroundSize: "cover",
-            filter: "drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))",
-          }}
-        >
-          <div>
+        <Box className="cohorte-modal">
+          <Typography variant="h5" gutterBottom>
+            Ajouter des apprenants par cohorte
+          </Typography>
+          <form>
             <input
+              required
               type="text"
               placeholder="Nom de la cohorte"
               value={cohortName}
               onChange={(e) => setCohortName(e.target.value)}
-              style={{
-                width: "30%",
-                marginBottom: "10px",
-                borderBottom: "1px solid black",
-                borderTopLeftRadius: "2px",
-                borderTopRightRadius: "2px",
-                borderLeft: "none",
-                borderRight: "none",
-                borderTop: "none",
-                outline: "none",
-                fontSize: "0.8rem",
-                padding: "8px 12px",
-                textAlign: "center",
-                marginLeft: "100px",
-                marginTop: "170px",
-                backgroundColor: "transparent",
-              }}
-              required
             />
 
-            <Box
-              sx={{
-                width: "30%",
-                height: "40px",
-                marginBottom: "10px",
-                position: "relative",
-              }}
-            >
-              <input
-                type="text"
-                value={selectedPromo}
-                onChange={(e) => setSelectedPromo(e.target.value)}
-                placeholder="Promo"
-                style={{
-                  border: "none",
-                  outline: "none",
-                  backgroundColor: "transparent",
-                  paddingLeft: "5px",
-                  paddingRight: "5px",
-                  marginTop: "20px",
-                  fontSize: "0.8rem",
-                  width: "100%",
-                  height: "100%",
-                  marginLeft: "100px",
-                  borderBottom: "1px solid ",
-                  textAlign: "center",
-                }}
-              />
-            </Box>
-          </div>
-          <div style={{ marginLeft: "auto" }}>
-            <div
-              style={{
-                marginLeft: "auto",
-                width: "60%",
-                position: "relative",
-                overflow: "hidden",
-                borderRadius: "4px",
-                backgroundColor: "#f0f0f0",
-                marginRight: "200px",
-                marginBottom: "600px",
-                marginTop: "-20%",
-              }}
-            >
+            <input
+              required
+              type="text"
+              value={selectedPromo}
+              onChange={(e) => setSelectedPromo(e.target.value)}
+              placeholder="Promo"
+            />
+
+            <div className="file-container">
               <input
                 type="file"
                 accept=".csv"
                 onChange={(e) => setCohortFile(e.target.files[0])}
-                style={{
-                  opacity: 0,
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  height: "100%",
-                  cursor: "pointer",
-                }}
               />
-              <div
-                style={{
-                  padding: "8px 12px",
-                  fontSize: "0.8rem",
-                  whiteSpace: "nowrap",
-                  textAlign: "center",
-                  borderBottom: "1px solid black",
-                  borderTopLeftRadius: "2px",
-                  borderTopRightRadius: "2px",
-                }}
-              >
-                fichier
+              <div className="file-place">
+                {cohortFile ? cohortFile.name : "Ajouter des enseignants"}
               </div>
             </div>
-
-            <Button
-              onClick={handleUploadCohort}
-              color="primary"
-              autoFocus
-              style={{
-                width: "60%",
-                marginBottom: "10px",
-                padding: "10px",
-                fontSize: "1rem",
-                fontWeight:'bold',
-                backgroundColor: "#0000665C",
-                color: "#000066",
-                border: "none",
-                borderRadius: "5px",
-                cursor: "pointer",
-                marginTop: "-900px",
-                marginLeft: "-350px",
-                marginRight: "120px",
-              }}
-            >
+          </form>
+          <div className="button-container" >
+            <Button onClick={handleUploadCohort} color="primary" autoFocus>
               Confirmer
             </Button>
-            <Button
-              onClick={() => setOpenCohortModal(false)}
-              style={{
-                width: "60%",
-                padding: "10px",
-                fontSize: "1rem",
-                fontWeight:'bold',
-                backgroundColor: "#0000665C",
-                color: "#000066",
-                border: "none",
-                borderRadius: "5px",
-                cursor: "pointer",
-                marginTop: "-910px",
-              }}
-            >
-              Annuler
-            </Button>
+            <Button onClick={() => setOpenCohortModal(false)}>Annuler</Button>
           </div>
         </Box>
       </Modal>
-
-      <Modal
-        open={openLotModal}
-        onClose={() => setOpenLotModal(false)}
-        aria-labelledby="modal-title"
-        aria-describedby="modal-description"
-      >
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: 820,
-            height: 650,
-
-            p: 4,
-            borderRadius: "15px",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            backgroundImage: `url('/src/assets/Ajouter.png')`,
-            backgroundSize: "cover",
-            filter: "drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))",
-          }}
-        >
-          <Box
-            sx={{
-              width: "30%",
-              height: "40px",
-              marginBottom: "10px",
-              position: "relative",
-            }}
-          >
+      <Modal open={openLotModal} onClose={() => setOpenLotModal(false)}>
+        <Box className="modal-lot">
+          <Typography variant="h5" gutterBottom>
+            Ajouter des apprenants par fichier csv
+          </Typography>
+          <form>
             <input
               type="text"
               value={selectedPromo}
               onChange={(e) => setSelectedPromo(e.target.value)}
               placeholder="Promo"
-              style={{
-                border: "none",
-                outline: "none",
-                backgroundColor: "transparent",
-                paddingLeft: "5px",
-                paddingRight: "5px",
-                marginTop: "200px",
-                fontSize: "0.8rem",
-                width: "100%",
-                height: "100%",
-                marginLeft: "100px",
-                borderBottom: "1px solid ",
-                textAlign: "center",
-              }}
             />
-          </Box>
-          <div style={{ marginLeft: "auto" }}>
-            <div
-              style={{
-                marginLeft: "auto",
-                width: "60%",
-                position: "relative",
-                overflow: "hidden",
-                borderRadius: "4px",
-                backgroundColor: "#f0f0f0",
-                marginRight: "200px",
-                marginBottom: "600px",
-                marginTop: "60%",
-              }}
-            >
+
+            <div className="file-container">
               <input
                 type="file"
                 accept=".csv"
                 onChange={(e) => setCohortFile(e.target.files[0])}
-                style={{
-                  opacity: 0,
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  height: "100%",
-                  cursor: "pointer",
-                }}
               />
-              <div
-                style={{
-                  padding: "8px 12px",
-                  fontSize: "0.8rem",
-                  whiteSpace: "nowrap",
-                  textAlign: "center",
-                  borderBottom: "1px solid black",
-                  borderTopLeftRadius: "2px",
-                  borderTopRightRadius: "2px",
-                }}
-              >
-                fichier
+              <div className="file-place">
+                {cohortFile ? cohortFile.name : "Ajouter des enseignants"}
               </div>
             </div>
-
+          </form>
+          <div className="button-container">
             <Button
               onClick={handleUploadCohort}
               color="primary"
               autoFocus
-              style={{
-                width: "60%",
-                marginBottom: "10px",
-                padding: "10px",
-                fontSize: "1rem",
-                fontWeight:'bold',
-                backgroundColor: "#0000665C",
-                color: "#000066",
-                border: "none",
-                borderRadius: "5px",
-                cursor: "pointer",
-                marginTop: "-900px",
-                marginLeft: "-350px",
-                marginRight: "120px",
-              }}
+              className="button-submit"
             >
               Confirmer
             </Button>
             <Button
-              onClick={() =>  setOpenLotModal(false)}
+              onClick={() => setOpenLotModal(false)}
               autoFocus
-              style={{
-                width: "60%",
-                padding: "10px",
-                fontSize: "1rem",
-                fontWeight:'bold',
-                backgroundColor: "#0000665C",
-                color: "#000066",
-                border: "none",
-                borderRadius: "5px",
-                cursor: "pointer",
-                marginTop: "-910px",
-              }}
+              className="button-submit"
             >
               Annuler
             </Button>
@@ -813,219 +579,114 @@ function ApprenantPage() {
       {/* this part is about  adding one student ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
 
       <Modal open={showOneStudentModal} onClose={handleCloseModal}>
-        <Box
-          sx={{
-            position:"relative",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: 820,
-            height: 650,
-            backgroundColor:"transparent",
-            border:"0px",
-            p: 4,
-            borderRadius: "15px",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            backgroundImage: `url('/src/assets/ajouter.png')`,
-            backgroundSize: "cover",
-            filter: "drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))",
-          }}
-        >
-          <form >
-            <div className="form"
-         
-            >
-            <input 
-             
-              required
-              type="text"
-              placeholder="Mail"
-              name="mail"
-              value={formData.mail}
-              onChange={handleInputChange}
-              style={{
-                borderRadius:'0',
-                height: "20px",
-                width: "200px",
-                border: "none",
-                borderBottom: "0.5px solid #000066",
-                outline: "none",
-                background: "none",
-                position:"absolute",
-                marginLeft:"-100px",
-               marginTop:"150px",
-              }}
-              onKeyDown={e => {
-                if (e.key === 'Enter') {
-                  e.preventDefault();
-                  document.getElementsByName('promo')[0].focus(); // Passer au champ promo
-                }}}
-            />
-            <input
-              type="text"
-              placeholder="Promo"
-              required
-              name="promo"
-              value={formData.promo}
-              onChange={handleInputChange}
-              style={{
-                borderRadius:'0',
-                height: "40px",
-                width: "200px",
-                border: "none",
-                borderBottom: "0.5px solid #000066",
-                outline: "none",
-                
-                position:"absolute",
-                marginLeft:"220px",
-                marginTop:"130px",
-              }}
-              onKeyDown={e => {
-                if (e.key === 'Enter') {
-                  e.preventDefault();
-                  document.getElementsByName('nomp')[0].focus(); 
-                }
-              }}
-            />
-            <input
-              required
-              type="text"
-              placeholder="Nom et prenom"
-              name="nomp"
-              value={formData.nomp}
-              onChange={handleInputChange}
-              style={{
-                height: "40px",
-                width: "200px",
-                border: "none",
-                borderBottom: "0.5px solid #000066",
-                outline: "none",
-                borderRadius:'0',
-                background: "none", 
-                position:"absolute",
-                marginLeft:"-100px",
-               marginTop:"210px",
-              }}
-              onKeyDown={e => {
-                if (e.key === 'Enter') {
-                  e.preventDefault();
-                  document.getElementsByName('cohorte')[0].focus(); 
-                }
-              }}
-            />
-            <input required
-              type="text"
-              placeholder="Cohorte"
-              name="cohorte"
-              value={formData.cohorte}
-              onChange={handleInputChange}
-              style={{
-                height: "40px",
-                width: "200px",
-                border: "none",
-                borderBottom: "0.5px solid #000066",
-                outline: "none",
-                borderRadius:'0',
-                position:"absolute",
-                background: "none",
-                marginLeft:"220px",
-                marginTop:"210px",
-              }}
-              onKeyDown={e => {
-                if (e.key === 'Enter') {
-                  e.preventDefault();
-                  document.getElementsByName('Matricule')[0].focus(); 
-                }
-              }}
-            />
-            <input
-             required
-              type="text"
-              placeholder="Matricule"
-              name="Matricule"
-              value={formData.Matricule}
-              onChange={handleInputChange}
-              style={{
-                height: "40px",
-                width: "200px",
-                border: "none",
-                borderBottom: "0.5px solid #000066",
-                outline: "none",
-               position:"absolute",
-                background: "none",
-                borderRadius:'0',
-                marginLeft:"-100px",
-                marginTop:"290px",
-              }}
-              onKeyDown={e => {
-                if (e.key === 'Enter') {
-                  e.preventDefault();
-                  document.getElementsByName('vide')[0].focus(); 
-                }
-              }}
-              
-            />
-            <div className="button-container"
-            style={{
-              textAlign:' center',
-              cursor: 'pointer',
-              justifyContent: 'center',
-              alignItems:' center',
-               }}
-            >
-              <button
-              
-              style={{position:'absolute',
-                fontSize:' 16px',
-                fontWeight:'bold',
-                height:' 45px',
-                width:' 120px',  
-                marginLeft: '-250px',
-                marginTop:'390px',
-                borderRadius:'6px',
-                color:'#000066' ,
-                border:' none',
-                backgroundColor: ' #0000665C',
-                zIndex:' 2',
-                cursor:"pointer",
-            }}
-                className="button-submit"
-                type="submit"
-                onClick={(
-                 )=>
-                { handleSubmit ( (formData.mail!==''&&formData.Matricule!==''&&formData.promo!==''&&formData.cohorte!==''&&formData.nomp!==''))}}
+        <Box className="Modal-seul-appr">
+          <Typography variant="h5" gutterBottom>
+            Ajouter un nouvel apprenant
+          </Typography>
+          <form>
+            <div className="form">
+              <input
+                required
+                type="text"
+                placeholder="Mail"
+                name="mail"
+                value={formData.mail}
+                onChange={handleInputChange}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    document.getElementsByName("promo")[0].focus();
+                  }
+                }}
+              />
+              <input
+                type="text"
+                placeholder="Promo"
+                required
+                name="promo"
+                value={formData.promo}
+                onChange={handleInputChange}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    document.getElementsByName("nomp")[0].focus();
+                  }
+                }}
+              />
+              <input
+                required
+                type="text"
+                placeholder="Nom et prenom"
+                name="nomp"
+                value={formData.nomp}
+                onChange={handleInputChange}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    document.getElementsByName("cohorte")[0].focus();
+                  }
+                }}
+              />
+              <input
+                required
+                type="text"
+                placeholder="Cohorte"
+                name="cohorte"
+                value={formData.cohorte}
+                onChange={handleInputChange}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    document.getElementsByName("Matricule")[0].focus();
+                  }
+                }}
+              />
+              <input
+                required
+                type="text"
+                placeholder="Matricule"
+                name="Matricule"
+                value={formData.Matricule}
+                onChange={handleInputChange}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    document.getElementsByName("vide")[0].focus();
+                  }
+                }}
+              />
+              <div
+                className="button-container"
+                style={{
+                  textAlign: " center",
+                  cursor: "pointer",
+                }}
               >
-                Confirmer
-              </button>
+                <button
+                  className="button-submit"
+                  type="submit"
+                  onClick={() => {
+                    handleSubmit(
+                      formData.mail !== "" &&
+                        formData.Matricule !== "" &&
+                        formData.promo !== "" &&
+                        formData.cohorte !== "" &&
+                        formData.nomp !== ""
+                    );
+                  }}
+                >
+                  Confirmer
+                </button>
 
-              <button
-              style={{position:'absolute',
-              fontSize:' 16px',
-              fontWeight:'bold',
-              height:' 45px',
-              width:' 120px',  
-             
-              marginLeft: '80px',
-                marginTop:'340px',
-              borderRadius:'6px',
-              color:'#000066' ,
-              border:' none',
-              backgroundColor: ' #0000665C',
-              zIndex:' 2',
-              cursor: 'pointer',
-          }}
-                className="button-cancel"
-                type="submit"
-                onClick={handleCloseModal}
-                
-              >
-                Annuler
-              </button>
+                <button
+                  type="submit"
+                  onClick={handleCloseModal}
+                  className="button-submit"
+                >
+                  Annuler
+                </button>
+              </div>
             </div>
-            </div>
-            
           </form>
         </Box>
       </Modal>

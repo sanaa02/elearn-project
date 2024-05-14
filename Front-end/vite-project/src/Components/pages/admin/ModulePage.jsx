@@ -13,6 +13,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
+import './M.css'
 
 function createData(n, id, name, enseignant, promo, coefficient, actions) {
   return { n, id, name, enseignant, promo, coefficient, actions };
@@ -328,21 +329,22 @@ function ModulePage() {
             boxShadow: 24,
             p: 4,
             textAlign: "center",
-            backgroundImage: `url('/src/assets/dialog.png')`,
+            background:'white',
             backgroundSize: "cover",
             backgroundPosition: "center",
             borderRadius: "15px",
+            
           }}
         >
-          <h2 id="modal-title">Confirmer la suppression</h2>
-          <p id="modal-description">
+          <h2 id="modal-title" style={{color:'#000066',marginBottom:'50px'}}>Confirmer la suppression</h2>
+          <p id="modal-description" style={{marginBottom:'50px'}}>
             {selectedRow &&
               `Voulez-vous vraiment supprimer Module : ${selectedRow.name} ?.`}
           </p>
-          <Button onClick={handleDelete} color="error" autoFocus>
+          <Button onClick={handleDelete}  autoFocus style={{color:'white',background:'#000066',width:'100px',marginLeft:'10px'}}>
             Supprimer
           </Button>
-          <Button onClick={handleCloseDeleteModal} autoFocus>
+          <Button onClick={handleCloseDeleteModal} autoFocus style={{color:'white',background:'#000066',width:'100px',marginLeft:'10px'}}>
             Annuler
           </Button>
         </Box>
@@ -417,217 +419,116 @@ function ModulePage() {
             boxShadow: 24,
             p: 4,
             textAlign: "center",
-            backgroundImage: `url('/src/assets/dialog.png')`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
+            background:'white',
             borderRadius: "15px",
           }}
         >
-          <h2 id="modal-title">Modifier Module</h2>
-          <TextField
-            label="nom"
-            variant="outlined"
-            size="small"
-            value={editedName}
-            onChange={(e) => setEditedName(e.target.value)}
-            InputLabelProps={{
-              shrink: true,
-              style: {
-                fontSize: "0.8rem",
-              },
-            }}
-            sx={{
-              marginBottom: "10px",
-              display: "block",
-              width: "100%",
-            }}
-          />
-
-          <TextField
-            label="enseignant"
-            variant="outlined"
-            size="small"
-            value={editedEnseignant}
-            onChange={(e) => setEditedEnseignant(e.target.value)}
-            InputLabelProps={{
-              shrink: true,
-              style: {
-                fontSize: "0.8rem",
-              },
-            }}
-            sx={{
-              marginBottom: "10px",
-              display: "block",
-              width: "100%",
-            }}
-          />
-
-          <TextField
-            label="promo"
-            variant="outlined"
-            size="small"
-            value={editedPromo}
-            onChange={(e) => setEditedPromo(e.target.value)}
-            InputLabelProps={{
-              shrink: true,
-              style: {
-                fontSize: "0.8rem",
-              },
-            }}
-            sx={{
-              marginBottom: "10px",
-              display: "block",
-              width: "100%",
-            }}
-          />
-          <TextField
-            label="coefficient"
-            variant="outlined"
-            size="small"
-            value={editedcoefficient}
-            onChange={(e) => setEditedcoefficient(e.target.value)}
-            InputLabelProps={{
-              shrink: true,
-              style: {
-                fontSize: "0.8rem",
-              },
-            }}
-            sx={{
-              marginBottom: "10px",
-              display: "block",
-              width: "100%",
-            }}
-          />
-          <Button onClick={handleSaveEdit} color="primary" autoFocus>
-            enregistrer
+          <h2 id="modal-title" style={{color:'#000066',marginBottom:'40px'}}>Modifier Module</h2>
+          <form  style={{display:'flex',flexDirection:'column',alignItems:'center', marginBottom:'20px'}}>
+          <input
+        type="text"
+        placeholder="Nom"
+        value={editedName}
+        onChange={(e) => setEditedName(e.target.value)}
+        style={{
+          marginBottom: "8px",
+          width: "60%",
+          padding: "8px",
+          border: "1px solid #000066",
+          borderRadius: "4px",
+        }}
+      />
+      <input
+        type="text"
+        placeholder="Enseignant"
+        value={editedEnseignant}
+        onChange={(e) => setEditedEnseignant(e.target.value)}
+        style={{
+          marginBottom: "8px",
+          width: "60%",
+          padding: "8px",
+          border: "1px solid #000066",
+          borderRadius: "4px",
+        }}
+      />
+      <input
+        type="text"
+        placeholder="Promo"
+        value={editedPromo}
+        onChange={(e) => setEditedPromo(e.target.value)}
+        style={{
+          marginBottom: "8px",
+          width: "60%",
+          padding: "8px",
+          border: "1px solid #000066",
+          borderRadius: "4px",
+        }}
+      />
+      <input
+        type="text"
+        placeholder="Coefficient"
+        value={editedcoefficient}
+        onChange={(e) => setEditedcoefficient(e.target.value)}
+        style={{
+          marginBottom: "8px",
+          width: "60%",
+          padding: "8px",
+          border: "1px solid #000066",
+          borderRadius: "4px",
+        }}
+      />
+      </form>
+          <Button onClick={handleSaveEdit}  autoFocus style={{color:'white',background:'#000066',width:'100px',marginLeft:'10px'}}>
+            Confirmer
           </Button>
-          <Button onClick={handleCloseEditModal} autoFocus>
+          <Button onClick={handleCloseEditModal} autoFocus style={{color:'white',background:'#000066',width:'100px',marginLeft:'10px'}}>
             Annuler
           </Button>
         </Box>
       </Modal>
       <Modal
         open={openLotModal}
-        onClose={() => setOpenLotModal(false)}
+        onClose={()=> setOpenLotModal(false)}
         aria-labelledby="modal-title"
         aria-describedby="modal-description"
       >
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: 820,
-            height: 650,
-            p: 4,
-            borderRadius: "15px",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            backgroundImage: `url('/src/assets/ajouter1.png')`,
-            backgroundSize: "cover",
-            filter: "drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))",
-          }}
-        >
-          <div
-            style={{
-              width: "50%",
-              marginBottom: "10px",
-              position: "relative",
-              marginTop: "25%",
-            }}
-          >
-            <input
-              type="file"
-              accept=".csv"
-              onChange={(e) => setCohortFile(e.target.files[0])}
-              style={{
-                opacity: 0,
-                position: "absolute",
-                top: 0,
-                left: 0,
-                width: "100%",
-                height: "100%",
-                cursor: "pointer",
-              }}
-            />
-            <div
-              style={{
-                padding: "8px 12px",
-                fontSize: "0.8rem",
-                whiteSpace: "nowrap",
-                textAlign: "center",
-                borderBottom: "1px solid black",
-                borderTopLeftRadius: "2px",
-                borderTopRightRadius: "2px",
-              }}
-            >
-              {cohortFile
-                ? cohortFile.name
-                : "ajouter des modules par lot/fichie csv"}
+        <Box className="lot-modal">
+          <Typography variant="h5" gutterBottom>
+            Ajouter des modules par lots
+          </Typography>
+          <form>
+            <div className="file-container">
+              <input required
+                className="file"
+                type="file"
+                accept=".csv"
+                onChange={(e) => setCohortFile(e.target.files[0])}
+              />
+              <div className="file-place">
+                {cohortFile
+                  ? cohortFile.name
+                  : "ajouter des modules par lot/fichie csv"}
+              </div>
             </div>
-          </div>
-
-          <div style={{ display: "flex", width: "40%", marginTop: "100px" }}>
-            <Button
-              onClick={() => setOpenLotModal(false)}
-              autoFocus
-              style={{
-                flex: 1,
-                marginRight: "10px",
-                padding: "10px",
-                fontSize: "1rem",
-                backgroundColor: "#0000665c",
-                color: "#000066",
-                fontWeight: "bold",
-                border: "none",
-                borderRadius: "5px",
-                cursor: "pointer",
-              }}
-            >
+            </form>
+            <div className="button-container">
+            <Button onClick={() => setOpenLotModal(false)} autoFocus>
               Annuler
             </Button>
-            <Button
-              onClick={handleUploadCohort}
-              autoFocus
-              style={{
-                flex: 1,
-                padding: "10px",
-                fontSize: "1rem",
-                backgroundColor: "#0000665c",
-                color: "#000066",
-                fontWeight: "bold",
-                border: "none",
-                borderRadius: "5px",
-                cursor: "pointer",
-              }}
-            >
+            <Button onClick={handleUploadCohort} autoFocus>
               Confirmer
             </Button>
           </div>
+       
+
+         
         </Box>
       </Modal>
       <Modal open={showModal} onClose={handleCloseModal}>
-        <Box
-          sx={{
-            position: "relative",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: 820,
-            height: 650,
-
-            p: 4,
-            borderRadius: "15px",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            backgroundImage: `url('/src/assets/ajouter.png')`,
-            backgroundSize: "cover",
-            filter: "drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))",
-          }}
-        >
+        <Box className="Modal-seul-module">
+          <Typography variant="h5" gutterBottom>
+            Ajouter une seule module
+          </Typography>
           <form>
             <div className="form">
               <input
@@ -637,18 +538,6 @@ function ModulePage() {
                 name="nomModule"
                 value={formData.nomModule}
                 onChange={handleInputChange}
-                style={{
-                  height: "40px",
-                  width: "200px",
-                  border: "none",
-                  borderBottom: "0.5px solid #000066",
-                  outline: "none",
-                  padding: "10px",
-                  background: "none",
-                  marginLeft: "-80px",
-                  marginTop: "150px",
-                  transition: "height 0.3s",
-                }}
                 onFocus={(e) => {
                   e.target.style.height = "40px";
                 }}
@@ -664,18 +553,6 @@ function ModulePage() {
                 name="promo"
                 value={formData.promo}
                 onChange={handleInputChange}
-                style={{
-                  height: "40px",
-                  width: "200px",
-                  border: "none",
-                  borderBottom: "0.5px solid #000066",
-                  outline: "none",
-                  padding: "10px",
-                  marginTop: "145px",
-                  marginLeft: "120px",
-                  background: "none",
-                  position: "absolute",
-                }}
               />
               <input
                 required
@@ -684,59 +561,19 @@ function ModulePage() {
                 name="coefficient"
                 value={formData.coefficient}
                 onChange={handleInputChange}
-                style={{
-                  height: "40px",
-                  width: "200px",
-                  border: "none",
-                  borderBottom: "0.5px solid #000066",
-                  outline: "none",
-                  padding: "10px",
-                  marginLeft: "-200px",
-                  marginTop: "227px",
-                  background: "none",
-                  position: "absolute",
-                }}
               />
 
-              <div
-                style={{
-                  width: "200px",
-                  marginBottom: "10px",
-                  position: "relative",
-                  marginTop: "0%",
-                  marginLeft: "240px",
-                  borderBottom: "#000066",
-                }}
-              >
+              <div className="file-container">
+                <div>
+                  {cohortFile ? cohortFile.name : "Ajouter des enseignants"}
+                </div>
                 <input
+                  className="file"
                   type="file"
                   accept=".csv"
                   onChange={(e) => setCohortFile(e.target.files[0])}
-                  style={{
-                    opacity: 0,
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    cursor: "pointer",
-                  }}
                 />
-                <div
-                  style={{
-                    padding: "8px 12px",
-                    fontSize: "0.8rem",
-                    whiteSpace: "nowrap",
-                    textAlign: "center",
-                    borderBottom: "1px solid black",
-                    borderTopLeftRadius: "2px",
-                    borderTopRightRadius: "2px",
-                  }}
-                >
-                  {cohortFile ? cohortFile.name : "Ajouter des enseignants"}
-                </div>
               </div>
-
               <input
                 required
                 type="text"
@@ -744,18 +581,17 @@ function ModulePage() {
                 name="Matricule"
                 value={formData.Matricule}
                 onChange={handleInputChange}
-                style={{
-                  height: "40px",
-                  width: "200px",
-                  border: "none",
-                  borderBottom: "0.5px solid #000066",
-                  outline: "none",
-                  padding: "10px",
-                  marginLeft: "-80px",
-                  background: "none",
-                  marginTop: "30px",
-                }}
               />
+              <select 
+                required
+                name="SelectOption"
+                value={formData.SelectOption}
+                onChange={handleInputChange}
+              >
+             
+                <option value="s1">semestre1</option>
+                <option value="s2">semestre2</option>
+              </select>
               <div
                 className="button-container"
                 style={{
@@ -766,7 +602,7 @@ function ModulePage() {
                 }}
               >
                 <button
-                  className="button-submit"
+                className="button-submit"
                   type="submit"
                   onClick={() => {
                     handleSubmit(
@@ -776,40 +612,12 @@ function ModulePage() {
                         formData.Matricule !== ""
                     );
                   }}
-                  style={{
-                    position: "absolute",
-                    fontSize: " 16px",
-                    fontWeight: "bold",
-                    height: " 45px",
-                    width: " 120px",
-                    marginLeft: "-200px",
-                    marginTop: "20px",
-                    borderRadius: "6px",
-                    color: "#000066",
-                    border: " none",
-                    backgroundColor: " #0000665C",
-                    zIndex: " 2",
-                  }}
                 >
                   Confirmer
                 </button>
 
                 <button
-                  style={{
-                    position: "absolute",
-                    fontSize: " 16px",
-                    fontWeight: "bold",
-                    height: " 45px",
-                    width: " 120px",
-                    marginLeft: "65px",
-                    marginTop: "20px",
-                    borderRadius: "6px",
-                    color: "#000066",
-                    border: " none",
-                    backgroundColor: " #0000665C",
-                    zIndex: " 2",
-                  }}
-                  className="button-cancel"
+                     className="button-submit"
                   type="submit"
                   onClick={handleCloseModal}
                 >
