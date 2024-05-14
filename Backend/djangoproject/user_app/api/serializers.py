@@ -6,8 +6,28 @@ from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.contrib.auth.password_validation import validate_password 
 
+class ProfessorUploadSerializer(serializers.Serializer):
+    file = serializers.FileField()
+   
+
 class FileUploadSerializer(serializers.Serializer):
     file = serializers.FileField()
+    year = serializers.ChoiceField(choices=[
+        ('year1', '1CPI'),
+        ('year2', '2CPI'),
+        ('year3', '1CS'),
+        ('year4', '2CS '),
+        ('year5', '3CS'),
+    ])
+    # def create(self, validated_data):
+    #     role = validated_data.get('role')  # Extract 'role' from validated data
+        
+    #     # Perform any necessary actions with the 'role' data
+    #     if role == 'student':
+            
+        
+    #     return validated_data['file'] 
+    
 class SaveFileSerializer(serializers.Serializer):
     class Meta:
         model = File
@@ -54,6 +74,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
         # )
          email = validated_data['email']
          role = validated_data['role']
+        #  password = validated_data.get('password')
          
          if MyUser.objects.filter(email=email).exists():
             raise serializers.ValidationError({"email": "Email address already used."})
@@ -61,7 +82,17 @@ class RegistrationSerializer(serializers.ModelSerializer):
          # Generate a random password
          password = ''.join(random.choices(string.ascii_letters + string.digits, k=12))
          
-         user = MyUser.objects.create_user(email=email, password=password)
+         is_superuser = is_professor = is_student = False
+         
+         if role == 'admin':
+            is_superuser = True
+         elif role == 'professor':
+            is_professor = True
+         elif role == 'student':
+            is_student = True
+
+         user = MyUser.objects.create_user(email=email,  is_superuser=is_superuser, is_professor=is_professor, is_student=is_student)
+        #  user = MyUser.objects.create_user(email=email, password=password)
          
         
         #  user.set_password(validated_data['password'])

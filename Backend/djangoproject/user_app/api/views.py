@@ -22,6 +22,8 @@ from rest_framework.decorators import action
 from django.core.files.storage import FileSystemStorage
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.hashers import make_password
+from django.utils.crypto import get_random_string
+from django.contrib.auth.password_validation import validate_password
 # Create your views here.
   
   
@@ -73,7 +75,95 @@ class UploadFileView(generics.CreateAPIView):
         return response
 
   
-  
+ 
+class UserTokenObtainPairView(TokenObtainPairView):
+    serializer_class = UserTokenObtainPairSerializer
+   
+class RegistrationView(generics.CreateAPIView):
+    queryset = MyUser.objects.all()
+    permission_classes = (AllowAny,)
+    serializer_class = RegistrationSerializer
+    def perform_update(self, serializer):
+        # Check if the user has permission to modify another user's information
+        if self.request.user.is_staff or self.request.user == self.get_object():
+            serializer.save()
+        else:
+            # Raise a permission denied exception if the user doesn't have permission
+            raise PermissionDenied("You do not have permission to modify this user's information.")
+        
+    # def create(self, request, *args, **kwargs):
+    #     serializer = self.get_serializer(data=request.data)
+    #     serializer.is_valid(raise_exception=True)
+    #     user = serializer.save()
+        
+    #     # return the generated password in the response
+    #     response_data = {
+    #         "email": user.email,
+    #         "role": user.role,
+    #         "password": user.password  # Note: This password is hashed in the database
+    #     }
+
+    #     return Response(response_data, status=status.HTTP_201_CREATED)    
+    def create(self, request, *args, **kwargs):
+        role = request.data.get('role')
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        
+        password_length = 12 
+        password = get_random_string(length=password_length)
+        validate_password(password)
+        hashed_password = make_password(password)
+        
+        
+        user = serializer.save(password=hashed_password)
+        
+        response_data = {
+            "email": user.email,
+            "role": role,
+            "password": password #  hashed in db
+        }
+        
+        return Response(response_data, status=status.HTTP_201_CREATED)
+    
+
+
+@api_view (['GET'])
+def list_users(request):
+    # Query all users and retrieve their IDs
+    users = MyUser.objects.all().values('id', 'email', 'is_professor', 'is_student')  # You can include other fields as needed
+
+    # Serialize the query results into JSON format
+    serialized_users = list(users)
+
+    # Return the serialized data as a JSON response
+    return Response(serialized_users)
+
+    
+@api_view (['GET'])
+def getRoutes(request):
+    routes = [
+        '/api/token/',
+        '/api/register/',
+        '/api/token/refresh/',
+    ]
+    return Response(routes)
+    
+
+@api_view (['GET', 'POST'])
+@permission_classes([IsAuthenticated])
+def testEndPoint(request):
+    if request.method == 'GET':
+        data = "Congratulations {request.user}, your API just responded to GET request"
+        return Response({'response': data}, status = status.HTTP_200_OK)
+    
+    elif request.method == 'POST':
+        text = "Hello babe"
+        data = "Congratulations your API just responded to POST request with text: ${text}"
+        return Response({'response': data}, status = status.HTTP_200_OK)
+    return Response({}, status.HTTP_400_BAD_REQUEST)
+
+
+ 
   
 # class UploadFileView(generics.CreateAPIView):
 #     serializer_class = FileUploadSerializer
@@ -177,84 +267,3 @@ class UploadFileView(generics.CreateAPIView):
 #            return Response("Users created successfully", status=status.HTTP_201_CREATED)
 #         except KeyError:
 #                 raise ParseError("The 'file' field is missing from the request data.")
-
-class UserTokenObtainPairView(TokenObtainPairView):
-    serializer_class = UserTokenObtainPairSerializer
-   
-class RegistrationView(generics.CreateAPIView):
-    queryset = MyUser.objects.all()
-    permission_classes = (AllowAny,)
-    serializer_class = RegistrationSerializer
-    def perform_update(self, serializer):
-        # Check if the user has permission to modify another user's information
-        if self.request.user.is_staff or self.request.user == self.get_object():
-            serializer.save()
-        else:
-            # Raise a permission denied exception if the user doesn't have permission
-            raise PermissionDenied("You do not have permission to modify this user's information.")
-        
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.save()
-        
-        # return the generated password in the response
-        response_data = {
-            "email": user.email,
-            "role": user.role,
-            "password": user.password  # Note: This password is hashed in the database
-        }
-
-        return Response(response_data, status=status.HTTP_201_CREATED)    
-    def create(self, request, *args, **kwargs):
-        role = request.data.get('role')
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.save()
-        
-        response_data = {
-            "email": user.email,
-            "role": user.role,
-            "password": user.password  # Note: This password is hashed in the database
-        }
-        
-        return Response(response_data, status=status.HTTP_201_CREATED)
-    
-
- # Import your custom user model
-@api_view (['GET'])
-def list_users(request):
-    # Query all users and retrieve their IDs
-    users = MyUser.objects.all().values('id', 'email', 'is_professor', 'is_student')  # You can include other fields as needed
-
-    # Serialize the query results into JSON format
-    serialized_users = list(users)
-
-    # Return the serialized data as a JSON response
-    return Response(serialized_users)
-
-    
-@api_view (['GET'])
-def getRoutes(request):
-    routes = [
-        '/api/token/',
-        '/api/register/',
-        '/api/token/refresh/',
-    ]
-    return Response(routes)
-    
-
-@api_view (['GET', 'POST'])
-@permission_classes([IsAuthenticated])
-def testEndPoint(request):
-    if request.method == 'GET':
-        data = "Congratulations {request.user}, your API just responded to GET request"
-        return Response({'response': data}, status = status.HTTP_200_OK)
-    
-    elif request.method == 'POST':
-        text = "Hello babe"
-        data = "Congratulations your API just responded to POST request with text: ${text}"
-        return Response({'response': data}, status = status.HTTP_200_OK)
-    return Response({}, status.HTTP_400_BAD_REQUEST)
-
-

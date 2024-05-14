@@ -14,6 +14,7 @@ class UploadFileModules(generics.CreateAPIView):
     
     def post(self, request, *args, **kwargs):
         file = request.FILES.get('file')
+        year = request.data.get('year') 
         
         try:
             reader = pd.read_csv(file)

@@ -28,3 +28,11 @@ class Post(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
+class Reply(models.Model):
+    post = models.ForeignKey(Post, related_name='replies', on_delete=models.CASCADE)
+    creator = models.ForeignKey(MyUser, on_delete=models.CASCADE)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Reply by {self.creator} on {self.post}"

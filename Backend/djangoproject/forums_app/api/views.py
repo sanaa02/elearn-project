@@ -1,10 +1,10 @@
 import json
 from rest_framework import generics
-from forums_app.models import Forum, Post
+from forums_app.models import Forum, Post, Reply
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import ForumSerializer, PostSerializer
+from .serializers import ForumSerializer, PostSerializer, ReplySerializer
 from rest_framework.pagination import PageNumberPagination
 from user_app.models import MyUser
 
@@ -87,4 +87,25 @@ class CreatePostView(APIView):
         new_post.save()
         
         serializer = PostSerializer(new_post)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+class CreateReplyView(APIView):
+    def post(self, request):
+        data = request.data
+        post_id = data.get('post_id')
+        creator_id = data.get('creator_id')
+        content = data.get('content')
+
+        try:
+            post = Post.objects.get(pk=post_id)
+        except Post.DoesNotExist:
+            return Response({"res": "Invalid post"}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            creator = MyUser.objects.get(pk=creator_id)
+        except MyUser.DoesNotExist:
+            return Response({"res": "Invalid user"}, status=status.HTTP_400_BAD_REQUEST)
+
+        reply = Reply.objects.create(post=post, creator=creator, content=content)
+        serializer = ReplySerializer(reply)
         return Response(serializer.data, status=status.HTTP_201_CREATED)

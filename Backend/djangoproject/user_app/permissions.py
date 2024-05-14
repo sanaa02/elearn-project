@@ -1,8 +1,24 @@
 from django.http import Http404
+from rest_framework.permissions import BasePermission
 
 from rest_framework import exceptions
 
 SAFE_METHODS = ('GET', 'HEAD', 'OPTIONS')
+
+
+class IsStudent(BasePermission):
+    def has_permission(self, request, view):
+        return request.user.is_authenticated and request.user.is_student 
+
+class IsProfessor(BasePermission):
+    def has_permission(self, request, view):
+        return request.user.is_authenticated and request.user.is_professor 
+
+class IsAdmin(BasePermission):
+    def has_permission(self, request, view):
+        return request.user.is_authenticated and request.user.is_superuser 
+
+
 
 class OperationHolderMixin:
     def __and__(self, other):

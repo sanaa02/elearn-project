@@ -13,10 +13,10 @@ from professor_app.models import Professor
 from module_app.models import Module
 from .serializers import ProfessorSerializer
 from user_app.models import MyUser
-from user_app.api.serializers import UserSerializer, FileUploadSerializer
+from user_app.api.serializers import UserSerializer, FileUploadSerializer, ProfessorUploadSerializer
 
 class UploadProfessorView(generics.CreateAPIView):
-    serializer_class = ProfessorSerializer
+    serializer_class = ProfessorUploadSerializer
     
     def post(self, request, *args, **kwargs):
         file = request.FILES.get('file')
@@ -35,7 +35,7 @@ class UploadProfessorView(generics.CreateAPIView):
                 password = ''.join(random.choices(string.ascii_letters + string.digits, k=12))
                 
                 # Create a new MyUser instance
-                user = MyUser.objects.create_user(email=email, password=password)
+                user = MyUser.objects.create_user(email=email, password=password, is_professor=True)
                 
                 # Create a new professor instance associated with the user
                 professor = Professor(user=user)

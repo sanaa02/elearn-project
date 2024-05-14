@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.contrib.auth.models import PermissionsMixin, AbstractBaseUser, BaseUserManager
 from django.dispatch import receiver
+
 #from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
@@ -58,10 +59,22 @@ class MyUser(PermissionsMixin, AbstractBaseUser):
 
 class Profile(models.Model):
     user = models.OneToOneField(MyUser, on_delete=models.CASCADE, related_name='profile')
-    name = models.CharField(max_length=100)
-    bio = models.TextField(blank=True)
+#     name = models.CharField(max_length=100)
+#     bio = models.TextField(blank=True)
     
-# # #     #image = models.ImageField(upload_to='user_images', default='default.jpg')
+    
+# class Profile(models.Model):
+#     user = models.OneToOneField(MyUser, on_delete=models.CASCADE)
+#     # other fields
+
+# # In your view or wherever you're accessing the profile
+#     try:
+#         profile = request.user.profile
+#     except Profile.DoesNotExist:
+#     # Handle the case where the profile doesn't exist
+#     # For example, create a new profile object for the user
+#         profile = Profile.objects.create(user=request.user)
+# # # #     #image = models.ImageField(upload_to='user_images', default='default.jpg')
 
 
 # @receiver(post_save, sender=MyUser, dispatch_uid='save_new_user_profile')
