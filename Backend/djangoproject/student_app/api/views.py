@@ -46,38 +46,66 @@ class UploadStudentView(generics.CreateAPIView):
     serializer_class = FileUploadSerializer
     
     def post(self, request, *args, **kwargs):
+        
+        print("request.data:", request.data)
+        print("request.FILES:", request.FILES)
+        
         file = request.FILES.get('file')
         year = request.data.get('year') 
         
+        print("request.data:", request.data)
+        print("request.FILES:", request.FILES)
+        
+        if not file or not year:
+            print("Missing file or year")
+            return Response({"error": "File or year is missing"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Log for debugging
+        print(f"Received year: {year}")
+        print(f"Received file: {file}")
+
+        
         serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
+        
+        if not serializer.is_valid():
+            print("Serializer errors:", serializer.errors)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        
+        # serializer.is_valid(raise_exception=True)
         file = serializer.validated_data['file']
         
         try:
             reader = pd.read_csv(file)
             response_data = []
             
+            print("CSV file columns:", reader.columns)
+            
             for index, row in reader.iterrows():  # Iterate over rows using iterrows() method
+                print(f"Processing row {index}: {row}")
                 email = row['email']
+                name = row['name']
+                matricule = row['matricule']
                 
                 # Generate a random password for the professor
                 password = ''.join(random.choices(string.ascii_letters + string.digits, k=12))
                 
                 # Create a new MyUser instance
-                user = MyUser.objects.create_user(email=email, password=password, is_student=True)
+                user = MyUser.objects.create_user(email=email, password=password, is_student=True, matricule=matricule, name=name)
                 
                 # Create a new student instance associated with the user
-                student = Student(user=user)
+                student = Student(user=user, year=year)
                 student.save()
                 
                 # Append professor's email and generated password to response data
-                response_data.append({'email': email, 'password': password, 'year': year})
+                response_data.append({'email': email, 'password': password})
             
             # Create CSV response with professors' emails and passwords
-            response = self.create_csv_response(response_data)
+            response = self.create_csv_response(response_data, year)
             return response
         
         except Exception as e:
+            print("Exception occurred during CSV processing:", str(e))
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
         
     def create_csv_response(self, data, year):
@@ -97,8 +125,8 @@ class UploadStudentView(generics.CreateAPIView):
 class StudentList(APIView):
      def get(self, request):
 
-        users = MyUser.objects.filter(is_student=True)
-        serializer = UserSerializer(users, many=True)
+        users = Student.objects.filter()
+        serializer = StudentSerializer(users, many=True)
         return Response(serializer.data)
     
     #  def post(self, request):

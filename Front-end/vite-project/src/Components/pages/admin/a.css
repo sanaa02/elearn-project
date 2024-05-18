@@ -26,8 +26,20 @@
     margin-top: 50px;
   }
   .Modal-seul-appr form input {
-    outline: none;
+    
+    outline-color: #D0D5DD;
     background-color: white;
+    font-size: 0.8rem;
+    height: 40px;
+    width: 350px;
+    position: relative;
+    border: 1px solid #000066;
+    text-align: center;
+    margin:20px;
+  }
+
+  .year-select {
+    outline: none;
     font-size: 0.8rem;
     height: 40px;
     width: 350px;

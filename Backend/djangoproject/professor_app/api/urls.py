@@ -6,4 +6,5 @@ urlpatterns = [
     path('upload/', views.UploadProfessorView.as_view(), name='upload-professor'),
     path('', views.ProfessorList.as_view(), name='professor-list'),
     path('<int:pk>/', views.ProfessorDetail.as_view(), name='professor-detail'),
+    path('available/', views.ProfessorList.as_view(), name='professor-available'),
 ]

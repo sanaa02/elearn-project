@@ -4,10 +4,23 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from module_app.models import Module
+from professor_app.models import Professor
 from .serializers import ModuleSerializer, ModuleUploadSerializer
 from rest_framework import generics
 import io, csv, pandas as pd
 
+
+
+class YearChoicesView(APIView):
+    def get(self, request, *args, **kwargs):
+        year_choices = [
+            {'1CPI'},
+            {'2CPI'},
+            {'1CS'},
+            {'2CS'},
+            {'3CS'},
+        ]
+        return Response(year_choices, status=status.HTTP_200_OK)
 class UploadFileModules(generics.CreateAPIView):
     serializer_class = ModuleUploadSerializer
     queryset = Module.objects.all()
@@ -15,6 +28,8 @@ class UploadFileModules(generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
         file = request.FILES.get('file')
         year = request.data.get('year') 
+        
+        # data = request.data.copy() 
         
         try:
             reader = pd.read_csv(file)
@@ -25,10 +40,30 @@ class UploadFileModules(generics.CreateAPIView):
                 nom = row['nom']
          
                 description = row.get('description', '').lower()
-
-                module = Module(nom=nom, description=description)
+                coef = row.get('coef', '')
+                semester = row.get('semester', '')
+                year = row.get('year', '')
+                professor_email = row.get('professor', '')
+                print(nom, year, professor_email, coef, semester, description)
+                print(f"Processing row: {row}")
                 
+                if professor_email:
+                    try:
+                        professor = Professor.objects.get(user__email=professor_email)
+                        print(f"Professor found: {professor}")
+                    except Professor.DoesNotExist:
+                        return Response({"error": f"Professor with email {professor_email} does not exist."}, status=status.HTTP_400_BAD_REQUEST)
+                else:
+                    professor = None
+                    print("No professor email provided, setting professor to None")
+                
+                module = Module(nom=nom, description=description, coef=coef, semester=semester, year=year, professor=professor)
+                # serializer = ModuleSerializer(data=data)
+                # if serializer.is_valid():
+                #    serializer.save()
+                module.full_clean() 
                 module.save()
+                print(f"Module saved: {module}")
                 module_list.append(module)
                 response_data.append(module.nom)
                 
@@ -44,11 +79,28 @@ class ModuleList(APIView):
         return Response(serializer.data)
 
     def post(self, request):
-        serializer = ModuleSerializer(data=request.data)
+        print(request.data)
+        
+        data = request.data.copy()  # Make a mutable copy of the request data
+
+        # Convert professor email to primary key
+        professor_email = data.get('professor')
+        if professor_email:
+            try:
+                professor = Professor.objects.get(user__email=professor_email)
+                data['professor'] = professor.pk
+            except Professor.DoesNotExist:
+                return Response({"professor": ["Professor with this email does not exist."]}, status=status.HTTP_400_BAD_REQUEST)
+
+
+        
+        serializer = ModuleSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            print("Serializer Errors:", serializer.errors)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ModuleDetail(APIView):
     def get_object(self, pk):
