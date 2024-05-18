@@ -13,11 +13,11 @@ class ProfessorUploadSerializer(serializers.Serializer):
 class FileUploadSerializer(serializers.Serializer):
     file = serializers.FileField()
     year = serializers.ChoiceField(choices=[
-        ('year1', '1CPI'),
-        ('year2', '2CPI'),
-        ('year3', '1CS'),
-        ('year4', '2CS '),
-        ('year5', '3CS'),
+        ('1CPI', '1CPI'),
+        ('2CPI','2CPI'),
+        ('1CS','1CS'),
+        ('2CS','2CS'),
+        ('3CS','3CS'),
     ])
     # def create(self, validated_data):
     #     role = validated_data.get('role')  # Extract 'role' from validated data
@@ -37,7 +37,7 @@ class SaveFileSerializer(serializers.Serializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = MyUser
-        fields = ['id', 'email', 'password']
+        fields = ['id', 'email','name','matricule']
         
         def create_user(self, validated_data):
           password = validated_data.pop('password')
@@ -55,12 +55,13 @@ class UserTokenObtainPairSerializer(TokenObtainPairSerializer):
 class RegistrationSerializer(serializers.ModelSerializer):
     #  password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
     #  password2 = serializers.CharField(write_only=True, required=True)
+     name = serializers.CharField(required=True)
      role = serializers.CharField(write_only=True, required=True)
-    
-    
+     matricule = serializers.CharField(required=True)
+     year = serializers.CharField(required=False) 
      class Meta:
         model = MyUser
-        fields = ['email', 'role']
+        fields = ['email', 'role', 'matricule', 'year', 'name']
 
     #  def validate(self, attrs):
     #      if attrs['password'] != attrs['password2']:
@@ -72,8 +73,13 @@ class RegistrationSerializer(serializers.ModelSerializer):
         #  user = MyUser.objects.create(
         #      email=validated_data['email'],
         # )
+        
          email = validated_data['email']
          role = validated_data['role']
+         matricule = validated_data['matricule']
+         name = validated_data.get('name')
+         year = validated_data.get('year') 
+         
         #  password = validated_data.get('password')
          
          if MyUser.objects.filter(email=email).exists():
@@ -90,11 +96,17 @@ class RegistrationSerializer(serializers.ModelSerializer):
             is_professor = True
          elif role == 'student':
             is_student = True
+            
 
-         user = MyUser.objects.create_user(email=email,  is_superuser=is_superuser, is_professor=is_professor, is_student=is_student)
+         user = MyUser.objects.create_user(email=email,  is_superuser=is_superuser, is_professor=is_professor, is_student=is_student, matricule=matricule, name=name )
         #  user = MyUser.objects.create_user(email=email, password=password)
          
-        
+         if is_student:
+            if year is None:
+                raise serializers.ValidationError({"year": "Year is required for student role."})
+            user.year = year
+            user.save()
+            
         #  user.set_password(validated_data['password'])
         
         #  user.save()

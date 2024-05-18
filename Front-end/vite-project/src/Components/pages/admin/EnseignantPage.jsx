@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import  { useState } from "react";
+import  { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -133,6 +133,14 @@ function EnseignantPage() {
     Matricule: "",
     module:"",
   });
+
+  const [formDataOne, setFormDataOne] = useState({
+    email: "",
+    promo: "",
+    name: "",
+    matricule: "",
+    role: "professor",
+  });
   const handleOpenOneproftModal = () => {
     setShowOneProftModal(true);
   };
@@ -145,40 +153,116 @@ function EnseignantPage() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormDataOne({
+      ...formDataOne,
       [name]: value,
     });
   };
 
-  const handleSubmit = (Empty) => {
-    if (Empty == true) {
-      const newRow = createData(
-        rows.length + 1,
-        rows.length + 1,
-        formData.module,
-        formData.nomp,
-        formData.mail,
-        formData.Matricule,
 
-      );
+    
 
-      setRows([...rows, newRow]);
-      setShowOneProftModal(false);
-      setFormData({
-        mail: "",
-        nomp: "",
-        Matricule: "",
-        module:"",
+
+   useEffect(() => {
+     
+
+
+     fetchData();
+   }, []);
+
+   
+  const fetchData = async () => {
+    try {
+      // Make API call using fetch
+      const response = await fetch("http://127.0.0.1:8000/professor/");
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+      const data = await response.json(); // Parse JSON response
+      console.log("Fetched data:", data);
+
+      // Process the data and create rows
+      const processedData = data.map((item, index) => {
+        return createData(
+          item.id,
+          item.matricule,
+          item.name,
+          item.email,
+
+          // index + 1,
+        );
       });
+
+      console.log("processed", processedData);
+
+      // Update state with the fetched rows
+      setRows(processedData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
     }
-  }
+  };
+
+
+   
+
+   const handleSubmit = async (Empty) => {
+     if (Empty == true) {
+     }
+
+     const formDataAdd = new FormData();
+     formDataAdd.append("email", formDataOne.email);
+     formDataAdd.append("matricule", formDataOne.matricule);
+     formDataAdd.append("name", formDataOne.name);
+     formDataAdd.append("role", formDataOne.role);
+     
+     for (let [key, value] of formDataAdd.entries()) {
+       console.log(`${key}: ${value}`);
+     }
+
+     try {
+       const response = await fetch("http://127.0.0.1:8000/account/register/", {
+         method: "POST",
+         body: formDataAdd,
+       });
+     } catch (error) {
+       console.error("Error uploading file:", error);
+     }
+   };
+
+
+  // const handleSubmit = (Empty) => {
+  //   if (Empty == true) {
+  //     const newRow = createData(
+  //       rows.length + 1,
+  //       rows.length + 1,
+  //       formData.module,
+  //       formData.nomp,
+  //       formData.mail,
+  //       formData.Matricule,
+
+  //     );
+
+  //     setRows([...rows, newRow]);
+  //     setShowOneProftModal(false);
+  //     setFormData({
+  //       mail: "",
+  //       nomp: "",
+  //       Matricule: "",
+  //       module:"",
+  //     });
+  //   }
+  
   ///////////
 
   return (
     <Box>
       <Box sx={{ display: "flex", alignItems: "center" }}>
-        <Typography variant="subtitle2" align="left" gutterBottom style={{ marginRight: "50px" }}>
+        <Typography
+          variant="subtitle2"
+          align="left"
+          gutterBottom
+          style={{ marginRight: "50px" }}
+        >
           Liste des enseignants
         </Typography>
         <TextField
@@ -195,12 +279,12 @@ function EnseignantPage() {
           displayEmpty
           inputProps={{ "aria-label": "Without label" }}
           sx={{
-            marginLeft: 'auto',
-            backgroundColor: '#D9D9D9',
-            borderRadius: '5px',
-            paddingLeft: '5px',
-            paddingRight: '5px',
-            width: "150px"
+            marginLeft: "auto",
+            backgroundColor: "#D9D9D9",
+            borderRadius: "5px",
+            paddingLeft: "5px",
+            paddingRight: "5px",
+            width: "150px",
           }}
           size="small"
         >
@@ -214,15 +298,19 @@ function EnseignantPage() {
       </Box>
 
       <TableContainer component={Paper}>
-        <Table sx={{ maxWidth: 1000, width: 1000, background: "#D9D9D9" }} aria-label="simple table">
+        <Table
+          sx={{ maxWidth: 1000, width: 1000, background: "#D9D9D9" }}
+          aria-label="simple table"
+        >
           <TableHead>
             <TableRow>
-              <TableCell sx={{ textAlign: "center" }}>N°</TableCell>
               <TableCell sx={{ textAlign: "center" }}>ID</TableCell>
-              <TableCell sx={{ textAlign: "center" }}>Module</TableCell>
+              <TableCell sx={{ textAlign: "center" }}>Matricule</TableCell>
+
               <TableCell sx={{ textAlign: "center" }}>Nom et Prénom</TableCell>
               <TableCell sx={{ textAlign: "center" }}>Email</TableCell>
-              
+              <TableCell sx={{ textAlign: "center" }}>Module</TableCell>
+
               <TableCell sx={{ textAlign: "center" }}>
                 <Button
                   onClick={handleNewEnseignant}
@@ -250,16 +338,25 @@ function EnseignantPage() {
                   {row.n}
                 </TableCell>
                 <TableCell style={{ textAlign: "center" }}>{row.id}</TableCell>
-                <TableCell style={{ textAlign: "center" }}>{row.Module}</TableCell>
-                <TableCell style={{ textAlign: "center" }}>{row.name}</TableCell>
-                <TableCell style={{ textAlign: "center" }}>{row.email}</TableCell>
-                
+                <TableCell style={{ textAlign: "center" }}>
+                  {row.Module}
+                </TableCell>
+                <TableCell style={{ textAlign: "center" }}>
+                  {row.name}
+                </TableCell>
+                <TableCell style={{ textAlign: "center" }}>
+                  {row.email}
+                </TableCell>
+
                 <TableCell style={{ textAlign: "center" }}>
                   <Button
                     onClick={() => handleOpenEditModal(row)}
                     size="small"
                     variant="contained"
-                    style={{ backgroundColor: "#1F7848", marginRight: "0.5rem" }}
+                    style={{
+                      backgroundColor: "#1F7848",
+                      marginRight: "0.5rem",
+                    }}
                   >
                     Modifier
                   </Button>
@@ -278,7 +375,6 @@ function EnseignantPage() {
           </TableBody>
         </Table>
       </TableContainer>
-      
 
       <Modal
         open={openNewEnseignantModal}
@@ -338,7 +434,7 @@ function EnseignantPage() {
         aria-labelledby="modal-title"
         aria-describedby="modal-description"
       >
-       <Box
+        <Box
           sx={{
             position: "absolute",
             top: "50%",
@@ -350,22 +446,44 @@ function EnseignantPage() {
             boxShadow: 24,
             p: 4,
             textAlign: "center",
-            background:'white',
+            background: "white",
             backgroundSize: "cover",
             backgroundPosition: "center",
             borderRadius: "15px",
-            
           }}
         >
-          <h2 id="modal-title" style={{color:'#000066',marginBottom:'50px'}}>Confirmer la suppression</h2>
-          <p id="modal-description" style={{marginBottom:'50px'}}>
+          <h2
+            id="modal-title"
+            style={{ color: "#000066", marginBottom: "50px" }}
+          >
+            Confirmer la suppression
+          </h2>
+          <p id="modal-description" style={{ marginBottom: "50px" }}>
             {selectedRow &&
               `Voulez-vous vraiment supprimer l'Enseignant : ${selectedRow.name} ?.`}
           </p>
-          <Button onClick={handleDelete}  autoFocus style={{color:'white',background:'#000066',width:'100px',marginLeft:'10px'}}>
+          <Button
+            onClick={handleDelete}
+            autoFocus
+            style={{
+              color: "white",
+              background: "#000066",
+              width: "100px",
+              marginLeft: "10px",
+            }}
+          >
             Supprimer
           </Button>
-          <Button onClick={handleCloseDeleteModal} autoFocus style={{color:'white',background:'#000066',width:'100px',marginLeft:'10px'}}>
+          <Button
+            onClick={handleCloseDeleteModal}
+            autoFocus
+            style={{
+              color: "white",
+              background: "#000066",
+              width: "100px",
+              marginLeft: "10px",
+            }}
+          >
             Annuler
           </Button>
         </Box>
@@ -389,58 +507,88 @@ function EnseignantPage() {
             boxShadow: 24,
             p: 4,
             textAlign: "center",
-            background:'white',
+            background: "white",
             borderRadius: "15px",
           }}
         >
-          <h2 id="modal-title" style={{color:'#000066',marginBottom:'50px'}}>Modifier Enseignant</h2>
-          <form style={{display:'flex',flexDirection:'column',alignItems:'center', marginBottom:'20px'}}>
-          <input
-        type="text"
-        placeholder="Module"
-        value={editedModule}
-        onChange={(e) => setEditedModule(e.target.value)}
-        style={{
-          marginBottom: "8px",
-          
-          width: "60%",
-          padding: "8px",
-          border: "1px solid #ccc",
-          borderRadius: "4px",
-        }}
-      />
-      <input
-        type="text"
-        placeholder="Nom et Prénom"
-        value={editedName}
-        onChange={(e) => setEditedName(e.target.value)}
-        style={{
-          marginBottom: "8px",
-          width: "60%",
-          padding: "8px",
-          border: "1px solid #ccc",
-          borderRadius: "4px",
-        }}
-      />
-      <input
-        type="email"
-        placeholder="Email"
-        value={editedEmail}
-        onChange={(e) => setEditedEmail(e.target.value)}
-        style={{
-          marginBottom: "8px",
-          width: "60%",
-          padding: "8px",
-          border: "1px solid #ccc",
-          borderRadius: "4px",
-        }}
-      />
-      </form>
-       
-          <Button onClick={handleSaveEdit}  autoFocus style={{color:'white',background:'#000066',width:'100px',marginLeft:'10px'}}>
+          <h2
+            id="modal-title"
+            style={{ color: "#000066", marginBottom: "50px" }}
+          >
+            Modifier Enseignant
+          </h2>
+          <form
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              marginBottom: "20px",
+            }}
+          >
+            <input
+              type="text"
+              placeholder="Module"
+              value={editedModule}
+              onChange={(e) => setEditedModule(e.target.value)}
+              style={{
+                marginBottom: "8px",
+
+                width: "60%",
+                padding: "8px",
+                border: "1px solid #ccc",
+                borderRadius: "4px",
+              }}
+            />
+            <input
+              type="text"
+              placeholder="Nom et Prénom"
+              value={editedName}
+              onChange={(e) => setEditedName(e.target.value)}
+              style={{
+                marginBottom: "8px",
+                width: "60%",
+                padding: "8px",
+                border: "1px solid #ccc",
+                borderRadius: "4px",
+              }}
+            />
+            <input
+              type="email"
+              placeholder="Email"
+              value={editedEmail}
+              onChange={(e) => setEditedEmail(e.target.value)}
+              style={{
+                marginBottom: "8px",
+                width: "60%",
+                padding: "8px",
+                border: "1px solid #ccc",
+                borderRadius: "4px",
+              }}
+            />
+          </form>
+
+          <Button
+            onClick={handleSaveEdit}
+            autoFocus
+            style={{
+              color: "white",
+              background: "#000066",
+              width: "100px",
+              marginLeft: "10px",
+            }}
+          >
             confirmer
           </Button>
-          <Button onClick={handleCloseEditModal} autoFocus style={{color:'white',background:'#000066',width:'100px',marginLeft:'10px'}}>
+          <Button
+            onClick={handleCloseEditModal}
+            autoFocus
+            style={{
+              color: "white",
+              background: "#000066",
+              width: "100px",
+              marginLeft: "10px",
+            }}
+          >
             Annuler
           </Button>
         </Box>
@@ -455,150 +603,110 @@ function EnseignantPage() {
           <Typography variant="h5" gutterBottom>
             Ajouter des enseignants par cohorte
           </Typography>
-          <div className="file-container"
-            style={{
-            
-            }}
-          >
+          <div className="file-container" style={{}}>
             <input
               type="file"
               accept=".csv"
               onChange={(e) => setCohortFile(e.target.files[0])}
-            
-            /> 
-            <div className="file-place"
-              style={{
-               
-              }}
-            >
+            />
+            <div className="file-place" style={{}}>
               {cohortFile
                 ? cohortFile.name
                 : "Ajouter des enseignants par lot/fichier CSV"}
             </div>
           </div>
 
-          <div className="button-container" >
-            <Button
-              onClick={() => setOpenLotModal(false)}
-              autoFocus
-            >
+          <div className="button-container">
+            <Button onClick={() => setOpenLotModal(false)} autoFocus>
               Confirmer
             </Button>
-            <Button
-              onClick={handleUploadCohort}
-              autoFocus
-            >
+            <Button onClick={handleUploadCohort} autoFocus>
               Annuler
             </Button>
           </div>
         </Box>
       </Modal>
-    
 
-
-
-
-
-
-
-    <Modal open={showOneProftModal} onClose={handleCloseOneProfModal}>
+      <Modal open={showOneProftModal} onClose={handleCloseOneProfModal}>
         <Box className="Modal-seul-prof">
           <Typography variant="h5" gutterBottom>
             Ajouter un seul enseignant
           </Typography>
           <form>
-            
-              <input
-                required
-                type="email"
-                placeholder="Mail"
-                name="mail"
-                value={formData.mail}
-                onChange={handleInputChange}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
-                    document.getElementsByName("nomp")[0].focus(); 
-                  }
-                }}
-              />
-
-              <input
-                required
-                type="text"
-                placeholder="Nom et prenom"
-                name="nomp"
-                value={formData.nomp}
-                onChange={handleInputChange}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
-                    document.getElementsByName("Matricule")[0].focus(); 
-                  }
-                }}
-              />
-
-              <input
-                required
-                type="text"
-                placeholder="Matricule"
-                name="Matricule"
-                value={formData.Matricule}
-                onChange={handleInputChange}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
-                    document.getElementsByName("module")[0].focus(); 
-                  }
-                }}
-              />
-              <input
-                required
-                type="text"
-                placeholder="Module"
-                name="module"
-                value={formData.module}
-                onChange={handleInputChange}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
-                    document.getElementsByName("vide")[0].focus();
-                  }
-                }}
-              
-              />
-         
-          <div className="button-container">
-            <button
-              type="submit"
-              className="button-submit"
-              onClick={() => {
-                handleSubmit(
-                  formData.mail !== "" &&
-                  formData.nomp !== "" &&
-                  formData.Matricule !== "" &&
-                  formData.module !== ""
-                );
+            <input
+              required
+              type="email"
+              placeholder="Mail"
+              name="email"
+              value={formDataOne.email}
+              onChange={handleInputChange}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  document.getElementsByName("name")[0].focus();
+                }
               }}
-            >
-              Confirmer
-            </button>
+            />
 
-            <button
-              className="button-submit"
-              type="submit"
-              onClick={handleCloseOneProfModal}
-            >
-              Annuler
-            </button>
-          </div>
-            
+            <input
+              required
+              type="text"
+              placeholder="Nom et prenom"
+              name="name"
+              value={formDataOne.name}
+              onChange={handleInputChange}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  document.getElementsByName("Matricule")[0].focus();
+                }
+              }}
+            />
+
+            <input
+              required
+              type="text"
+              placeholder="Matricule"
+              name="matricule"
+              value={formDataOne.matricule}
+              onChange={handleInputChange}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  document.getElementsByName("module")[0].focus();
+                }
+              }}
+            />
+
+            <div className="button-container">
+              <button
+                type="submit"
+                className="button-submit"
+                onClick={() => {
+                  handleSubmit(
+                    formDataOne.email !== "" &&
+                      formDataOne.name !== "" &&
+                      formDataOne.matricule !== "" &&
+                      formDataOne.module !== ""
+                  );
+                }}
+              >
+                Confirmer
+              </button>
+
+              <button
+                className="button-submit"
+                type="submit"
+                onClick={handleCloseOneProfModal}
+              >
+                Annuler
+              </button>
+            </div>
           </form>
         </Box>
-        
       </Modal>
     </Box>
   );
-}
+ }
 
 export default EnseignantPage;

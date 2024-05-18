@@ -41,6 +41,8 @@ class MyUser(PermissionsMixin, AbstractBaseUser):
     # first_name = models.CharField(max_length=100)
     # last_name = models.CharField(max_length=200)
     email = models.EmailField(unique=True)
+    name = models.CharField(max_length=300)
+    matricule = models.CharField(max_length=300)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     is_professor = models.BooleanField(default=False)

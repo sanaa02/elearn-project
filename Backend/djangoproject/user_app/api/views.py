@@ -24,6 +24,8 @@ from django.core.exceptions import PermissionDenied
 from django.contrib.auth.hashers import make_password
 from django.utils.crypto import get_random_string
 from django.contrib.auth.password_validation import validate_password
+from student_app.models import Student
+from professor_app.models import Professor
 # Create your views here.
   
   
@@ -105,7 +107,11 @@ class RegistrationView(generics.CreateAPIView):
 
     #     return Response(response_data, status=status.HTTP_201_CREATED)    
     def create(self, request, *args, **kwargs):
+        print(request.data)
         role = request.data.get('role')
+        matricule = request.data.get('matricule')
+        name = request.data.get('name')
+        year = request.data.get('year')
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         
@@ -115,8 +121,15 @@ class RegistrationView(generics.CreateAPIView):
         hashed_password = make_password(password)
         
         
-        user = serializer.save(password=hashed_password)
-        
+        user = serializer.save(password=hashed_password, matricule=matricule, name=name)
+        if role == 'student': 
+            student = Student(user=user, year=year)
+            student.save()
+            
+        if role == 'professor': 
+            professor = Professor(user=user)
+            professor.save()
+            
         response_data = {
             "email": user.email,
             "role": role,

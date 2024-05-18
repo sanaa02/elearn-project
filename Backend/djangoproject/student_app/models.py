@@ -3,7 +3,7 @@ from django.db import models
 # from forums_app import views
 # from user_app import permissions
 from user_app.models import MyUser
-from module_app.models import Year
+
 from ressources_app.models import Ressource, QuizQuestion, QuizOption
 from ressources_app.api.serializers import RessourceSerializer
 from rest_framework.response import Response
@@ -12,9 +12,16 @@ from rest_framework.response import Response
 
 class Student(models.Model):
     user = models.OneToOneField(MyUser, on_delete=models.CASCADE)
-    year = models.ForeignKey(Year, on_delete=models.CASCADE)
+    YEAR_CHOICES = [
+        ('1CPI', '1CPI'),
+        ('2CPI','2CPI'),
+        ('1CS','1CS'),
+        ('2CS','2CS'),
+        ('3CS','3CS'),
+    ]
+    year = models.CharField(max_length=4, choices=YEAR_CHOICES)
     def __str__(self):
-        return self.user
+        return f"{self.user.name} - {self.year}"
     
 
 

@@ -5,7 +5,7 @@ import './App.css';
 import './Components/About'
 import AdminPage from './Components/pages/admin/AdminPage'; 
 import TeacherPage from './Components/pages/Enseignant/Enseignant';
-import StudentPage from './Components/pages/StudentPage'; 
+
 import ApprenantPage from './Components/pages/admin/ApprenantPage';
 import EnseignantPage from './Components/pages/admin/EnseignantPage';
 import ModulePage from './Components/pages/admin/ModulePage';
@@ -33,7 +33,7 @@ function App() {
           <Route path="Modules/:moduleId/Chapitres" element={<Chapitres />} />
           <Route path="Modules/:moduleId/Chapitres/:chapterId" element={<Ressources />} />
         </Route>
-        <Route path="/student" element={<StudentPage />} />
+        
       </Routes>
     </Router>
   );

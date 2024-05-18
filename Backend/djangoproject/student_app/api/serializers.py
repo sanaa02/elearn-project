@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from student_app.models import Student
+from user_app.api.serializers import UserSerializer
 
 # class ResourceSerializer(serializers.ModelSerializer):
 #     class Meta:
@@ -29,6 +30,7 @@ from student_app.models import Student
 #         read_only_fields = ['student']
 
 class StudentSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
     class Meta:
         model = Student
         fields = ['id', 'user',  'year']

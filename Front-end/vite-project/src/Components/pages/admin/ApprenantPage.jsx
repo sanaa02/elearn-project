@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -16,38 +16,41 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import './a.css'
 
-function createData(n, id, promo, name, email, actions) {
-  return { n, id, promo, name, email, actions };
+function createData(id, matricule, name, email, promo, actions) {
+  return { id, matricule, name, email, promo, actions };
 }
 
-const initialRows = [
-  createData(1, 1, "Promo1", "Maroua Djili", "m.djili@esi-sba.dz", {
-    modify: () => console.log("Modifying row with ID:", 1),
-    delete: () => console.log("Deleting row with ID:", 1),
-  }),
-  createData(2, 2, "Promo2", "Maroua Djili", "m.djili@esi-sba.dz", {
-    modify: () => console.log("Modifying row with ID:", 2),
-    delete: () => console.log("Deleting row with ID:", 2),
-  }),
-  createData(3, 3, "Promo3", "Maroua Djili", "m.djili@esi-sba.dz", {
-    modify: () => console.log("Modifying row with ID:", 3),
-    delete: () => console.log("Deleting row with ID:", 3),
-  }),
-  createData(4, 4, "Promo4", "Maroua Djili", "m.djili@esi-sba.dz", {
-    modify: () => console.log("Modifying row with ID:", 4),
-    delete: () => console.log("Deleting row with ID:", 4),
-  }),
-  createData(5, 5, "Promo5", "Inas Chaala", "c.chaala@esi-sba.dz", {
-    modify: () => console.log("Modifying row with ID:", 5),
-    delete: () => console.log("Deleting row with ID:", 5),
-  }),
-];
+ const initialRows = [
+   createData(1, 1, "Promo1", "Maroua Djili", "m.djili@esi-sba.dz", {
+     modify: () => console.log("Modifying row with ID:", 1),
+     delete: () => console.log("Deleting row with ID:", 1),
+   }),
+   createData(2, 2, "Promo2", "Maroua Djili", "m.djili@esi-sba.dz", {
+     modify: () => console.log("Modifying row with ID:", 2),
+     delete: () => console.log("Deleting row with ID:", 2),
+   }),
+   createData(3, 3, "Promo3", "Maroua Djili", "m.djili@esi-sba.dz", {
+     modify: () => console.log("Modifying row with ID:", 3),
+     delete: () => console.log("Deleting row with ID:", 3),
+   }),
+   createData(4, 4, "Promo4", "Maroua Djili", "m.djili@esi-sba.dz", {
+     modify: () => console.log("Modifying row with ID:", 4),
+     delete: () => console.log("Deleting row with ID:", 4),
+   }),
+   createData(5, 5, "Promo5", "Inas Chaala", "c.chaala@esi-sba.dz", {
+     modify: () => console.log("Modifying row with ID:", 5),
+     delete: () => console.log("Deleting row with ID:", 5),
+   }),
+ ];
 
 function ApprenantPage() {
+
   const [openNewApprenantModal, setOpenNewApprenantModal] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedPromo, setSelectedPromo] = useState("");
+  const [selectedYear, setSelectedYear] = useState("");
+  const [selectedYearOne, setSelectedYearOne] = useState("");
   const [openEditModal, setOpenEditModal] = useState(false);
   const [editedRow, setEditedRow] = useState(null);
   const [editedPromo, setEditedPromo] = useState("");
@@ -59,6 +62,7 @@ function ApprenantPage() {
   const [openLotModal, setOpenLotModal] = useState(false);
   const [cohortName, setCohortName] = useState("");
   const [cohortFile, setCohortFile] = useState(null);
+  const [years, setYears] = useState([]);
   //////////////////////////////////////////////ajouter un seul etudiant////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   const [showOneStudentModal, setShowOneStudentModal] = useState(false);
   const [formData, setFormData] = useState({
@@ -68,6 +72,15 @@ function ApprenantPage() {
     cohorte: "",
     Matricule: "",
   });
+
+  const [formDataOne, setFormDataOne] = useState({
+    email: "",
+    promo: "",
+    nom: "",
+    matricule: "",
+    role:"student"
+  });
+
   const handleOpenOneStudentModal = () => {
     setShowOneStudentModal(true);
   };
@@ -82,33 +95,44 @@ function ApprenantPage() {
       [name]: value,
     });
   };
-
-  const handleSubmit = (Empty) => {
+const handleInputChangeOne = (e) => {
+  const { name, value } = e.target;
+  setFormDataOne({
+    ...formDataOne,
+    [name]: value,
+  });
+};
+  const handleSubmit = async  (Empty) => {
     if (Empty == true) {
-      const newRow = createData(
-        rows.length + 1,
-        rows.length + 1,
-        formData.promo,
-        formData.nomp,
-        formData.mail,
-        formData.cohorte,
-        formData.Matricule,
+    }
 
+    const formDataAdd = new FormData();
+    formDataAdd.append("email", formDataOne.email);
+    formDataAdd.append("matricule", formDataOne.matricule);
+    formDataAdd.append("name", formDataOne.nom);
+    formDataAdd.append("year", selectedYearOne);
+    formDataAdd.append("role", formDataOne.role);
+    for (let [key, value] of formDataAdd.entries()) {
+      console.log(`${key}: ${value}`);
+    }
+
+    try {
+      const response = await fetch(
+        "http://127.0.0.1:8000/account/register/",
+        {
+          method: "POST",
+          body: formDataAdd,
+        }
       );
-
-      setRows([...rows, newRow]);
-      setShowOneStudentModal(false);
-      setFormData({
-        mail: "",
-        promo: "",
-        nomp: "",
-        cohorte: "",
-        Matricule: "",
-      });
+    } catch (error) {
+      console.error("Error uploading file:", error);
     }
   };
 
   ///////////////////////////////////////////////////////////////////////////ajouter un seul etudiant finnnnnnnnnnnnnnnnnnnnnnnnnnn////////////////////////////////////////
+
+
+ 
 
   const handleOpenDeleteModal = (row) => {
     setSelectedRow(row);
@@ -132,10 +156,8 @@ function ApprenantPage() {
   };
 
   const handleOptionSelect = (option) => {
-    if (option === "insertion par cohorte") {
-      setOpenNewApprenantModal(false);
-      setOpenCohortModal(true);
-    } else if (option === "insertion par lot") {
+ 
+if (option === "insertion par lot") {
       setOpenNewApprenantModal(false);
       setOpenLotModal(true);
     } else if (option==="un seul apprenant") {
@@ -160,8 +182,8 @@ function ApprenantPage() {
 
   const filteredRows = rows.filter((row) => {
     return (
-      row.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
-      (selectedPromo === "" || row.promo === selectedPromo)
+      row.email.toLowerCase().includes(searchQuery.toLowerCase()) &&
+      (selectedPromo === "" || row.year === selectedPromo)
     );
   });
 
@@ -194,16 +216,110 @@ function ApprenantPage() {
     }
   };
 
-  const handleUploadCohort = () => {
+  useEffect(() => {
+    // Fetch the list of years from the backend
+    const fetchYears = async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/module/years/");
+        const data = await response.json();
+        setYears(data);
+        console.log("Years fetched:", data);
+        
+      } catch (error) {
+        console.error("Error fetching years:", error);
+      }
+    };
+
+    fetchYears();
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      // Make API call using fetch
+      const response = await fetch("http://127.0.0.1:8000/student/");
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+      const data = await response.json(); // Parse JSON response
+      console.log("Fetched data:", data);
+
+      // Process the data and create rows
+      const processedData = data.map((item, index) => {
+        return createData(
+
+          item.user.id,
+          item.user.matricule,
+          item.user.name,
+          item.user.email,
+
+          item.year,
+
+          // index + 1,
+        );
+      });
+
+      console.log(processedData)
+
+      // Update state with the fetched rows
+      setRows(processedData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const handleUploadCohort = async () => {
     // Gérer l'envoi du fichier de la cohorte
     console.log("Nom de la cohorte :", cohortName);
-    console.log("Promotion sélectionnée :", selectedPromo);
+    console.log("Promotion sélectionnée :", selectedYear);
     console.log("Fichier de la cohorte :", cohortFile);
+
+    // if (!selectedPromo || !cohortFile) {
+    //   alert("Please select a promo and a file.");
+    //   return;
+    // }
+
+    // setSelectedPromo()
+
+    const formData = new FormData();
+    formData.append("year", selectedYear);
+    formData.append("file", cohortFile);
+     for (let [key, value] of formData.entries()) {
+       console.log(`${key}: ${value}`);
+     }
+
+    try {
+      const response = await fetch("http://127.0.0.1:8000/student/upload/", {
+        method: "POST",
+        body: formData
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.style.display = "none";
+      a.href = url;
+      a.download = `student_passwords_${selectedYear}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+
+      // const result = await response.json();
+      console.log("Upload successful:", result);
+      setOpenLotModal(false);
+    } catch (error) {
+      console.error("Error uploading file:", error);
+    }
+
     setOpenCohortModal(false);
   };
 
   return (
-    <Box style={{  }}>
+    <Box style={{}}>
       <Box sx={{ display: "flex" }}>
         <Typography variant="subtitle2" align="left" gutterBottom>
           Liste des apprenants
@@ -222,18 +338,18 @@ function ApprenantPage() {
           displayEmpty
           inputProps={{ "aria-label": "Without label" }}
           sx={{
-            marginLeft: 'auto',
-            backgroundColor: '#D9D9D9',
-            borderRadius: '5px',
-            paddingLeft: '5px',
-            paddingRight: '5px',
+            marginLeft: "auto",
+            backgroundColor: "#D9D9D9",
+            borderRadius: "5px",
+            paddingLeft: "5px",
+            paddingRight: "5px",
             width: "150px",
-            marginBottom:'10px'
+            marginBottom: "10px",
           }}
           size="small"
         >
           <MenuItem value="">Tous</MenuItem>
-          {["Promo1", "Promo2", "Promo3", "Promo4", "Promo5"].map((promo) => (
+          {years.map((promo) => (
             <MenuItem key={promo} value={promo}>
               {promo}
             </MenuItem>
@@ -247,11 +363,12 @@ function ApprenantPage() {
         >
           <TableHead>
             <TableRow>
-              <TableCell sx={{ textAlign: "center" }}>N°</TableCell>
               <TableCell sx={{ textAlign: "center" }}>ID</TableCell>
-              <TableCell sx={{ textAlign: "center" }}>Promo</TableCell>
+              <TableCell sx={{ textAlign: "center" }}>Matricule</TableCell>
+
               <TableCell sx={{ textAlign: "center" }}>Nom et Prénom</TableCell>
               <TableCell sx={{ textAlign: "center" }}>Email</TableCell>
+              <TableCell sx={{ textAlign: "center" }}>Année</TableCell>
               <TableCell sx={{ textAlign: "center" }}>
                 <Button
                   onClick={handleNewApprenant}
@@ -275,18 +392,26 @@ function ApprenantPage() {
                   textAlign: "center",
                 }}
               >
-                <TableCell component="th" scope="row">
+                {/* <TableCell
+                  component="th"
+                  scope="row"
+                  style={{ textAlign: "center" }}
+                >
                   {row.n}
-                </TableCell>
+                </TableCell> */}
                 <TableCell style={{ textAlign: "center" }}>{row.id}</TableCell>
                 <TableCell style={{ textAlign: "center" }}>
-                  {row.promo}
+                  {row.matricule}
                 </TableCell>
+
                 <TableCell style={{ textAlign: "center" }}>
                   {row.name}
                 </TableCell>
                 <TableCell style={{ textAlign: "center" }}>
                   {row.email}
+                </TableCell>
+                <TableCell style={{ textAlign: "center" }}>
+                  {row.promo}
                 </TableCell>
                 <TableCell style={{ textAlign: "center" }}>
                   <Button
@@ -324,11 +449,11 @@ function ApprenantPage() {
         <Box
           sx={{
             position: "absolute",
-            top: "51.5%",
-            left: "82%",
+            top: "50%",
+            left: "50%",
             transform: "translate(-50%, -50%)",
             width: 280,
-            height: 200,
+            height: 150,
             boxShadow: 25,
             p: 4,
             textAlign: "center",
@@ -352,18 +477,7 @@ function ApprenantPage() {
             >
               Un seul apprenant
             </Button>
-            <Button
-              onClick={() => handleOptionSelect("insertion par cohorte")}
-              variant="contained"
-              style={{
-                backgroundColor: "#1F7848",
-                marginBottom: "0.2rem",
-                width: "80%",
-                fontSize: "0.7rem",
-              }}
-            >
-              Insertion par cohorte
-            </Button>
+
             <Button
               onClick={() => handleOptionSelect("insertion par lot")}
               variant="contained"
@@ -396,22 +510,44 @@ function ApprenantPage() {
             boxShadow: 24,
             p: 4,
             textAlign: "center",
-            background:'white',
+            background: "white",
             backgroundSize: "cover",
             backgroundPosition: "center",
             borderRadius: "15px",
-            
           }}
         >
-          <h2 id="modal-title" style={{color:'#000066',marginBottom:'50px'}}>Confirmer la suppression</h2>
-          <p id="modal-description" style={{marginBottom:'50px'}}>
+          <h2
+            id="modal-title"
+            style={{ color: "#000066", marginBottom: "50px" }}
+          >
+            Confirmer la suppression
+          </h2>
+          <p id="modal-description" style={{ marginBottom: "50px" }}>
             {selectedRow &&
               `Voulez-vous vraiment supprimer l'apprenant : ${selectedRow.name} ?.`}
           </p>
-          <Button onClick={handleDelete}  autoFocus style={{color:'white',background:'#000066',width:'100px',marginLeft:'10px'}}>
+          <Button
+            onClick={handleDelete}
+            autoFocus
+            style={{
+              color: "white",
+              background: "#000066",
+              width: "100px",
+              marginLeft: "10px",
+            }}
+          >
             Supprimer
           </Button>
-          <Button onClick={handleCloseDeleteModal} autoFocus style={{color:'white',background:'#000066',width:'100px',marginLeft:'10px'}}>
+          <Button
+            onClick={handleCloseDeleteModal}
+            autoFocus
+            style={{
+              color: "white",
+              background: "#000066",
+              width: "100px",
+              marginLeft: "10px",
+            }}
+          >
             Annuler
           </Button>
         </Box>
@@ -434,117 +570,144 @@ function ApprenantPage() {
             boxShadow: 24,
             p: 4,
             textAlign: "center",
-            background:'white',
+            background: "white",
             backgroundSize: "cover",
             backgroundPosition: "center",
             borderRadius: "15px",
           }}
         >
-          <h2 id="modal-title" style={{color:'#000066',marginBottom:'50px'}}>Modifier apprenant</h2>
-          <form style={{display:'flex',flexDirection:'column',alignItems:'center', marginBottom:'20px'}}>
-          <input
-        type="text"
-        placeholder="Promo"
-        value={editedPromo}
-        onChange={(e) => setEditedPromo(e.target.value)}
-        style={{
-          marginBottom: "8px",
-          display: "block",
-          width: "60%",
-          padding: "8px",
-        }}
-      />
-      <input
-        type="text"
-        placeholder="Nom et Prénom"
-        value={editedName}
-        onChange={(e) => setEditedName(e.target.value)}
-        style={{
-          marginBottom: "8px",
-          display: "block",
-          width: "60%",
-          padding: "8px",
-        }}
-      />
-      <input
-        type="email"
-        placeholder="Email"
-        value={editedEmail}
-        onChange={(e) => setEditedEmail(e.target.value)}
-        style={{
-          marginBottom: "8px",
-          display: "block",
-          width: "60%",
-          padding: "8px",
-        }}
-      />
-      </form>
-          <Button onClick={handleSaveEdit}  autoFocus style={{color:'white',background:'#000066',width:'100px',marginLeft:'10px'}}>
+          <h2
+            id="modal-title"
+            style={{ color: "#000066", marginBottom: "50px" }}
+          >
+            Modifier apprenant
+          </h2>
+          <form
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              marginBottom: "20px",
+            }}
+          >
+            <input
+              type="text"
+              placeholder="Promo"
+              value={editedPromo}
+              onChange={(e) => setEditedPromo(e.target.value)}
+              style={{
+                marginBottom: "8px",
+                display: "block",
+                width: "60%",
+                padding: "8px",
+              }}
+            />
+            <input
+              type="text"
+              placeholder="Nom et Prénom"
+              value={editedName}
+              onChange={(e) => setEditedName(e.target.value)}
+              style={{
+                marginBottom: "8px",
+                display: "block",
+                width: "60%",
+                padding: "8px",
+              }}
+            />
+            <input
+              type="email"
+              placeholder="Email"
+              value={editedEmail}
+              onChange={(e) => setEditedEmail(e.target.value)}
+              style={{
+                marginBottom: "8px",
+                display: "block",
+                width: "60%",
+                padding: "8px",
+              }}
+            />
+          </form>
+          <Button
+            onClick={handleSaveEdit}
+            autoFocus
+            style={{
+              color: "white",
+              background: "#000066",
+              width: "100px",
+              marginLeft: "10px",
+            }}
+          >
             Confirmer
           </Button>
-          <Button onClick={handleCloseEditModal} autoFocus style={{color:'white',background:'#000066',width:'100px',marginLeft:'10px'}}>
+          <Button
+            onClick={handleCloseEditModal}
+            autoFocus
+            style={{
+              color: "white",
+              background: "#000066",
+              width: "100px",
+              marginLeft: "10px",
+            }}
+          >
             Annuler
           </Button>
         </Box>
       </Modal>
-      <Modal
-        open={openCohortModal}
-        onClose={() => setOpenCohortModal(false)}
-        aria-labelledby="modal-title"
-        aria-describedby="modal-description"
-      >
-        <Box className="cohorte-modal">
-          <Typography variant="h5" gutterBottom>
-            Ajouter des apprenants par cohorte
-          </Typography>
-          <form>
-            <input
-              required
-              type="text"
-              placeholder="Nom de la cohorte"
-              value={cohortName}
-              onChange={(e) => setCohortName(e.target.value)}
-            />
 
-            <input
-              required
-              type="text"
-              value={selectedPromo}
-              onChange={(e) => setSelectedPromo(e.target.value)}
-              placeholder="Promo"
-            />
-
-            <div className="file-container">
-              <input
-                type="file"
-                accept=".csv"
-                onChange={(e) => setCohortFile(e.target.files[0])}
-              />
-              <div className="file-place">
-                {cohortFile ? cohortFile.name : "Ajouter des enseignants"}
-              </div>
-            </div>
-          </form>
-          <div className="button-container" >
-            <Button onClick={handleUploadCohort} color="primary" autoFocus>
-              Confirmer
-            </Button>
-            <Button onClick={() => setOpenCohortModal(false)}>Annuler</Button>
-          </div>
-        </Box>
-      </Modal>
       <Modal open={openLotModal} onClose={() => setOpenLotModal(false)}>
         <Box className="modal-lot">
           <Typography variant="h5" gutterBottom>
             Ajouter des apprenants par fichier csv
           </Typography>
           <form>
-            <input
+            {/* <input
               type="text"
               value={selectedPromo}
               onChange={(e) => setSelectedPromo(e.target.value)}
               placeholder="Promo"
-            />
+            /> */}
+            {/* ///sanaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa */}
+            {/* <Select
+              value={selectedPromo}
+              onChange={(e) => setSelectedPromo(e.target.value)}
+              displayEmpty
+            >
+              <MenuItem value="" disabled>
+                Year
+              </MenuItem>
+              {years.map((year) => (
+                <MenuItem key={promo.value} value={promo.value}>
+                  {promo.label}
+                </MenuItem>
+              ))}
+            </Select> */}
+
+            <Select
+              className="year-select"
+              value={selectedYear}
+              onChange={(e) => setSelectedYear(e.target.value)}
+              displayEmpty
+              inputProps={{ "aria-label": "Without label" }}
+              sx={{
+                margin: "20px",
+                backgroundColor: "#D9D9D9",
+                borderRadius: "5px",
+                paddingLeft: "5px",
+                paddingRight: "5px",
+                height: "40px",
+                width: "350px",
+                position: "relative",
+                marginBottom: "10px",
+              }}
+              size="small"
+            >
+              <MenuItem value="">Année</MenuItem>
+              {years.map((year) => (
+                <MenuItem key={year} value={year}>
+                  {year}
+                </MenuItem>
+              ))}
+            </Select>
 
             <div className="file-container">
               <input
@@ -553,13 +716,13 @@ function ApprenantPage() {
                 onChange={(e) => setCohortFile(e.target.files[0])}
               />
               <div className="file-place">
-                {cohortFile ? cohortFile.name : "Ajouter des enseignants"}
+                {cohortFile ? cohortFile.name : "Ajouter des etudiants"}
               </div>
             </div>
           </form>
           <div className="button-container">
             <Button
-              onClick={handleUploadCohort}
+              onClick={() => handleUploadCohort(selectedPromo, cohortFile)}
               color="primary"
               autoFocus
               className="button-submit"
@@ -589,9 +752,9 @@ function ApprenantPage() {
                 required
                 type="text"
                 placeholder="Mail"
-                name="mail"
-                value={formData.mail}
-                onChange={handleInputChange}
+                name="email"
+                value={formDataOne.email}
+                onChange={handleInputChangeOne}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     e.preventDefault();
@@ -599,12 +762,12 @@ function ApprenantPage() {
                   }
                 }}
               />
-              <input
+              {/* <input
                 type="text"
                 placeholder="Promo"
                 required
                 name="promo"
-                value={formData.promo}
+                value={formDataOne.promo}
                 onChange={handleInputChange}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
@@ -612,14 +775,40 @@ function ApprenantPage() {
                     document.getElementsByName("nomp")[0].focus();
                   }
                 }}
-              />
+              /> */}
+              <Select
+                className="year-select"
+                value={selectedYearOne}
+                onChange={(e) => setSelectedYearOne(e.target.value)}
+                displayEmpty
+                inputProps={{ "aria-label": "Without label" }}
+                sx={{
+                  margin: "20px",
+                  backgroundColor: "#D9D9D9",
+                  borderRadius: "5px",
+                  paddingLeft: "5px",
+                  paddingRight: "5px",
+                  height: "40px",
+                  width: "350px",
+                  position: "relative",
+                  marginBottom: "10px",
+                }}
+                size="small"
+              >
+                <MenuItem value="">Année</MenuItem>
+                {years.map((year) => (
+                  <MenuItem key={year} value={year}>
+                    {year}
+                  </MenuItem>
+                ))}
+              </Select>
               <input
                 required
                 type="text"
                 placeholder="Nom et prenom"
-                name="nomp"
-                value={formData.nomp}
-                onChange={handleInputChange}
+                name="nom"
+                value={formDataOne.nom}
+                onChange={handleInputChangeOne}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     e.preventDefault();
@@ -627,27 +816,14 @@ function ApprenantPage() {
                   }
                 }}
               />
-              <input
-                required
-                type="text"
-                placeholder="Cohorte"
-                name="cohorte"
-                value={formData.cohorte}
-                onChange={handleInputChange}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
-                    document.getElementsByName("Matricule")[0].focus();
-                  }
-                }}
-              />
+
               <input
                 required
                 type="text"
                 placeholder="Matricule"
-                name="Matricule"
-                value={formData.Matricule}
-                onChange={handleInputChange}
+                name="matricule"
+                value={formDataOne.matricule}
+                onChange={handleInputChangeOne}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     e.preventDefault();
@@ -667,11 +843,10 @@ function ApprenantPage() {
                   type="submit"
                   onClick={() => {
                     handleSubmit(
-                      formData.mail !== "" &&
-                        formData.Matricule !== "" &&
-                        formData.promo !== "" &&
-                        formData.cohorte !== "" &&
-                        formData.nomp !== ""
+                      formDataOne.email !== "" &&
+                        formDataOne.matricule !== "" &&
+                        formDataOne.promo !== "" &&
+                        formDataOne.nom !== ""
                     );
                   }}
                 >
@@ -690,9 +865,6 @@ function ApprenantPage() {
           </form>
         </Box>
       </Modal>
-
-
-      
     </Box>
   );
 }

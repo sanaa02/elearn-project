@@ -24,7 +24,7 @@ class UploadProfessorView(generics.CreateAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         file = serializer.validated_data['file']
-        
+        print("request.data:", request.data)
         try:
             reader = pd.read_csv(file)
             response_data = []
@@ -63,6 +63,15 @@ class UploadProfessorView(generics.CreateAPIView):
             writer.writerow([item['email'], item['password']])
         
         return response
+    
+class ProfessorAvailable(APIView):
+     def get(self, request):
+        # Filter MyUser objects based on is_professor field
+        professors_without_modules = Professor.objects.filter(modules__isnull=True)
+        serializer = ProfessorSerializer(professors_without_modules, many=True)
+        # users = MyUser.objects.filter(is_professor=True)
+        # serializer = UserSerializer(users, many=True)
+        return Response(serializer.data)
 
 class ProfessorList(APIView):
      def get(self, request):
