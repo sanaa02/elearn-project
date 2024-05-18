@@ -5,11 +5,11 @@ import './App.css';
 import './Components/About'
 import AdminPage from './Components/pages/admin/AdminPage'; 
 import TeacherPage from './Components/pages/Enseignant/Enseignant';
-<<<<<<< HEAD
+// <<<<<<< HEAD
 import StudentPage from '../src/Components/pages/Student/StudentPage'; 
-=======
+// =======
 
->>>>>>> sanaa-admin
+// >>>>>>> sanaa-admin
 import ApprenantPage from './Components/pages/admin/ApprenantPage';
 import EnseignantPage from './Components/pages/admin/EnseignantPage';
 import ModulePage from './Components/pages/admin/ModulePage';
@@ -50,7 +50,7 @@ function App() {
           <Route path="Forums" element={<ListForum />} />
           <Route path="Forums/:forumId" element={<Forum />} />
         </Route>
-<<<<<<< HEAD
+
         <Route path="/StudentPage" element={<StudentPage />}>
   <Route path="Modules_Etudiant" element={<Modules_Etudiant />} />
   <Route path="Modules_Etudiant/:moduleId/Chapitres_Etudiant" element={<Chapitres_Etudiant />} />
@@ -62,8 +62,7 @@ function App() {
   <Route path="Forums/:forumId" element={<ForumS />} />
 </Route>
 
-=======
->>>>>>> sanaa-admin
+
         
       </Routes>
     </Router>
