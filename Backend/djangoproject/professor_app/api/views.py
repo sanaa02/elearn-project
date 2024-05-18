@@ -31,6 +31,7 @@ class UploadProfessorView(generics.CreateAPIView):
             
             for index, row in reader.iterrows():  # Iterate over rows using iterrows() method
                 email = row['email']
+                print("row", row)
                 # Generate a random password for the professor
                 password = ''.join(random.choices(string.ascii_letters + string.digits, k=12))
                 

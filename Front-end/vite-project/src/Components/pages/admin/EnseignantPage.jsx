@@ -44,6 +44,8 @@ function EnseignantPage() {
   const [cohortFile, setCohortFile] = useState(null);
   const [openLotModal, setOpenLotModal] = useState(false);
 
+  
+
   const handleOpenDeleteModal = (row) => {
     setSelectedRow(row);
   };
@@ -71,10 +73,49 @@ function EnseignantPage() {
     } else {
       console.log("Option sélectionnée :", option);
       handleOpenOneproftModal();
-      setOpenNewEnseignantModal(false)}}
-      const handleUploadCohort = () => {
+      setOpenNewEnseignantModal(false)}
+    }
+      
+      const handleUploadCohort = async () => {
         
         console.log("Fichier de cohorte chargé :", cohortFile);
+
+        const formData = new FormData();
+    
+    formData.append("file", cohortFile);
+     for (let [key, value] of formData.entries()) {
+       console.log(`${key}: ${value}`);
+     }
+
+    try {
+      const response = await fetch("http://127.0.0.1:8000/professor/upload/", {
+        method: "POST",
+        body: formData
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.style.display = "none";
+      a.href = url;
+      a.download = `student_passwords_${selectedYear}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+
+      // const result = await response.json();
+      console.log("Upload successful:", result);
+      setOpenLotModal(false);
+    } catch (error) {
+      console.error("Error uploading file:", error);
+    }
+
+
+        
         
         setOpenLotModal(false);
       };
@@ -617,10 +658,10 @@ function EnseignantPage() {
           </div>
 
           <div className="button-container">
-            <Button onClick={() => setOpenLotModal(false)} autoFocus>
+            <Button onClick={handleUploadCohort} autoFocus>
               Confirmer
             </Button>
-            <Button onClick={handleUploadCohort} autoFocus>
+            <Button onClick={() => setOpenLotModal(false)} autoFocus>
               Annuler
             </Button>
           </div>
