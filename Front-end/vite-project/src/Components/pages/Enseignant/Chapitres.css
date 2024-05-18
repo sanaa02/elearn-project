@@ -17,6 +17,7 @@ body{
     padding: 10px;
     font-weight: bold;
     
+    
   }
   
   .title-chapters{
@@ -31,6 +32,12 @@ body{
       justify-content: space-between;
       width: 100%;
       border-bottom: 2px solid #000066;
+      
+    }
+    .chapter-header h3{
+      max-width: 100%;
+      word-wrap: break-word;
+      font-size: 15px;
     }
     .link-chapitre{
        
@@ -54,7 +61,7 @@ body{
         transition: .5s;
       }
       
-      .Box-chapters .Description {
+      .Box-chapters .Description p{
         max-width: 200px;
         word-wrap: break-word;
       }

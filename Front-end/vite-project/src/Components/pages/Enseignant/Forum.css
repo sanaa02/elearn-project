@@ -1,0 +1,142 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap");
+
+.Forum
+ {
+  display: flex;
+  width: 100vw;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.homeTitle
+{
+  margin-bottom: 20px;
+}
+
+
+.ForumForm {
+  display: flex;
+
+  flex-direction: column;
+  width: 80%;
+
+  position: fixed;
+  bottom: 2%;
+}
+
+
+.thread-container {
+  flex-direction: column;
+
+  padding-left: 10px;
+}
+.thread__item {
+  border-radius: 5px;
+  background-color: white;
+  padding: 20px;
+  width: 70%;
+  
+  box-shadow: 0 0 1px 1px #c8e4ec;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  word-wrap: break-word; /* Pour les navigateurs anciens */
+}
+.thread-date {
+  width:70% ;
+font-size: 0.7em;
+color: grey;
+display: flex;
+justify-content: flex-end;
+}
+
+.react__container {
+  display: flex;
+  align-items: center;
+}
+
+
+.homeTitle {
+  color: #000066;
+ 
+}
+
+
+.replay-date{
+  width:65% ;
+  font-size: 0.7em;
+  color: grey;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.replay_box {
+  display: flex;
+  
+  flex-direction: column;
+  width:100%;
+  padding-left:35px;
+}
+.reply__item {
+    border-radius: 5px;
+    background-color: white;
+    padding: 20px;
+    width: 65%;
+
+    box-shadow: 0 0 1px 1px #c8e4ec;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+  }
+.replyInput{
+    
+  border-radius: 5px;
+  background-color: white;
+  padding: 20px;
+  width: 65%;
+
+  box-shadow: 0 0 1px 1px #c8e4ec;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  word-wrap: break-word;
+}
+
+  
+.replyInput input{
+    border:none ;
+    outline: none;
+    word-wrap: break-word; 
+}
+
+.messageInput{
+  border-radius: 5px;
+  background-color: white;
+  padding: 20px;
+  width: 90%;
+  
+  box-shadow: 0 0 1px 1px #c8e4ec;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  word-wrap: break-word; 
+  outline: none;
+
+}
+.messageInput input {
+    border:none ;
+    outline: none;
+ 
+ 
+    word-wrap: break-word;  
+}
+
+
+
