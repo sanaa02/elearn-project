@@ -23,7 +23,7 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import BookIcon from "@mui/icons-material/Book";
-import AssignmentIcon from "@mui/icons-material/Assignment";
+
 import ForumIcon from "@mui/icons-material/Forum";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import DashboardIcon from "@mui/icons-material/Dashboard";
@@ -187,26 +187,8 @@ const TeacherSideBar = () => {
 </ListItem>
 
 
-<ListItem disablePadding className="list-item">
-  <NavLink
-    to="DevoirEtQuizze"
-    style={{
-      textDecoration: "none",
-      color: "inherit",
-      width: '100%',
-    }}
-    className="nav-link"
-    activeClassName="active"
-    exact
-  >
-    <ListItemButton sx={{ width: "100%" }}>
-      <ListItemIcon sx={{ color: "inherit" }}>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Devoir & Quizze" sx={{ color: "#000066" }} />
-    </ListItemButton>
-  </NavLink>
-</ListItem>
+
+
 
         <ListItem disablePadding className="list-item">
   <NavLink

@@ -1,0 +1,481 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+*{ font-family: "Roboto", sans-serif;}
+
+
+.add-question {
+  background-color: #000066;
+  color: white;
+  display: flex;
+  height: 35px;
+  width: 160px;
+  align-items: center;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1px solid #000066;
+  border-radius: 6px;
+  position: fixed;
+  top: 200px;
+  right: 25px;
+  transform: translate(-10%, 0);
+}
+.partager {
+  background-color: #000066;
+  color: white;
+  display: flex;
+  height: 35px;
+  width: 160px;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1px solid #000066;
+  border-radius: 6px;
+  position: fixed;
+  bottom:5% ;
+  right: 15px;
+  transform: translate(-10%, 0);
+}
+.deadline-container {
+  position: fixed;
+  top: 90px;
+  right: 0px;
+  transform: translate(-10%, 0); /* Optionnel : pour centrer horizontalement */
+
+  padding: 10px; /* Espacement interne */
+  border: none;
+  border-radius: 5px; /* Coins arrondis */
+}
+.deadline {
+  width: 260px;
+  height: 35px;
+  border: 1px solid grey;
+  border-radius: 6px;
+  outline: none;
+}
+.deadline-title {
+  color: #647480;
+}
+.quiz-title {
+  color: #000066;
+  font-weight: bold;
+  font-size: 26px;
+}
+.question-label {
+  position: relative;
+
+  font-weight: bold;
+}
+.button-container {
+  position: relative;
+}
+.Modal-add-question {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 680px;
+  height: 550px;
+
+  border-radius: 15px;
+
+  background-color: white;
+}
+.Modal-add-question form {
+}
+
+.Modal-add-question .MuiTypography-root {
+  background-color: #000066;
+  position: relative;
+  font-size: 20px;
+  font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centrer verticalement */
+  align-items: center; /* Centrer horizontalement */
+  text-align: center;
+  color: white;
+  width: 680px; /* Réglez la largeur sur celle du modal */
+  margin-left: auto; /* Déplacez-le vers la gauche pour occuper tout l'espace disponible */
+  margin-right: auto;
+  height: 50px;
+  border-radius: 15px;
+  border-bottom-left-radius: 0; /* Éliminer le border radius du coin inférieur gauche */
+  border-bottom-right-radius: 0;
+}
+
+.questionETnote {
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+  margin-left: 12px;
+}
+.questionETnote :nth-child(2) {
+  margin-right: 70px;
+}
+.questionETnote-input {
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+.Modal-add-question form .question-text {
+  position: relative;
+  height: 40px;
+  width: 400px;
+  border: solid 0.5px rgb(223, 222, 222);
+  margin: 10px;
+  padding: 10px;
+}
+
+.Modal-add-question form .note-text {
+  position: relative;
+  height: 40px;
+  width: 100px;
+  border: solid 0.5px rgb(223, 222, 222);
+  margin: 10px;
+  padding: 10px;
+}
+.reponse-inputs {
+  display: flex;
+  flex-direction: column;
+}
+.reponse-text {
+  position: relative;
+  height: 40px;
+  width: 400px;
+  border: solid 0.5px rgb(223, 222, 222);
+  margin: 10px;
+  padding: 10px;
+}
+.reponse-zone {
+  display: flex;
+}
+
+.sumbit-button {
+  background-color: #000066;
+  color: white;
+  display: flex;
+  height: 35px;
+  width: 100px;
+  justify-content: center; /* Centrer verticalement */
+  align-items: center; /* Centrer horizontalement */
+  text-align: center;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1px solid #000066;
+  border-radius: 6px;
+  position: relative;
+  margin: 20px;
+  bottom:0%
+}
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+}
+
+.questions-list {
+  margin-top: 50px;
+  height: auto;
+  width: 800px;
+  padding: 20px;
+
+  list-style: none;
+}
+.Question-affichage {
+  display: flex;
+  flex-direction: row;
+  margin-right: 40px;
+  padding-left: 10px;
+  margin-top: 10px;
+}
+.afficher-question {
+  margin: 10px;
+  padding-left: 10px;
+  max-width: 900px; 
+  word-wrap: break-word; 
+  font-size: 1.25em;
+}
+
+
+.afficher-note{
+
+}
+.afficher-reponse{
+  margin-left: 30px; 
+  word-wrap: break-word; 
+}
+.reponses-list {
+  padding-left: 30px;
+
+
+}
+.reponses-list-item {
+  background-color: white;
+  border: 1px solid rgb(232, 229, 229);
+  border-radius:10px;
+  padding: 10px;
+  margin: 10px;
+  margin-top: 10px;
+  background:white ;
+}
+
+.reponses-list-item {
+ 
+}
+
+.selected-response {
+  color: green;
+  border: 1px solid green;
+}
+.reponse-checkbox:checked {
+  color: green; /* Couleur de la coche lorsque le checkbox est coché */
+}
+
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+*{ font-family: "Roboto", sans-serif;}
+
+
+.add-question {
+  background-color: #000066;
+  color: white;
+  display: flex;
+  height: 35px;
+  width: 160px;
+  align-items: center;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1px solid #000066;
+  border-radius: 6px;
+  position: fixed;
+  top: 200px;
+  right: 25px;
+  transform: translate(-10%, 0);
+}
+.partager {
+  background-color: #000066;
+  color: white;
+  display: flex;
+  height: 35px;
+  width: 160px;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1px solid #000066;
+  border-radius: 6px;
+  position: fixed;
+  bottom:5% ;
+  right: 15px;
+  transform: translate(-10%, 0);
+}
+.deadline-container {
+  position: fixed;
+  top: 90px;
+  right: 0px;
+  transform: translate(-10%, 0); /* Optionnel : pour centrer horizontalement */
+
+  padding: 10px; /* Espacement interne */
+  border: none;
+  border-radius: 5px; /* Coins arrondis */
+}
+.deadline {
+  width: 260px;
+  height: 35px;
+  border: 1px solid grey;
+  border-radius: 6px;
+}
+.deadline-title {
+  color: #647480;
+}
+.quiz-title {
+  color: #000066;
+  font-weight: bold;
+  font-size: 26px;
+}
+.question-label {
+  position: relative;
+
+  font-weight: bold;
+}
+.button-container {
+  position: relative;
+}
+.Modal-add-question {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 680px;
+  height: 550px;
+
+  border-radius: 15px;
+
+  background-color: white;
+}
+.Modal-add-question form {
+}
+
+.Modal-add-question .MuiTypography-root {
+  background-color: #000066;
+  position: relative;
+  font-size: 20px;
+  font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centrer verticalement */
+  align-items: center; /* Centrer horizontalement */
+  text-align: center;
+  color: white;
+  width: 680px; /* Réglez la largeur sur celle du modal */
+  margin-left: auto; /* Déplacez-le vers la gauche pour occuper tout l'espace disponible */
+  margin-right: auto;
+  height: 50px;
+  border-radius: 15px;
+  border-bottom-left-radius: 0; /* Éliminer le border radius du coin inférieur gauche */
+  border-bottom-right-radius: 0;
+}
+
+.questionETnote {
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+  margin-left: 12px;
+}
+.questionETnote :nth-child(2) {
+  margin-right: 70px;
+}
+.questionETnote-input {
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+.Modal-add-question form .question-text {
+  position: relative;
+  height: 40px;
+  width: 400px;
+  border: solid 0.5px rgb(223, 222, 222);
+  margin: 10px;
+  padding: 10px;
+}
+
+.Modal-add-question form .note-text {
+  position: relative;
+  height: 40px;
+  width: 100px;
+  border: solid 0.5px rgb(223, 222, 222);
+  margin: 10px;
+  padding: 10px;
+}
+.reponse-inputs {
+  display: flex;
+  flex-direction: column;
+}
+.reponse-text {
+  position: relative;
+  height: 40px;
+  width: 400px;
+  border: solid 0.5px rgb(223, 222, 222);
+  margin: 10px;
+  padding: 10px;
+}
+.reponse-zone {
+  display: flex;
+}
+
+.sumbit-button {
+  background-color: #000066;
+  color: white;
+  display: flex;
+  height: 35px;
+  width: 100px;
+  justify-content: center; /* Centrer verticalement */
+  align-items: center; /* Centrer horizontalement */
+  text-align: center;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1px solid #000066;
+  border-radius: 6px;
+  position: relative;
+  margin: 20px;
+  bottom:0%
+}
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+}
+
+.questions-list {
+  margin-top: 50px;
+  height: auto;
+  width: 800px;
+  padding: 20px;
+
+  list-style: none;
+}
+.Question-affichage {
+  display: flex;
+  flex-direction: row;
+  margin-right: 40px;
+  padding-left: 10px;
+  margin-top: 10px;
+}
+.afficher-question {
+  margin: 10px;
+  padding-left: 10px;
+  max-width: 900px; 
+  word-wrap: break-word; 
+  font-size: 1.25em;
+}
+
+
+.afficher-note{
+
+}
+.afficher-reponse{
+  margin-left: 30px; 
+  word-wrap: break-word; 
+}
+.reponses-list {
+  padding-left: 30px;
+
+
+}
+.reponses-list-item {
+  background-color: white;
+  border: 1px solid rgb(232, 229, 229);
+  border-radius:10px;
+  padding: 10px;
+  margin: 10px;
+  margin-top: 10px;
+  background:white ;
+}
+
+.reponses-list-item {
+ 
+}
+
+.selected-response {
+  color: green;
+  border: 1px solid green;
+}
+.reponse-checkbox:checked {
+  color: green; /* Couleur de la coche lorsque le checkbox est coché */
+}

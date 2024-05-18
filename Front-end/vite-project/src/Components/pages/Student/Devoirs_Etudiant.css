@@ -1,0 +1,58 @@
+/* Titre des devoirs */
+.title {
+    color: #000066;
+   
+  }
+  
+  .title-devoirs {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    color: #000066;
+    margin-top: 70px;
+    
+  }
+  
+  .title-devoirs h3 {
+    flex: 1;
+  }
+  
+  
+  /* Conteneur de chaque devoir */
+  .Box-devoirs {
+    width: 350px;
+    background: white;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .Box-devoirs:hover{
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;
+  }
+  
+  /* Titre de chaque devoir */
+  .title-of-Devoir {
+    color: #000066;
+    width: 90%;
+    padding: 10px;
+    font-weight: bold;
+    border-bottom: 2px solid #000066;
+  }
+  .title-of-Devoir h3{
+        font-size: 15px;
+      }
+ 
+  
+  /* Description de chaque devoir */
+  .Description {
+   
+    font-size: 13px;
+  }
+ .devoir-link{
+  text-decoration: none;
+ } 
+
+  

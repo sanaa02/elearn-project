@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState } from 'react';
 import { Box, Divider, Button, Menu, MenuItem } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
@@ -5,8 +6,17 @@ import QuizIcon from '@mui/icons-material/Quiz';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import './Quizzes.css';
 import AddQuizModal from './AddQuizModal';
+/////////////////////////////////////////////////////////////////////
+import { Link, useParams } from 'react-router-dom';
 
 function Quizzes() {
+  ///////////////////////////////////////////
+  const { moduleId } = useParams();
+  const moduleDetails = {
+    name: 'Reseau 01',
+    id: parseInt(moduleId, 10),
+  };
+////////////////////////////////////////////////////////////////
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [quizzes, setQuizzes] = useState([
     { id: 1, title: 'Quiz 1', description: 'Description du quiz 1' },
@@ -78,10 +88,12 @@ function Quizzes() {
         {quizzes.map((quiz) => (
           <div key={quiz.id} className='Box-quizzes'>
             <div className='title-of-Quiz'>
+             <Link to={`/Enseignant/Modules/${moduleId}/Quizzes/${quiz.id}`} className='link-chapitre'> 
               <div className='box-title'>
               <QuizIcon style={{ marginRight: '8px', marginTop: '4px' }} />
               <h3>{quiz.title}</h3>
               </div>
+            </Link>
               <Button
                 aria-controls={`quiz-menu-${quiz.id}`}
                 aria-haspopup="true"
