@@ -1,7 +1,7 @@
 # module/models.py
 from django.db import models
 #from student_app.models import Year
-# from professor_app.models import Professor
+from professor_app.models import Professor
 
 
 class Year(models.Model):
@@ -25,7 +25,7 @@ class Module(models.Model):
     # enseignant = models.CharField(max_length=100, null = True)
     # horaire = models.CharField(max_length=100)
     # contenu = models.TextField()
-    #professor = models.ForeignKey(Professor, on_delete=models.CASCADE, related_name='modules')
+    professor = models.ForeignKey(Professor, on_delete=models.CASCADE, related_name='modules')
     coef = models.CharField(max_length=1)
     year = models.CharField(Year,max_length=10)
 
