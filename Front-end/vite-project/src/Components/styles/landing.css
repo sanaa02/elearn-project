@@ -117,6 +117,7 @@ nav {
 }
 
 .login-active {  /* Use same class as login trigger */
+    -webkit-backdrop-filter: blur(5px) !important ;
     filter: blur(5px) !important; 
     backdrop-filter: blur(2px) !important;
     -webkit-filter: blur(2px) !important ;
@@ -310,6 +311,7 @@ nav {
 #About .about-section-logo {
   /* Adjust the width of the image as needed */
 
+   left: 100px;
   /* Add spacing between the image and text */
 }
 #About .about-section-text-container {

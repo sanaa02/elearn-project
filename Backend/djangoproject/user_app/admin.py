@@ -1,6 +1,10 @@
 from django.contrib import admin
-from user_app.models import MyUser, Profile
+from user_app.models import MyUser, Profile, File
 from django.contrib.auth.hashers import make_password
+
+
+class FileAdmin(admin.ModelAdmin):
+    list_display = ["email"]
 
 class CustomUserAdmin(admin.ModelAdmin):
     list_display = ['email']
@@ -17,3 +21,4 @@ class CustomUserAdmin(admin.ModelAdmin):
 
 admin.site.register(MyUser, CustomUserAdmin)
 admin.site.register( Profile,ProfileAdmin)
+admin.site.register(File, FileAdmin)
