@@ -16,10 +16,15 @@ class ProfessorEmailField(serializers.RelatedField):
         return value.user.email
 
     def to_internal_value(self, data):
+        print(f"Converting email to professor: {data}")
         try:
+            print(f"Converting email to professor 222: {data}")
+            
             professor = Professor.objects.get(user__email=data)
+            print(f"Found Professor SERIALIZIng: {professor}")
             return professor
         except Professor.DoesNotExist:
+            print("Professor with this email does not exist.")
             raise serializers.ValidationError("Professor with this email does not exist.")
 
 

@@ -5,7 +5,7 @@ from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.contrib.auth.password_validation import validate_password 
-
+from professor_app.api.serializers import ProfessorSerializer
 class ProfessorUploadSerializer(serializers.Serializer):
     file = serializers.FileField()
    
@@ -35,9 +35,10 @@ class SaveFileSerializer(serializers.Serializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
+    professor_details = ProfessorSerializer(source='professor', read_only=True)
     class Meta:
         model = MyUser
-        fields = ['id', 'email','name','matricule']
+        fields = ['id', 'email','name','matricule', 'professor_details']
         
         def create_user(self, validated_data):
           password = validated_data.pop('password')

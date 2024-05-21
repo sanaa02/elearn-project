@@ -229,6 +229,7 @@ function EnseignantPage() {
           item.matricule,
           item.name,
           item.email,
+          item.professor_details.modules[0].nom
 
           // index + 1,
         );

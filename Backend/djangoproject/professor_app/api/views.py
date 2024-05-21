@@ -15,6 +15,21 @@ from .serializers import ProfessorSerializer
 from user_app.models import MyUser
 from user_app.api.serializers import UserSerializer, FileUploadSerializer, ProfessorUploadSerializer
 
+class ProfessorModuleList(APIView):
+    def get(self, request, professor_id):
+        try:
+            professor = Professor.objects.get(id=professor_id)
+            serializer = ProfessorSerializer(professor)
+            professor_details = serializer.data.get('professor_details')
+            if professor_details:
+                modules = professor_details.get('modules', [])
+                return Response(modules)
+            else:
+                return Response({"error": "No modules found for this professor"}, status=status.HTTP_404_NOT_FOUND)
+        except Professor.DoesNotExist:
+            return Response({"error": "Professor not found"}, status=status.HTTP_404_NOT_FOUND)
+        
+        
 class UploadProfessorView(generics.CreateAPIView):
     serializer_class = ProfessorUploadSerializer
     
@@ -79,6 +94,8 @@ class ProfessorList(APIView):
         # Filter MyUser objects based on is_professor field
         users = MyUser.objects.filter(is_professor=True)
         serializer = UserSerializer(users, many=True)
+        # professors = ProfessorSerializer( many=True)
+        # return Response(professors.data)
         return Response(serializer.data)
     
      def post(self, request):

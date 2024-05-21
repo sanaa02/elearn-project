@@ -42,6 +42,7 @@ function App() {
           <Route path="ModulePage" element={<ModulePage />} />
           <Route path="EspaceCommunicationPage" element={<EspaceCommunicationPage />} />
         </Route>
+        
         <Route path="/Enseignant" element={<TeacherPage />}>
           <Route path="Modules" element={<Modules />} />
           <Route path="Modules/:moduleId/Chapitres" element={<Chapitres />} />
