@@ -43,7 +43,7 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 15px;
-  word-wrap: break-word; /* Pour les navigateurs anciens */
+  word-wrap: break-word; 
 }
 .thread-date {
   width:70% ;

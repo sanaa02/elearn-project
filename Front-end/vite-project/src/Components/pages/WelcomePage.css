@@ -1,7 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Work+Sans:wght@200;300;400;500;600;700;800&display=swap');
 *{
-    font-family: 'Roboto', 'sans-serif';
+    font-family: "Roboto", sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box ;
@@ -152,7 +151,7 @@
     height: 400px;
     
 }
-.modal{
+.moddal{
     position: absolute;
     top: 50%;
     left: 50%;
@@ -165,35 +164,35 @@
     height:600px;
     border-radius: 20px;
 }
-.modal form{
+.moddal form{
     display: flex;
      flex-direction: column;
       align-items: center; 
       margin-top: 50px;
 }
-.modal form input{
+.moddal form input{
     margin-bottom: 8px;
      width: 60%;
       padding: 8px;
        border: 1px solid #000066;
         border-radius: 4px
 }
-.modal .logo-esi{
+.moddal .logo-esi{
     margin-top: 40px;
 }
-.modal .Modal-title{
+.moddal .Modal-title{
     margin-top: 50px;
     font-size: 25px;
     font-weight: bold;
     color: #000066;
 }
-.modal .button-box{
+.moddal .button-box{
     display: flex;
     align-items: center;
     justify-content: center;
     margin-top: 20px;
 }
-.modal .button{
+.moddal .button{
     color: #000066;
     background-color: white;
     width: 100px;

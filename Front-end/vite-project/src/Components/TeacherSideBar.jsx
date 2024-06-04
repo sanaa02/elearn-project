@@ -99,6 +99,7 @@ const TeacherSideBar = () => {
           alignItems: "center",
           justifyContent: "center",
           mr: "30px",
+          mt:'20px'
         }}
       >
         <img
@@ -146,7 +147,7 @@ const TeacherSideBar = () => {
       >
        <ListItem disablePadding className="list-item">
   <NavLink
-    to="TableauDeBord"
+    to="Evaluation"
     style={{
       textDecoration: "none",
       color: "inherit",
@@ -160,10 +161,11 @@ const TeacherSideBar = () => {
       <ListItemIcon sx={{ color: "inherit" }}>
         <DashboardIcon />
       </ListItemIcon>
-      <ListItemText primary="Tableau de bord" sx={{ color: "#000066" }} />
+      <ListItemText primary="Devoir et Quizz" sx={{ color: "#000066" }} />
     </ListItemButton>
   </NavLink>
 </ListItem>
+     
 
         <ListItem disablePadding className="list-item">
   <NavLink

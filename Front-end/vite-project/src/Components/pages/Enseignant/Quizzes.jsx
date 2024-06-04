@@ -22,7 +22,7 @@ function Quizzes() {
     { id: 1, title: 'Quiz 1', description: 'Description du quiz 1' },
     { id: 2, title: 'Quiz 2', description: 'Description du quiz 2' },
     { id: 3, title: 'Quiz 3', description: 'Description du quiz 3' },
-    // Ajoutez d'autres quizzes ici
+   
   ]);
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -57,7 +57,7 @@ function Quizzes() {
   };
 
   const handleEditQuiz = (action) => {
-    // Logique pour modifier le quiz
+    
     console.log("Modifier le quiz avec l'action :", action);
     handleMenuClose();
   };

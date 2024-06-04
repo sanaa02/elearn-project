@@ -1,21 +1,21 @@
 
 import { Box, Typography, Button, Modal } from '@mui/material';
 import model from '../../assets/Model 2.png';
-import './WelcomePage.css' // Assurez-vous d'importer les styles CSS nécessaires
+import './WelcomePage.css' 
 
 function LoginModal({ open, handleClose }) {
-  // Ici, vous pouvez conserver tout l'état et la logique de la modal
+
 
   return (
     <Modal
       open={open}
       onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
+      aria-labelledby="moddal-modal-title"
+      aria-describedby="moddal-modal-description"
     >
-      <Box className="modal">
+      <Box className="moddal">
         <img src={model} alt="" className="logo-esi" />
-        <Typography className="Modal-title"> Connexion</Typography>
+        <Typography className="Moddal-title"> Connexion</Typography>
         <form className="login">
           <input type="text" placeholder="Username" required />
           <input type="password" placeholder="Password" required />

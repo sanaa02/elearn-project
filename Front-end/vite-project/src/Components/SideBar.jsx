@@ -18,6 +18,7 @@ import {
   Fade,
   Backdrop,
   TextField,
+  
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import SchoolIcon from '@mui/icons-material/School';
@@ -128,11 +129,45 @@ const SideBar = () => {
 
   const drawer = (
     <div style={{ background: 'white' }}>
-      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center',mr:'30px' }}>
-        <img src={logos} alt="logo" style={{ width: '40px', marginRight: '20px' }} />
+    <Box
+        className="Box-logo"
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          mr: "30px",
+          mt:'20px'
+        }}
+      >
+        <img
+          src={logos}
+          alt="logo"
+          style={{ width: "40px", marginRight: "20px" }}
+        />
         <Box>
-          <Typography variant="h6" sx={{ color: '#000066', fontWeight: 500, width: '100px', fontSize: '18px' }}>Elearning</Typography>
-          <Typography variant="h6" sx={{ color: '#000066', fontWeight: 500, width: '100px', fontSize: '18px' }}> Plateform</Typography>
+          <Typography
+            variant="h6"
+            sx={{
+              color: "#000066",
+              fontWeight: 500,
+              width: "100px",
+              fontSize: "18px",
+            }}
+          >
+            Elearning
+          </Typography>
+          <Typography
+            variant="h6"
+            sx={{
+              color: "#000066",
+              fontWeight: 500,
+              width: "100px",
+              fontSize: "18px",
+            }}
+          >
+            {" "}
+            Plateform
+          </Typography>
         </Box>
       </Box>
       
