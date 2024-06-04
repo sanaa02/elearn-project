@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -13,9 +13,10 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
+import './M.css'
 
-function createData(n, id, name, enseignant, promo, coefficient, actions) {
-  return { n, id, name, enseignant, promo, coefficient, actions };
+function createData(n, id, name, enseignant, promo, coefficient, description, actions) {
+  return { n, id, name, enseignant, promo, coefficient,description, actions };
 }
 
 const initialRows = [
@@ -55,9 +56,13 @@ function ModulePage() {
   const [editedcoefficient, setEditedcoefficient] = useState("");
   const [cohortFile, setCohortFile] = useState(null);
   const [openLotModal, setOpenLotModal] = useState(false);
-
-  
-  
+  const [selectedYearOne, setSelectedYearOne] = useState("");
+  const [selectedPromo, setSelectedPromo] = useState("");
+  const [years, setYears] = useState([]);
+  const [selectedYear, setSelectedYear] = useState("");
+  const [profs, setProfs] = useState([]);
+  const [selectedProf, setSelectedProf] = useState("");
+  const [selectedSemester, setSelectedSemester] = useState("");
   const [showModal, setShowModal] = useState(false);
   const handleOpenModal = () => {
     setShowModal(true);
@@ -67,10 +72,10 @@ function ModulePage() {
   };
   const [formData, setFormData] = useState({
     nomModule: "",
-    enseignat: "",
+    enseignant: "",
     coefficient: "",
     promo: "",
-    Matricule: "",
+    description: "",
   });
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -79,27 +84,52 @@ function ModulePage() {
       [name]: value,
     });
   };
-  const handleSubmit = (Empty) => {
+  const handleSubmit = async (Empty) => {
     if (Empty == true) {
       const newRow = createData(
-        rows.length + 1,
+        // rows.length + 1,
         rows.length + 1,
         formData.nomModule,
         formData.enseignant,
         formData.promo,
         formData.coefficient,
 
-        formData.Matricule
+        formData.description,
       );
 
       setRows([...rows, newRow]);
       setShowModal(false);
       setFormData({
         nomModule: "",
+        enseignant:"",
         coefficient: "",
         promo: "",
-        Matricule: "",
+        description: "",
       });
+    }
+
+    const formDataAdd = new FormData();
+
+    formDataAdd.append("nom", formData.nomModule);
+    formDataAdd.append("year", selectedYear);
+    formDataAdd.append("coef", formData.coefficient);
+    formDataAdd.append("description", formData.description);
+    formDataAdd.append("semester", formData.SelectOption);
+    formDataAdd.append("professor", selectedProf);
+    for (let [key, value] of formDataAdd.entries()) {
+      console.log(`${key}: ${value}`);
+    }
+
+    try {
+      const response = await fetch(
+        "http://127.0.0.1:8000/module/",
+        {
+          method: "POST",
+          body: formDataAdd,
+        }
+      );
+    } catch (error) {
+      console.error("Error uploading file:", error);
     }
   };
 
@@ -121,10 +151,43 @@ function ModulePage() {
     }
   };
 
-  const handleUploadCohort = () => {
+  const handleUploadCohort = async () => {
     console.log("Fichier de cohorte chargé :", cohortFile);
 
     setOpenLotModal(false);
+
+    const formDataFile = new FormData();
+    formDataFile.append("file", cohortFile);
+     for (let [key, value] of formDataFile.entries()) {
+       console.log(`${key}: ${value}`);
+     }
+
+    try {
+      const response = await fetch("http://127.0.0.1:8000/module/upload/", {
+        method: "POST",
+        body: formDataFile
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      // const blob = await response.blob();
+      // const url = window.URL.createObjectURL(blob);
+      // const a = document.createElement("a");
+      // a.style.display = "none";
+      // a.href = url;
+      // a.download = `student_passwords_${selectedYear}.csv`;
+      // document.body.appendChild(a);
+      // a.click();
+      // window.URL.revokeObjectURL(url);
+
+      // const result = await response.json();
+      console.log("Upload successful:", result);
+      setOpenLotModal(false);
+    } catch (error) {
+      console.error("Error uploading file:", error);
+    }
   };
 
   const handleSearch = (event) => {
@@ -177,6 +240,92 @@ function ModulePage() {
     setOpenNewModuleModal(true);
   };
 
+   useEffect(() => {
+     // Fetch the list of years from the backend
+     const fetchYears = async () => {
+       try {
+         const response = await fetch("http://127.0.0.1:8000/module/years/");
+         const data = await response.json();
+         setYears(data);
+         console.log("Years fetched:", data);
+       } catch (error) {
+         console.error("Error fetching years:", error);
+       }
+     };
+
+     fetchYears();
+     fetchData();
+     fetchProf()
+   }, []);
+
+     const fetchData = async () => {
+       try {
+         // Make API call using fetch
+         const response = await fetch("http://127.0.0.1:8000/module/");
+         if (!response.ok) {
+           throw new Error("Failed to fetch data");
+         }
+         const data = await response.json(); // Parse JSON response
+         console.log("Fetched data:", data);
+
+         // Process the data and create rows
+        //  , index
+         const processedData = data.map((item, index) => {
+           return createData(
+             index + 1,
+             item.id,
+             item.nom,
+
+             item.professor,
+
+             item.year,
+             item.coef,
+
+             item.description
+           );
+         });
+
+         console.log("processed data ",processedData);
+
+         // Update state with the fetched rows
+         setRows(processedData);
+       } catch (error) {
+         console.error("Error fetching data:", error);
+       }
+     };
+
+     const fetchProf = async () => {
+       try {
+         // Make API call using fetch
+         const response = await fetch("http://127.0.0.1:8000/professor/");
+         if (!response.ok) {
+           throw new Error("Failed to fetch data");
+         }
+         const data = await response.json(); // Parse JSON response
+         console.log("Fetched professors:", data);
+         setProfs(data);
+
+
+         // Process the data and create rows
+        //  const processedData = data.map((item, index) => {
+        //    return createData(
+        //      index + 1,
+        //      item.email,
+        //      item.matricule,
+        //      item.name,
+        //      item.description
+        //    );
+        //  });
+
+        //  console.log(processedData);
+
+        //  // Update state with the fetched rows
+        //  setRows(processedData);
+       } catch (error) {
+         console.error("Error fetching data:", error);
+       }
+     };
+
   const handleOptionSelect = (option) => {
     if (option === "insertion par lot") {
       setOpenNewModuleModal(false);
@@ -185,6 +334,37 @@ function ModulePage() {
       console.log("Option sélectionnée :", option);
       setOpenNewModuleModal(false);
     }
+
+    // const fetchData = async () => {
+    //   try {
+    //     // Make API call using fetch
+    //     const response = await fetch("http://127.0.0.1:8000/student/");
+    //     if (!response.ok) {
+    //       throw new Error("Failed to fetch data");
+    //     }
+    //     const data = await response.json(); // Parse JSON response
+    //     console.log("Fetched data:", data);
+
+    //     // Process the data and create rows
+    //     const processedData = data.map((item, index) => {
+    //       return createData(
+    //         index + 1,
+    //         item.user.matricule,
+    //         item.year,
+    //         item.user.name,
+    //         item.user.email
+    //       );
+    //     });
+
+    //     console.log(processedData);
+
+    //     // Update state with the fetched rows
+    //     setRows(processedData);
+    //   } catch (error) {
+    //     console.error("Error fetching data:", error);
+    //   }
+    // };
+
   };
 
   return (
@@ -237,12 +417,13 @@ function ModulePage() {
         >
           <TableHead>
             <TableRow>
-              <TableCell sx={{ textAlign: "center" }}>N°</TableCell>
+              {/* <TableCell sx={{ textAlign: "center" }}>N°</TableCell> */}
               <TableCell sx={{ textAlign: "center" }}>ID</TableCell>
               <TableCell sx={{ textAlign: "center" }}>Nom</TableCell>
               <TableCell sx={{ textAlign: "center" }}>Enseignant</TableCell>
               <TableCell sx={{ textAlign: "center" }}>Promo</TableCell>
               <TableCell sx={{ textAlign: "center" }}>coefficient</TableCell>
+              {/* <TableCell sx={{ textAlign: "center" }}>Description</TableCell> */}
               <TableCell sx={{ textAlign: "center" }}>
                 <Button
                   onClick={handleNewModule}
@@ -267,9 +448,9 @@ function ModulePage() {
                 }}
               >
                 <TableCell component="th" scope="row">
-                  {row.n}
-                </TableCell>
-                <TableCell style={{ textAlign: "center" }}>{row.id}</TableCell>
+                  {row.id}
+                </TableCell> 
+                {/* <TableCell style={{ textAlign: "center" }}>{row.id}</TableCell> */}
                 <TableCell style={{ textAlign: "center" }}>
                   {row.name}
                 </TableCell>
@@ -282,6 +463,10 @@ function ModulePage() {
                 <TableCell style={{ textAlign: "center" }}>
                   {row.coefficient}
                 </TableCell>
+                 {/* <TableCell style={{ textAlign: "center" }}>
+                  {row.description}
+                </TableCell>  */}
+
                 <TableCell style={{ textAlign: "center" }}>
                   <Button
                     onClick={() => handleOpenEditModal(row)}
@@ -328,21 +513,44 @@ function ModulePage() {
             boxShadow: 24,
             p: 4,
             textAlign: "center",
-            backgroundImage: `url('/src/assets/dialog.png')`,
+            background: "white",
             backgroundSize: "cover",
             backgroundPosition: "center",
             borderRadius: "15px",
           }}
         >
-          <h2 id="modal-title">Confirmer la suppression</h2>
-          <p id="modal-description">
+          <h2
+            id="modal-title"
+            style={{ color: "#000066", marginBottom: "50px" }}
+          >
+            Confirmer la suppression
+          </h2>
+          <p id="modal-description" style={{ marginBottom: "50px" }}>
             {selectedRow &&
               `Voulez-vous vraiment supprimer Module : ${selectedRow.name} ?.`}
           </p>
-          <Button onClick={handleDelete} color="error" autoFocus>
+          <Button
+            onClick={handleDelete}
+            autoFocus
+            style={{
+              color: "white",
+              background: "#000066",
+              width: "100px",
+              marginLeft: "10px",
+            }}
+          >
             Supprimer
           </Button>
-          <Button onClick={handleCloseDeleteModal} autoFocus>
+          <Button
+            onClick={handleCloseDeleteModal}
+            autoFocus
+            style={{
+              color: "white",
+              background: "#000066",
+              width: "100px",
+              marginLeft: "10px",
+            }}
+          >
             Annuler
           </Button>
         </Box>
@@ -417,91 +625,99 @@ function ModulePage() {
             boxShadow: 24,
             p: 4,
             textAlign: "center",
-            backgroundImage: `url('/src/assets/dialog.png')`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
+            background: "white",
             borderRadius: "15px",
           }}
         >
-          <h2 id="modal-title">Modifier Module</h2>
-          <TextField
-            label="nom"
-            variant="outlined"
-            size="small"
-            value={editedName}
-            onChange={(e) => setEditedName(e.target.value)}
-            InputLabelProps={{
-              shrink: true,
-              style: {
-                fontSize: "0.8rem",
-              },
+          <h2
+            id="modal-title"
+            style={{ color: "#000066", marginBottom: "40px" }}
+          >
+            Modifier Module
+          </h2>
+          <form
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              marginBottom: "20px",
             }}
-            sx={{
-              marginBottom: "10px",
-              display: "block",
-              width: "100%",
+          >
+            <input
+              type="text"
+              placeholder="Nom"
+              value={editedName}
+              onChange={(e) => setEditedName(e.target.value)}
+              style={{
+                marginBottom: "8px",
+                width: "60%",
+                padding: "8px",
+                border: "1px solid #000066",
+                borderRadius: "4px",
+              }}
+            />
+            <input
+              type="text"
+              placeholder="Enseignant"
+              value={editedEnseignant}
+              onChange={(e) => setEditedEnseignant(e.target.value)}
+              style={{
+                marginBottom: "8px",
+                width: "60%",
+                padding: "8px",
+                border: "1px solid #000066",
+                borderRadius: "4px",
+              }}
+            />
+            <input
+              type="text"
+              placeholder="Promo"
+              value={editedPromo}
+              onChange={(e) => setEditedPromo(e.target.value)}
+              style={{
+                marginBottom: "8px",
+                width: "60%",
+                padding: "8px",
+                border: "1px solid #000066",
+                borderRadius: "4px",
+              }}
+            />
+            <input
+              type="text"
+              placeholder="Coefficient"
+              value={editedcoefficient}
+              onChange={(e) => setEditedcoefficient(e.target.value)}
+              style={{
+                marginBottom: "8px",
+                width: "60%",
+                padding: "8px",
+                border: "1px solid #000066",
+                borderRadius: "4px",
+              }}
+            />
+          </form>
+          <Button
+            onClick={handleSaveEdit}
+            autoFocus
+            style={{
+              color: "white",
+              background: "#000066",
+              width: "100px",
+              marginLeft: "10px",
             }}
-          />
-
-          <TextField
-            label="enseignant"
-            variant="outlined"
-            size="small"
-            value={editedEnseignant}
-            onChange={(e) => setEditedEnseignant(e.target.value)}
-            InputLabelProps={{
-              shrink: true,
-              style: {
-                fontSize: "0.8rem",
-              },
-            }}
-            sx={{
-              marginBottom: "10px",
-              display: "block",
-              width: "100%",
-            }}
-          />
-
-          <TextField
-            label="promo"
-            variant="outlined"
-            size="small"
-            value={editedPromo}
-            onChange={(e) => setEditedPromo(e.target.value)}
-            InputLabelProps={{
-              shrink: true,
-              style: {
-                fontSize: "0.8rem",
-              },
-            }}
-            sx={{
-              marginBottom: "10px",
-              display: "block",
-              width: "100%",
-            }}
-          />
-          <TextField
-            label="coefficient"
-            variant="outlined"
-            size="small"
-            value={editedcoefficient}
-            onChange={(e) => setEditedcoefficient(e.target.value)}
-            InputLabelProps={{
-              shrink: true,
-              style: {
-                fontSize: "0.8rem",
-              },
-            }}
-            sx={{
-              marginBottom: "10px",
-              display: "block",
-              width: "100%",
-            }}
-          />
-          <Button onClick={handleSaveEdit} color="primary" autoFocus>
-            enregistrer
+          >
+            Confirmer
           </Button>
-          <Button onClick={handleCloseEditModal} autoFocus>
+          <Button
+            onClick={handleCloseEditModal}
+            autoFocus
+            style={{
+              color: "white",
+              background: "#000066",
+              width: "100px",
+              marginLeft: "10px",
+            }}
+          >
             Annuler
           </Button>
         </Box>
@@ -512,122 +728,41 @@ function ModulePage() {
         aria-labelledby="modal-title"
         aria-describedby="modal-description"
       >
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: 820,
-            height: 650,
-            p: 4,
-            borderRadius: "15px",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            backgroundImage: `url('/src/assets/ajouter1.png')`,
-            backgroundSize: "cover",
-            filter: "drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))",
-          }}
-        >
-          <div
-            style={{
-              width: "50%",
-              marginBottom: "10px",
-              position: "relative",
-              marginTop: "25%",
-            }}
-          >
-            <input
-              type="file"
-              accept=".csv"
-              onChange={(e) => setCohortFile(e.target.files[0])}
-              style={{
-                opacity: 0,
-                position: "absolute",
-                top: 0,
-                left: 0,
-                width: "100%",
-                height: "100%",
-                cursor: "pointer",
-              }}
-            />
-            <div
-              style={{
-                padding: "8px 12px",
-                fontSize: "0.8rem",
-                whiteSpace: "nowrap",
-                textAlign: "center",
-                borderBottom: "1px solid black",
-                borderTopLeftRadius: "2px",
-                borderTopRightRadius: "2px",
-              }}
-            >
-              {cohortFile
-                ? cohortFile.name
-                : "ajouter des modules par lot/fichie csv"}
+        <Box className="lot-modal">
+          <Typography variant="h5" gutterBottom>
+            Ajouter des modules par lots
+          </Typography>
+          <form>
+            <div className="file-container">
+              <input
+                required
+                className="file"
+                type="file"
+                accept=".csv"
+                onChange={(e) => setCohortFile(e.target.files[0])}
+              />
+              <div className="file-place">
+                {cohortFile
+                  ? cohortFile.name
+                  : "ajouter des modules par lot/fichie csv"}
+              </div>
             </div>
-          </div>
-
-          <div style={{ display: "flex", width: "40%", marginTop: "100px" }}>
-            <Button
-              onClick={() => setOpenLotModal(false)}
-              autoFocus
-              style={{
-                flex: 1,
-                marginRight: "10px",
-                padding: "10px",
-                fontSize: "1rem",
-                backgroundColor: "#0000665c",
-                color: "#000066",
-                fontWeight: "bold",
-                border: "none",
-                borderRadius: "5px",
-                cursor: "pointer",
-              }}
-            >
+          </form>
+          <div className="button-container">
+            <Button onClick={() => setOpenLotModal(false)} autoFocus>
               Annuler
             </Button>
-            <Button
-              onClick={handleUploadCohort}
-              autoFocus
-              style={{
-                flex: 1,
-                padding: "10px",
-                fontSize: "1rem",
-                backgroundColor: "#0000665c",
-                color: "#000066",
-                fontWeight: "bold",
-                border: "none",
-                borderRadius: "5px",
-                cursor: "pointer",
-              }}
-            >
+            <Button onClick={handleUploadCohort} autoFocus>
               Confirmer
             </Button>
           </div>
         </Box>
       </Modal>
       <Modal open={showModal} onClose={handleCloseModal}>
-        <Box
-          sx={{
-            position: "relative",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: 820,
-            height: 650,
-
-            p: 4,
-            borderRadius: "15px",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            backgroundImage: `url('/src/assets/ajouter.png')`,
-            backgroundSize: "cover",
-            filter: "drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))",
-          }}
-        >
+        <Box className="Modal-seul-module">
+          <Typography variant="h5" gutterBottom>
+            Ajouter un seule module
+          </Typography>
           <form>
             <div className="form">
               <input
@@ -637,18 +772,6 @@ function ModulePage() {
                 name="nomModule"
                 value={formData.nomModule}
                 onChange={handleInputChange}
-                style={{
-                  height: "40px",
-                  width: "200px",
-                  border: "none",
-                  borderBottom: "0.5px solid #000066",
-                  outline: "none",
-                  padding: "10px",
-                  background: "none",
-                  marginLeft: "-80px",
-                  marginTop: "150px",
-                  transition: "height 0.3s",
-                }}
                 onFocus={(e) => {
                   e.target.style.height = "40px";
                 }}
@@ -657,26 +780,32 @@ function ModulePage() {
                 }}
               />
 
-              <input
-                type="text"
-                placeholder="Promo"
-                required
-                name="promo"
-                value={formData.promo}
-                onChange={handleInputChange}
-                style={{
+              <Select
+                className="year-select"
+                value={selectedYear}
+                onChange={(e) => setSelectedYear(e.target.value)}
+                displayEmpty
+                inputProps={{ "aria-label": "Without label" }}
+                sx={{
+                  margin: "20px",
+                  backgroundColor: "#D9D9D9",
+                  borderRadius: "5px",
+                  paddingLeft: "5px",
+                  paddingRight: "5px",
                   height: "40px",
-                  width: "200px",
-                  border: "none",
-                  borderBottom: "0.5px solid #000066",
-                  outline: "none",
-                  padding: "10px",
-                  marginTop: "145px",
-                  marginLeft: "120px",
-                  background: "none",
-                  position: "absolute",
+                  width: "350px",
+                  position: "relative",
+                  marginBottom: "10px",
                 }}
-              />
+                size="small"
+              >
+                <MenuItem value="">Année</MenuItem>
+                {years.map((year) => (
+                  <MenuItem key={year} value={year}>
+                    {year}
+                  </MenuItem>
+                ))}
+              </Select>
               <input
                 required
                 type="text"
@@ -684,78 +813,70 @@ function ModulePage() {
                 name="coefficient"
                 value={formData.coefficient}
                 onChange={handleInputChange}
-                style={{
-                  height: "40px",
-                  width: "200px",
-                  border: "none",
-                  borderBottom: "0.5px solid #000066",
-                  outline: "none",
-                  padding: "10px",
-                  marginLeft: "-200px",
-                  marginTop: "227px",
-                  background: "none",
-                  position: "absolute",
-                }}
               />
 
-              <div
-                style={{
-                  width: "200px",
-                  marginBottom: "10px",
-                  position: "relative",
-                  marginTop: "0%",
-                  marginLeft: "240px",
-                  borderBottom: "#000066",
-                }}
-              >
+              {/* <div className="file-container">
+                <div>
+                  {cohortFile ? cohortFile.name : "Ajouter des etudiants"}
+                </div>
                 <input
+                  className="file"
                   type="file"
                   accept=".csv"
                   onChange={(e) => setCohortFile(e.target.files[0])}
-                  style={{
-                    opacity: 0,
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    cursor: "pointer",
-                  }}
                 />
-                <div
-                  style={{
-                    padding: "8px 12px",
-                    fontSize: "0.8rem",
-                    whiteSpace: "nowrap",
-                    textAlign: "center",
-                    borderBottom: "1px solid black",
-                    borderTopLeftRadius: "2px",
-                    borderTopRightRadius: "2px",
-                  }}
-                >
-                  {cohortFile ? cohortFile.name : "Ajouter des enseignants"}
-                </div>
-              </div>
-
+              </div> */}
               <input
+                required
+                type="text"
+                placeholder="Description"
+                name="description"
+                value={formData.description}
+                onChange={handleInputChange}
+              />
+              {/* <input
                 required
                 type="text"
                 placeholder="Matricule"
                 name="Matricule"
                 value={formData.Matricule}
                 onChange={handleInputChange}
-                style={{
+              /> */}
+              <select
+                required
+                name="SelectOption"
+                value={formData.SelectOption}
+                onChange={handleInputChange}
+              >
+                <option value="semestre 1">semestre 1</option>
+                <option value="semestre 2">semestre 2</option>
+              </select>
+              <Select
+                className="year-select"
+                value={selectedProf}
+                onChange={(e) => setSelectedProf(e.target.value)}
+                displayEmpty
+                inputProps={{ "aria-label": "Without label" }}
+                sx={{
+                  margin: "20px",
+                  backgroundColor: "#D9D9D9",
+                  borderRadius: "5px",
+                  paddingLeft: "5px",
+                  paddingRight: "5px",
                   height: "40px",
-                  width: "200px",
-                  border: "none",
-                  borderBottom: "0.5px solid #000066",
-                  outline: "none",
-                  padding: "10px",
-                  marginLeft: "-80px",
-                  background: "none",
-                  marginTop: "30px",
+                  width: "350px",
+                  position: "relative",
+                  marginBottom: "10px",
                 }}
-              />
+                size="small"
+              >
+                <MenuItem value="">Enseignant</MenuItem>
+                {profs.map((prof) => (
+                  <MenuItem key={prof.id} value={prof.email}>
+                    {prof.email}
+                  </MenuItem>
+                ))}
+              </Select>
               <div
                 className="button-container"
                 style={{
@@ -776,40 +897,12 @@ function ModulePage() {
                         formData.Matricule !== ""
                     );
                   }}
-                  style={{
-                    position: "absolute",
-                    fontSize: " 16px",
-                    fontWeight: "bold",
-                    height: " 45px",
-                    width: " 120px",
-                    marginLeft: "-200px",
-                    marginTop: "20px",
-                    borderRadius: "6px",
-                    color: "#000066",
-                    border: " none",
-                    backgroundColor: " #0000665C",
-                    zIndex: " 2",
-                  }}
                 >
                   Confirmer
                 </button>
 
                 <button
-                  style={{
-                    position: "absolute",
-                    fontSize: " 16px",
-                    fontWeight: "bold",
-                    height: " 45px",
-                    width: " 120px",
-                    marginLeft: "65px",
-                    marginTop: "20px",
-                    borderRadius: "6px",
-                    color: "#000066",
-                    border: " none",
-                    backgroundColor: " #0000665C",
-                    zIndex: " 2",
-                  }}
-                  className="button-cancel"
+                  className="button-submit"
                   type="submit"
                   onClick={handleCloseModal}
                 >

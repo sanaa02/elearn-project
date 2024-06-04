@@ -1,8 +1,6 @@
-
 import SideBar from '../../SideBar';
 import { Box } from '@mui/material';
 import { Outlet } from 'react-router-dom'; 
-
 
 function AdminPage() {
   return (
@@ -10,11 +8,15 @@ function AdminPage() {
       <SideBar />
       <Box
         component="main"
-        sx={{ flexGrow: 1, p: 3, width: '100%', marginLeft:'145px' }}>
-       
+        sx={{ 
+          
+          p: 3, 
+          
+          marginLeft:'80px',
+          // Centrer horizontalement le contenu
+        }}
+      >
         <Outlet /> 
-
-        
       </Box>
     </Box>
   )

@@ -4,7 +4,7 @@ from django.contrib.auth.hashers import make_password
 
 
 class FileAdmin(admin.ModelAdmin):
-    list_display = ["email", "password"]
+    list_display = ["email"]
 
 class CustomUserAdmin(admin.ModelAdmin):
     list_display = ['email']

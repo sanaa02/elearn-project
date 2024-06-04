@@ -1,0 +1,56 @@
+/* Titre des ressources */
+.title{
+    color: #000066;
+    margin-bottom: 20px;
+      
+  }
+  
+  .title-resources {
+      display: flex;
+      /* align-items: center; */
+      margin-bottom: 20px;
+      color: #000066;
+    }
+    
+    .title-resources h3 {
+      flex: 1;
+    }
+    
+    /* Conteneur de chaque ressource */
+    .Box-resources {
+      width: 350px;
+      background: white;
+      border-radius: 10px;
+      margin: 10px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+     transition:  .5s;
+      
+    }
+    .Box-resources:hover{
+      box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;
+    }
+    
+    /* Titre de chaque ressource */
+    .title-of-Resource {
+      color: #000066;
+      width: 90%;
+      padding: 10px;
+      font-weight: bold;
+      border-bottom: 2px solid #000066;
+    }
+    .title-of-Resource h3{
+            font-size: 15px;
+          }
+    
+    
+    /* Description de chaque ressource */
+    .Ressource_Description {
+     font-size: 13px;
+      padding: 10px;
+  
+    }
+    
+  

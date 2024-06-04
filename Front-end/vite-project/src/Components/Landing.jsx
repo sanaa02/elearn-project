@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Home from "./Home";
-import Navbar from "./Navbar";
+
 import { LoginProvider } from "./LoginContext";
 
 const Landing = () => {

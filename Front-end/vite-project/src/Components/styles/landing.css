@@ -8,7 +8,7 @@ body {
   box-sizing: border-box;
   display: flex;
   
-}
+} 
 
 nav {
   padding: 0 15px;
@@ -419,7 +419,7 @@ footer {
   padding: 0px; /* Réduire le rembourrage */
   color: #fff;
   display: inline-block;
-  height: 526px;
+ 
   position: relative;
   width: 100%;
   bottom: 0px;

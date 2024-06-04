@@ -4,7 +4,7 @@ import Picprof from '../../../assets/prof.png'
 import Picmodule from '../../../assets/module.png'
 import Picespace from '../../../assets/espace.png'
 import Table from "../../Table"
-// import Rightside from "../../Rightside"
+
 
 
 function AdminHome  ()  {
@@ -15,14 +15,14 @@ function AdminHome  ()  {
   return (
     <div className="adminhome">
       <div className="Home-text">
-      <h2>Bienvenu ,</h2>
-        <p>Voici les informations concernant la platforme </p>
+      <h2 style={{color:'#000066',marginTop:'20px',marginBottom:'20px'}}>Bienvenu ,</h2>
+        <p style={{marginBottom:'20px'}}>Voici les informations concernant la platforme </p>
       </div>
         <div className="card-container">
-        <Card url={Picapprenant}stat={totalusers_app} title={"Total users"}></Card>
-        <Card url={Picprof} stat={totalusers_prof} title={"Total users"}></Card>
-        <Card url={Picmodule} stat={totalusers_module} title={"Total users"}></Card>
-        <Card url={Picespace}stat={totalusers_espace} title={"Total users"}></Card>
+        <Card url={Picapprenant}stat={totalusers_app} ></Card>
+        <Card url={Picprof} stat={totalusers_prof} ></Card>
+        <Card url={Picmodule} stat={totalusers_module}></Card>
+        <Card url={Picespace}stat={totalusers_espace}></Card>
         </div>
         <div className="listContainer">
            

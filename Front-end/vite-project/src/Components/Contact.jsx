@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import "./styles/landing.css";
 const Contact = () => {
   const [email, setEmail] = useState("");

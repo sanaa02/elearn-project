@@ -1,0 +1,64 @@
+/*About*/
+.about-container {
+    width: 100%;
+    margin-bottom: 150px;
+     padding: 20px;
+   
+   }
+   .about-container h1{
+     font-family: "Montserrat", sans-serif;
+     position: relative;
+     font-size: 40px;
+     font-weight: 700;
+     letter-spacing: 1.3px;
+     color:black;
+     width: 100%;
+     margin-left: 50px;
+     margin-bottom: 20px;
+ 
+   }
+   
+   .card-row {
+     display: flex;
+     flex-direction: column;
+     
+     justify-content: space-between;
+   }
+   .card-row :first-child{
+     margin-left: 150px;
+   }
+   .card-row :nth-child(2){
+     margin-left: 300px;
+   }
+   .card-row :nth-child(3){
+     margin-left: 450px;
+   }
+   
+   .card {
+     display: flex;
+     flex-direction: column;
+ justify-content: center;
+ align-items: center;
+     width: 40%;
+     height: 10%;
+     margin: 20px;
+     padding: 10px;
+     border: 1px solid #F1F5F9;
+     border-radius: 10px;
+     box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
+   }
+   
+   .card h2 {
+     margin-top: 0;
+     width: 100%;
+     color: #000066;
+   }
+   
+   .card p {
+     margin-right: 250px;
+     width: 100%;
+     margin-top: 20px;
+     padding: 10px;
+   }
+      
+ 
