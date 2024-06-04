@@ -4,6 +4,44 @@ import { Link } from 'react-router-dom';
 import './Modules.css'
 
 function Modules() {
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+   const fetchData = async () => {
+     try {
+       // Make API call using fetch
+       const response = await fetch("http://127.0.0.1:8000/professor/");
+       if (!response.ok) {
+         throw new Error("Failed to fetch data");
+       }
+       const data = await response.json(); // Parse JSON response
+       console.log("Fetched data:", data);
+
+       // Process the data and create rows
+       const processedData = data.map((item, index) => {
+         return createData(
+           item.id,
+           item.matricule,
+           item.name,
+           item.email,
+           item.professor_details.modules[0].nom
+
+           // index + 1,
+         );
+       });
+
+       console.log("processed", processedData);
+
+       // Update state with the fetched rows
+       setRows(processedData);
+     } catch (error) {
+       console.error("Error fetching data:", error);
+     }
+   };
+
+
   const modules = [
     { name: 'Reseaux 01', year: '1CS', semester: 'Semestre 01', id: 1, coefficient: 3, credit: 6, duration: 12 },
     { name: 'Reseaux 02', year: '1CS', semester: 'Semestre 01', id: 2, coefficient: 4, credit: 7, duration: 14 },
