@@ -3,11 +3,17 @@ import { Box, Typography, Button, Modal } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import model from "../../assets/Model 2.png";
 import "./WelcomePage.css";
-import jwt_decode from "jwt-decode";
+// import jwt_decode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
+// import jwtDecode from "jwt-decode";
+
 
 function LoginModal({ open, handleClose }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [authTokens, setAuthTokens] = useState("");
+  const [user, setUser] = useState("");
+
   const navigate = useNavigate();
 
     const loginUser = async (email, password) => {
@@ -29,10 +35,13 @@ function LoginModal({ open, handleClose }) {
       if (response.status == 200) {
         console.log("Logged in successfully");
         setAuthTokens(data);
-        const user = jwt_decode(data.access);
+        const user = jwtDecode(data.access);
         setUser(user);
+        console.log(user);
         // setUser(jwt_decode(data.access));
         localStorage.setItem("authTokens", JSON.stringify(data));
+        console.log("prof",user.is_professor);
+        console.log("student",user.is_student);
         if (user.is_superuser) {
           navigate("/admin");
         } else if (user.is_student) {

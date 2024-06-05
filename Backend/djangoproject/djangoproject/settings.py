@@ -22,9 +22,7 @@ INSTALLED_APPS = [
     'module_app',
     'ressources_app',
     'forums_app',
-    'module_app',
-    'ressources_app',
-    'forums_app',
+    
     'professor_app',
     'student_app'
 ]

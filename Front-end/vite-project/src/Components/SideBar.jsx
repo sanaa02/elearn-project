@@ -29,40 +29,45 @@ import ChatIcon from '@mui/icons-material/Chat';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import { NavLink} from 'react-router-dom';
-import { NavLink} from 'react-router-dom';
+// import { NavLink} from 'react-router-dom';
 import { Avatar } from '@mui/material';
 import "./TeacherSidebar.css";
 import logos from '../assets/Logos.png'
 import esilogo from '../assets/esilogo.png'
-import "./TeacherSidebar.css";
-import logos from '../assets/Logos.png'
-import esilogo from '../assets/esilogo.png'
+// import "./TeacherSidebar.css";
+// import logos from '../assets/Logos.png'
+// import esilogo from '../assets/esilogo.png'
 
 const drawerWidth = 220;
-const drawerWidth = 220;
+// const drawerWidth = 220;
 
 const SideBar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openProfileModal, setOpenProfileModal] = useState(false);
   const [openLogoutModal, setOpenLogoutModal] = useState(false);
-  const [name, setName] = useState(localStorage.getItem('name') || 'Mohammed AD');
-  const [email, setEmail] = useState(localStorage.getItem('email') || 'mohammed.ad@example.com');
-  const [avatar, setAvatar] = useState(localStorage.getItem('avatar') || 'img4.png');
-  const [bio, setBio] = useState(localStorage.getItem('bio') || '');
-  const [location, setLocation] = useState(localStorage.getItem('location') || 'Algiers, Algeria');
-  
-  
+  const [name, setName] = useState(
+    localStorage.getItem("name") || "Mohammed AD"
+  );
+  const [email, setEmail] = useState(
+    localStorage.getItem("email") || "mohammed.ad@example.com"
+  );
+  const [avatar, setAvatar] = useState(
+    localStorage.getItem("avatar") || "img4.png"
+  );
+  const [bio, setBio] = useState(localStorage.getItem("bio") || "");
+  const [location, setLocation] = useState(
+    localStorage.getItem("location") || "Algiers, Algeria"
+  );
 
   useEffect(() => {
-    localStorage.setItem('name', name);
-    localStorage.setItem('email', email);
-    localStorage.setItem('avatar', avatar);
-    localStorage.setItem('bio', bio);
-    localStorage.setItem('location', location);
-    
+    localStorage.setItem("name", name);
+    localStorage.setItem("email", email);
+    localStorage.setItem("avatar", avatar);
+    localStorage.setItem("bio", bio);
+    localStorage.setItem("location", location);
   }, [name, email, avatar, bio, location]);
-    
-  }, [name, email, avatar, bio, location]);
+
+  // }, [name, email, avatar, bio, location]);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -85,44 +90,40 @@ const SideBar = () => {
   };
 
   const handleLogout = () => {
-    
-    
     console.log("Déconnexion");
   };
 
   const saveProfile = () => {
     // Simulate an API call to save the profile data
-    console.log('Name:', name);
-    console.log('Email:', email);
-    console.log('Bio:', bio);
-    console.log('Avatar:', avatar);
-    console.log('Location:', location);
-    
-    
+    console.log("Name:", name);
+    console.log("Email:", email);
+    console.log("Bio:", bio);
+    console.log("Avatar:", avatar);
+    console.log("Location:", location);
 
     // Close the modal
     handleProfileModalClose();
   };
 
   const iconMapping = {
-    'Apprenant': <SchoolIcon sx={{ color: '#000066' }} />,
-    'Enseignant': <PersonOutlineIcon sx={{ color: '#000066' }} />,
-    'Module': <BookIcon sx={{ color: '#000066' }} />,
-    'Forums': <ChatIcon sx={{ color: '#000066' }} />,
-    'Dashboard': <DashboardIcon sx={{ color: '#000066' }} />,
-    'Apprenant': <SchoolIcon sx={{ color: '#000066' }} />,
-    'Enseignant': <PersonOutlineIcon sx={{ color: '#000066' }} />,
-    'Module': <BookIcon sx={{ color: '#000066' }} />,
-    'Forums': <ChatIcon sx={{ color: '#000066' }} />,
-    'Dashboard': <DashboardIcon sx={{ color: '#000066' }} />,
+    Apprenant: <SchoolIcon sx={{ color: "#000066" }} />,
+    Enseignant: <PersonOutlineIcon sx={{ color: "#000066" }} />,
+    Module: <BookIcon sx={{ color: "#000066" }} />,
+    Forums: <ChatIcon sx={{ color: "#000066" }} />,
+    Dashboard: <DashboardIcon sx={{ color: "#000066" }} />,
+    Apprenant: <SchoolIcon sx={{ color: "#000066" }} />,
+    Enseignant: <PersonOutlineIcon sx={{ color: "#000066" }} />,
+    Module: <BookIcon sx={{ color: "#000066" }} />,
+    Forums: <ChatIcon sx={{ color: "#000066" }} />,
+    Dashboard: <DashboardIcon sx={{ color: "#000066" }} />,
   };
   const linkMapping = {
-    'Apprenant': 'ApprenantPage',
-    'Enseignant': 'EnseignantPage',
-    'Module': 'ModulePage',
-    'Forums': 'EspaceCommunicationPage',
-    'Forums': 'EspaceCommunicationPage',
-    'Dashboard': 'Adminhome',
+    Apprenant: "ApprenantPage",
+    Enseignant: "EnseignantPage",
+    Module: "ModulePage",
+    Forums: "EspaceCommunicationPage",
+    Forums: "EspaceCommunicationPage",
+    Dashboard: "Adminhome",
   };
   const modalStyle = {
     position: "absolute",
@@ -145,29 +146,24 @@ const SideBar = () => {
     alignItems: "center",
     textAlign: "center",
     background: "white",
-   
+
     display: "flex",
 
     alignItems: "center",
     textAlign: "center",
     background: "white",
-   
   };
 
- 
-
- 
-
   const drawer = (
-    <div style={{ background: 'white' }}>
-    <Box
+    <div style={{ background: "white" }}>
+      <Box
         className="Box-logo"
         sx={{
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           mr: "30px",
-          mt:'20px'
+          mt: "20px",
         }}
       >
         <img
@@ -201,42 +197,64 @@ const SideBar = () => {
           </Typography>
         </Box>
       </Box>
-      
-      <List className="nav-menu-items" sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '100%', marginTop: '40px' }}>
-      <ListItem disablePadding className="list-item">
-      <NavLink to="Adminhome" style={{ textDecoration: 'none', width: '100%' }} activeClassName="active" exact>
-    <ListItem disablePadding className="list-item">
-      <ListItemButton sx={{ width: "100%" }}>
-        <ListItemIcon>
-          {iconMapping['Dashboard']}
-        </ListItemIcon>
-        <ListItemText primary="Tableau de bord" sx={{ color: '#000066' }} />
-      </ListItemButton>
-    </ListItem>
-  </NavLink>
-  </ListItem>
-  {['Apprenant', 'Enseignant', 'Module', 'Forums'].map((text) => (
-    <ListItem key={text} disablePadding className="list-item">
-      <NavLink to={linkMapping[text]} style={{ textDecoration: 'none', color: '#000066', width: '100%' }} activeClassName="active" exact>
-        <ListItemButton sx={{ width: "100%" }}>
-          <ListItemIcon>
-            {iconMapping[text]}
-          </ListItemIcon>
-          <ListItemText primary={text} sx={{ color: '#000066' }} />
-        </ListItemButton>
-      </NavLink>
-    </ListItem>
-  ))}
+
+      <List
+        className="nav-menu-items"
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          height: "100%",
+          marginTop: "40px",
+        }}
+      >
+        <ListItem disablePadding className="list-item">
+          <NavLink
+            to="Adminhome"
+            style={{ textDecoration: "none", width: "100%" }}
+            activeClassName="active"
+            exact
+          >
+            <ListItem disablePadding className="list-item">
+              <ListItemButton sx={{ width: "100%" }}>
+                <ListItemIcon>{iconMapping["Dashboard"]}</ListItemIcon>
+                <ListItemText
+                  primary="Tableau de bord"
+                  sx={{ color: "#000066" }}
+                />
+              </ListItemButton>
+            </ListItem>
+          </NavLink>
+        </ListItem>
+        {["Apprenant", "Enseignant", "Module", "Forums"].map((text) => (
+          <ListItem key={text} disablePadding className="list-item">
+            <NavLink
+              to={linkMapping[text]}
+              style={{
+                textDecoration: "none",
+                color: "#000066",
+                width: "100%",
+              }}
+              activeClassName="active"
+              exact
+            >
+              <ListItemButton sx={{ width: "100%" }}>
+                <ListItemIcon>{iconMapping[text]}</ListItemIcon>
+                <ListItemText primary={text} sx={{ color: "#000066" }} />
+              </ListItemButton>
+            </NavLink>
+          </ListItem>
+        ))}
       </List>
       <List className="nav-menu-items">
         <ListItem disablePadding className="list-item">
           <ListItemButton onClick={handleLogoutModalOpen}>
             <ListItemIcon>
-              <ExitToAppIcon sx={{ color: '#000066' }} />
-              <ExitToAppIcon sx={{ color: '#000066' }} />
+              <ExitToAppIcon sx={{ color: "#000066" }} />
+              <ExitToAppIcon sx={{ color: "#000066" }} />
             </ListItemIcon>
-            <ListItemText primary="Se déconnecter" sx={{ color: '#000066' }} />
-            <ListItemText primary="Se déconnecter" sx={{ color: '#000066' }} />
+            <ListItemText primary="Se déconnecter" sx={{ color: "#000066" }} />
+            <ListItemText primary="Se déconnecter" sx={{ color: "#000066" }} />
           </ListItemButton>
         </ListItem>
       </List>
@@ -244,115 +262,78 @@ const SideBar = () => {
   );
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar
-  position="fixed"
-  sx={{
-    width: { sm: `calc(100% - ${drawerWidth}px)` },
-    ml: { sm: `${drawerWidth}px` },
-    backgroundColor: 'white',
-    boxShadow: 'none',
-    height: '80px',
-   
-  }}
->
-  <Toolbar>
-    <IconButton
-      color="inherit"
-      aria-label="open drawer"
-      edge="start"
-      onClick={handleDrawerToggle}
-      sx={{ mr: 2, display: { sm: 'none' } }}
-    >
-      <MenuIcon style={{ color: '#000066' }} />
-    </IconButton>
-   
-    <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: '#000066',fontWeight:500 }}>
-      Bienvenue {name}
-    </Typography>
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <Button
-        onClick={handleProfileModalOpen}
+        position="fixed"
         sx={{
-          textTransform: 'none',
-          color: '#000066',
-          mr: 2,
+          width: { sm: `calc(100% - ${drawerWidth}px)` },
+          ml: { sm: `${drawerWidth}px` },
+          backgroundColor: "white",
+          boxShadow: "none",
+          height: "80px",
         }}
       >
-        <Avatar alt="Profile" src={avatar} sx={{ width: 48, height: 48, mr: 1 }} />
-        {name}
-      </Button>
-    </Box>
-  </Toolbar>
-</AppBar>
-
-  position="fixed"
-  sx={{
-    width: { sm: `calc(100% - ${drawerWidth}px)` },
-    ml: { sm: `${drawerWidth}px` },
-    backgroundColor: 'white',
-    boxShadow: 'none',
-    height: '80px',
-   
-  }}
->
-  <Toolbar>
-    <IconButton
-      color="inherit"
-      aria-label="open drawer"
-      edge="start"
-      onClick={handleDrawerToggle}
-      sx={{ mr: 2, display: { sm: 'none' } }}
-    >
-      <MenuIcon style={{ color: '#000066' }} />
-    </IconButton>
-   
-    <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: '#000066',fontWeight:500 }}>
-      Bienvenue {name}
-    </Typography>
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <Button
-        onClick={handleProfileModalOpen}
-        sx={{
-          textTransform: 'none',
-          color: '#000066',
-          mr: 2,
-        }}
-      >
-        <Avatar alt="Profile" src={avatar} sx={{ width: 48, height: 48, mr: 1 }} />
-        {name}
-      </Button>
-    </Box>
-  </Toolbar>
-</AppBar>
-
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2, display: { sm: "none" } }}
+          >
+            <MenuIcon style={{ color: "#000066" }} />
+          </IconButton>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1, color: "#000066", fontWeight: 500 }}
+          >
+            Bienvenue {name}
+          </Typography>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Button
+              onClick={handleProfileModalOpen}
+              sx={{
+                textTransform: "none",
+                color: "#000066",
+                mr: 2,
+              }}
+            >
+              <Avatar
+                alt="Profile"
+                src={avatar}
+                sx={{ width: 48, height: 48, mr: 1 }}
+              />
+              {name}
+            </Button>
+          </Box>
+        </Toolbar>
+      </AppBar>
       <Box
         component="nav"
         sx={{
           width: { sm: drawerWidth },
           flexShrink: { sm: 0 },
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          height: '100vh',
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          height: "100vh",
         }}
         aria-label="mailbox folders"
       >
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
           variant="temporary"
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{ keepMounted: true }}
           sx={{
-            display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': {
-              boxSizing: 'border-box',
+            display: { xs: "block", sm: "none" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
               width: drawerWidth,
-              background:"#000066",
-              background:"#000066",
-              backgroundSize: 'cover',
+              background: "#000066",
+              backgroundSize: "cover",
             },
           }}
         >
@@ -361,13 +342,12 @@ const SideBar = () => {
         <Drawer
           variant="permanent"
           sx={{
-            display: { xs: 'none', sm: 'block' },
-            '& .MuiDrawer-paper': {
-              boxSizing: 'border-box',
+            display: { xs: "none", sm: "block" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
               width: drawerWidth,
-              background:"white",
-              background:"white",
-              backgroundSize: 'cover',
+              background: "white",
+              backgroundSize: "cover",
             },
           }}
           open
@@ -385,46 +365,41 @@ const SideBar = () => {
         }}
       >
         <Fade in={openProfileModal}>
-          <Box sx={{
-            position:'absolute',
-            top:'50%',
-            left:'50%',
-            transform:'translate(-50%, -50%)',
-            padding:'24px',
-            background:'white',
-            borderRadius:'4px',
-            boxShadow:'0 2px 4px rgba(0, 0, 0, 0.2)',
-            width:'100%',
-            maxWidth:'400px'
-          }}>
-          <Box sx={{
-            position:'absolute',
-            top:'50%',
-            left:'50%',
-            transform:'translate(-50%, -50%)',
-            padding:'24px',
-            background:'white',
-            borderRadius:'4px',
-            boxShadow:'0 2px 4px rgba(0, 0, 0, 0.2)',
-            width:'100%',
-            maxWidth:'400px'
-          }}>
+          <Box
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              padding: "24px",
+              background: "white",
+              borderRadius: "4px",
+              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
+              width: "100%",
+              maxWidth: "400px",
+            }}
+          >
             <Typography id="profile-modal-title" variant="h5" component="h2">
               Profil
             </Typography>
-            <Avatar alt="Profile" src={avatar} sx={{ width: 120, height: 120, my: 2, border: '2px solid #000066' }} />
-            <Button
-              variant="outlined"
-              component="label"
-              sx={{ mt: 2 }}
-            >
+            <Avatar
+              alt="Profile"
+              src={avatar}
+              sx={{
+                width: 120,
+                height: 120,
+                my: 2,
+                border: "2px solid #000066",
+              }}
+            />
+            <Button variant="outlined" component="label" sx={{ mt: 2 }}>
               Choisir une photo
               <input
                 type="file"
                 style={{ display: "none" }}
-                onChange={(e) => setAvatar(URL.createObjectURL(e.target.files[0]))}
-              
-              
+                onChange={(e) =>
+                  setAvatar(URL.createObjectURL(e.target.files[0]))
+                }
               />
             </Button>
             <TextField
@@ -462,8 +437,6 @@ const SideBar = () => {
               fullWidth
               value="Apprenant"
               onChange={(e) => console.log(e.target.value)}
-              value="Apprenant"
-              onChange={(e) => console.log(e.target.value)}
             />
             <TextField
               margin="dense"
@@ -485,8 +458,7 @@ const SideBar = () => {
           </Box>
         </Fade>
       </Modal>
-      
-      
+
       <Modal
         open={openLogoutModal}
         onClose={handleLogoutModalClose}
@@ -499,13 +471,20 @@ const SideBar = () => {
         <Fade in={openLogoutModal}>
           <Box
             sx={{
-              ...modalStyle,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
               height: "350px",
               width: "600px",
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              padding: "24px",
+              background: "white",
+              borderRadius: "4px",
+              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
             }}
           >
             <img
@@ -514,82 +493,34 @@ const SideBar = () => {
                 width: "85px",
                 marginTop: "-260px",
                 position: "absolute",
-                marginLeft:'-440px',
+                marginLeft: "-440px",
               }}
-            ></img>
-             <Typography variant="h3" gutterBottom sx={{ color: "#000066", marginTop: "-240px",position:'absolute'}}>
-              Se déconnecter
-            </Typography>
-            <Typography variant="h6" gutterBottom sx={{ color: "#000066" ,marginTop:'60px'}}>
-              Vous voulez vraiment vous déconnecter de ce compte ?
-            </Typography>
-            <Box sx={{ display: "flex", justifyContent: "space-between" ,marginTop:"30px"}}>
-              <Button
-                onClick={handleLogoutModalClose}
-                color="primary"
-                variant="outlined"
-                sx={{
-                  width: "45%",
-                  mr: 2,
-                  background: "#000066",
-                  color: "white",
-                  fontWeight: "bold",
-                  "&:hover": {
-                    border: "1px solid white",
-                    color: "white",
-                    background: "#000066",
-                  },
-                }}
-              >
-                Annuler
-              </Button>
-              <Button
-                onClick={handleLogout}
-                color="error"
-                variant="contained"
-                sx={{
-                  width: "45%",
-                  background: "#000066",
-                  color: "white",
-                  fontWeight: "bold",
-                  "&:hover": {
-                    border: "1px solid white",
-                    color: "white",
-                    background: "#000066",
-                  },
-                }}
-              >
-                Confirmer
-              </Button>
-            </Box>
-          </Box>
-          <Box
-            sx={{
-              ...modalStyle,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              height: "350px",
-              width: "600px",
-            }}
-          >
-            <img
-              src={esilogo}
-              style={{
-                width: "85px",
-                marginTop: "-260px",
+            />
+            <Typography
+              variant="h3"
+              gutterBottom
+              sx={{
+                color: "#000066",
+                marginTop: "-240px",
                 position: "absolute",
-                marginLeft:'-440px',
               }}
-            ></img>
-             <Typography variant="h3" gutterBottom sx={{ color: "#000066", marginTop: "-240px",position:'absolute'}}>
+            >
               Se déconnecter
             </Typography>
-            <Typography variant="h6" gutterBottom sx={{ color: "#000066" ,marginTop:'60px'}}>
+            <Typography
+              variant="h6"
+              gutterBottom
+              sx={{ color: "#000066", marginTop: "60px" }}
+            >
               Vous voulez vraiment vous déconnecter de ce compte ?
             </Typography>
-            <Box sx={{ display: "flex", justifyContent: "space-between" ,marginTop:"30px"}}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginTop: "30px",
+              }}
+            >
               <Button
                 onClick={handleLogoutModalClose}
                 color="primary"
@@ -634,5 +565,6 @@ const SideBar = () => {
     </Box>
   );
 }
+
 
 export default SideBar;

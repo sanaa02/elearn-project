@@ -1,25 +1,8 @@
-
-
-
-
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
-import './Components/About'
-import './App.css';
-import './Components/About'
 import AdminPage from './Components/pages/admin/AdminPage'; 
 import TeacherPage from './Components/pages/Enseignant/Enseignant';
-// <<<<<<< HEAD
 import StudentPage from '../src/Components/pages/Student/StudentPage'; 
-// =======
-
-// >>>>>>> sanaa-admin
-import TeacherPage from './Components/pages/Enseignant/Enseignant';
-// <<<<<<< HEAD
-import StudentPage from '../src/Components/pages/Student/StudentPage'; 
-// =======
-
-// >>>>>>> sanaa-admin
 import ApprenantPage from './Components/pages/admin/ApprenantPage';
 import EnseignantPage from './Components/pages/admin/EnseignantPage';
 import ModulePage from './Components/pages/admin/ModulePage';
@@ -43,12 +26,11 @@ import QuizS from './Components/pages/Student/QuizS'
 import Evaluation from './Components/pages/Enseignant/Evaluation';
 import ConsulterDevoir from './Components/pages/Enseignant/ConsulterDevoir';
 import ConsulterQuiz from './Components/pages/Enseignant/ConsulterQuiz';
+
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<WelcomePage />} />
-        <Route path="/admin" element={<AdminPage />}>
         <Route path="/" element={<WelcomePage />} />
         <Route path="/admin" element={<AdminPage />}>
           <Route path="Adminhome" element={<Adminhome />} />
@@ -57,11 +39,11 @@ function App() {
           <Route path="ModulePage" element={<ModulePage />} />
           <Route path="EspaceCommunicationPage" element={<EspaceCommunicationPage />} />
         </Route>
-        
+
         <Route path="/Enseignant" element={<TeacherPage />}>
           <Route path="Evaluation" element={<Evaluation />} />
-          <Route path="Evaluation/devoirs/:devoirId" element={<ConsulterDevoir />} /> 
-          <Route path="Evaluation/quizzes/:quizId" element={<ConsulterQuiz />} /> 
+          <Route path="Evaluation/devoirs/:devoirId" element={<ConsulterDevoir />} />
+          <Route path="Evaluation/quizzes/:quizId" element={<ConsulterQuiz />} />
           <Route path="Modules" element={<Modules />} />
           <Route path="Modules/:moduleId/Chapitres" element={<Chapitres />} />
           <Route path="Modules/:moduleId/Chapitres/:chapterId" element={<Ressources />} />
@@ -71,18 +53,15 @@ function App() {
         </Route>
 
         <Route path="/StudentPage" element={<StudentPage />}>
-  <Route path="Modules_Etudiant" element={<Modules_Etudiant />} />
-  <Route path="Modules_Etudiant/:moduleId/Chapitres_Etudiant" element={<Chapitres_Etudiant />} />
-  <Route path="Modules_Etudiant/:moduleId/Chapitres_Etudiant/:chapterId" element={<Ressources_Etudiant />} />
-  <Route path="Quizz_Etudiant" element={<Quizz_Etudiant />} />
-  <Route path="Quizz_Etudiant/:QuizId" element={<QuizS />} />
-  <Route path="/StudentPage/Modules_Etudiant/:moduleId/Chapitres_Etudiant/:chapterId/DevoirDetails/:devoirId" element={<DevoirDetails />} />
-  <Route path="Forums" element={<ListForumStudent/>} />
-  <Route path="Forums/:forumId" element={<ForumS />} />
-</Route>
-
-
-        
+          <Route path="Modules_Etudiant" element={<Modules_Etudiant />} />
+          <Route path="Modules_Etudiant/:moduleId/Chapitres_Etudiant" element={<Chapitres_Etudiant />} />
+          <Route path="Modules_Etudiant/:moduleId/Chapitres_Etudiant/:chapterId" element={<Ressources_Etudiant />} />
+          <Route path="Quizz_Etudiant" element={<Quizz_Etudiant />} />
+          <Route path="Quizz_Etudiant/:QuizId" element={<QuizS />} />
+          <Route path="Modules_Etudiant/:moduleId/Chapitres_Etudiant/:chapterId/DevoirDetails/:devoirId" element={<DevoirDetails />} />
+          <Route path="Forums" element={<ListForumStudent />} />
+          <Route path="Forums/:forumId" element={<ForumS />} />
+        </Route>
       </Routes>
     </Router>
   );

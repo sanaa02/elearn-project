@@ -23,12 +23,12 @@ class QuizQuestionSerializer(serializers.ModelSerializer):
         fields = ['id', 'ressource', 'question', 'score', 'options']    
 
 class HomeworkSerializer(serializers.ModelSerializer):
-<<<<<<< HEAD
-    class Meta:
-        model = Homework
-        fields = ['id', 'title', 'file', 'resource', 'student']
-        read_only_fields = ['student']
-=======
+
+#     class Meta:
+#         model = Homework
+#         fields = ['id', 'title', 'file', 'resource', 'student']
+#         read_only_fields = ['student']
+# =======
     student_name = serializers.SerializerMethodField()
 
     class Meta:
@@ -38,4 +38,4 @@ class HomeworkSerializer(serializers.ModelSerializer):
 
     def get_student_name(self, obj):
         return obj.student.username if obj.student else None
->>>>>>> ferielmch
+# >>>>>>> ferielmch
