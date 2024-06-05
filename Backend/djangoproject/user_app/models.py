@@ -47,6 +47,7 @@ class MyUser(PermissionsMixin, AbstractBaseUser):
     is_superuser = models.BooleanField(default=False)
     is_professor = models.BooleanField(default=False)
     is_student = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
     
     
     USERNAME_FIELD = 'email'

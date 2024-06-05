@@ -101,6 +101,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 AUTH_USER_MODEL = 'user_app.MyUser'
 
 AUTHENTICATION_BACKENDS = [
+    # 'user_app.backends.EmailBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
 
@@ -110,7 +111,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',
     ),
 }
 

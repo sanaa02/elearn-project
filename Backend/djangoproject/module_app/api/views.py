@@ -12,6 +12,8 @@ import io, csv, pandas as pd
 
 
 class YearChoicesView(APIView):
+    authentication_classes = []  # Remove any authentication classes
+    permission_classes = [] 
     def get(self, request, *args, **kwargs):
         year_choices = [
             {'1CPI'},
@@ -79,6 +81,8 @@ class UploadFileModules(generics.CreateAPIView):
     
 
 class ModuleList(APIView):
+    authentication_classes = []  # Remove any authentication classes
+    permission_classes = [] 
     def get(self, request):
         module = Module.objects.all()
         serializer = ModuleSerializer(module, many=True)

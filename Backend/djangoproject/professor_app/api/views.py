@@ -90,15 +90,15 @@ class ProfessorAvailable(APIView):
         return Response(serializer.data)
 
 class ProfessorList(APIView):
-     def get(self, request):
+    authentication_classes = []  # Remove any authentication classes
+    permission_classes = [] 
+    def get(self, request):
         # Filter MyUser objects based on is_professor field
         users = MyUser.objects.filter(is_professor=True)
         serializer = UserSerializer(users, many=True)
-        # professors = ProfessorSerializer( many=True)
-        # return Response(professors.data)
         return Response(serializer.data)
     
-     def post(self, request):
+    def post(self, request):
         password = ''.join(random.choices(string.ascii_letters + string.digits, k=12))
         
         hashed_password = make_password(password)

@@ -452,42 +452,59 @@ class RegistrationView(generics.CreateAPIView):
     queryset = MyUser.objects.all()
     permission_classes = (AllowAny,)
     serializer_class = RegistrationSerializer
-
     def perform_update(self, serializer):
+        # Check if the user has permission to modify another user's information
         if self.request.user.is_staff or self.request.user == self.get_object():
             serializer.save()
         else:
+            # Raise a permission denied exception if the user doesn't have permission
             raise PermissionDenied("You do not have permission to modify this user's information.")
+        
+    # def create(self, request, *args, **kwargs):
+    #     serializer = self.get_serializer(data=request.data)
+    #     serializer.is_valid(raise_exception=True)
+    #     user = serializer.save()
+        
+    #     # return the generated password in the response
+    #     response_data = {
+    #         "email": user.email,
+    #         "role": user.role,
+    #         "password": user.password  # Note: This password is hashed in the database
+    #     }
 
+    #     return Response(response_data, status=status.HTTP_201_CREATED)    
     def create(self, request, *args, **kwargs):
+        print(request.data)
         role = request.data.get('role')
         matricule = request.data.get('matricule')
         name = request.data.get('name')
         year = request.data.get('year')
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-
-        password_length = 12
+        
+        password_length = 12 
         password = get_random_string(length=password_length)
         validate_password(password)
         hashed_password = make_password(password)
-
+        
+        
         user = serializer.save(password=hashed_password, matricule=matricule, name=name)
-        if role == 'student':
+        if role == 'student': 
             student = Student(user=user, year=year)
             student.save()
-        elif role == 'professor':
+            
+        if role == 'professor': 
             professor = Professor(user=user)
             professor.save()
-
+            
         response_data = {
             "email": user.email,
             "role": role,
-            "password": password
+            "password": password #  hashed in db
         }
-
+        
         return Response(response_data, status=status.HTTP_201_CREATED)
-
+    
 
 @api_view(['GET'])
 def list_users(request):

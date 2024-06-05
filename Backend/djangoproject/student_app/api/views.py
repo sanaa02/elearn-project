@@ -123,7 +123,9 @@ class UploadStudentView(generics.CreateAPIView):
         return response
 
 class StudentList(APIView):
-     def get(self, request):
+    authentication_classes = []  # Remove any authentication classes
+    permission_classes = [] 
+    def get(self, request):
 
         users = Student.objects.filter()
         serializer = StudentSerializer(users, many=True)

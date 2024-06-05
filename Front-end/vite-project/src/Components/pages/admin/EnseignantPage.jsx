@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import  { useEffect, useState } from "react";
-////////////////////FUSE.JS
 import {
   Table,
   TableBody,
@@ -20,7 +19,7 @@ import {
 import './E.css'
 
 function createData(n, id, Module, name, email) {
-  return { n, id, Module, name, email };
+  return { n, id, name, email, Module };
 }
 
 const initialRows = [
@@ -224,15 +223,32 @@ function EnseignantPage() {
       console.log("Fetched data:", data);
 
       // Process the data and create rows
+      // const processedData = data.map((item, index) => {
+      //   return createData(
+      //     item.id,
+      //     item.matricule,
+      //     item.name,
+      //     item.email,
+      //     // "yeah"
+      //     item.professor_details.modules[0].nom
+      //     // index + 1,
+      //   );
+      // });
+
       const processedData = data.map((item, index) => {
+        const moduleName =
+          item.professor_details &&
+          item.professor_details.modules &&
+          item.professor_details.modules.length > 0
+            ? item.professor_details.modules[0].nom
+            : "No Module"; // Provide a default value if module information is missing
+
         return createData(
           item.id,
           item.matricule,
           item.name,
           item.email,
-          item.professor_details.modules[0].nom
-
-          // index + 1,
+          moduleName
         );
       });
 

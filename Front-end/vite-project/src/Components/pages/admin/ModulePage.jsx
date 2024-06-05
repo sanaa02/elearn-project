@@ -13,10 +13,19 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-import './M.css'
+import "./M.css";
 
-function createData(n, id, name, enseignant, promo, coefficient, description, actions) {
-  return { n, id, name, enseignant, promo, coefficient,description, actions };
+function createData(
+  n,
+  id,
+  name,
+  enseignant,
+  promo,
+  coefficient,
+  description,
+  actions
+) {
+  return { n, id, name, enseignant, promo, coefficient, description, actions };
 }
 
 const initialRows = [
@@ -94,14 +103,14 @@ function ModulePage() {
         formData.promo,
         formData.coefficient,
 
-        formData.description,
+        formData.description
       );
 
       setRows([...rows, newRow]);
       setShowModal(false);
       setFormData({
         nomModule: "",
-        enseignant:"",
+        enseignant: "",
         coefficient: "",
         promo: "",
         description: "",
@@ -121,13 +130,10 @@ function ModulePage() {
     }
 
     try {
-      const response = await fetch(
-        "http://127.0.0.1:8000/module/",
-        {
-          method: "POST",
-          body: formDataAdd,
-        }
-      );
+      const response = await fetch("http://127.0.0.1:8000/module/", {
+        method: "POST",
+        body: formDataAdd,
+      });
     } catch (error) {
       console.error("Error uploading file:", error);
     }
@@ -158,14 +164,14 @@ function ModulePage() {
 
     const formDataFile = new FormData();
     formDataFile.append("file", cohortFile);
-     for (let [key, value] of formDataFile.entries()) {
-       console.log(`${key}: ${value}`);
-     }
+    for (let [key, value] of formDataFile.entries()) {
+      console.log(`${key}: ${value}`);
+    }
 
     try {
       const response = await fetch("http://127.0.0.1:8000/module/upload/", {
         method: "POST",
-        body: formDataFile
+        body: formDataFile,
       });
 
       if (!response.ok) {
@@ -240,91 +246,90 @@ function ModulePage() {
     setOpenNewModuleModal(true);
   };
 
-   useEffect(() => {
-     // Fetch the list of years from the backend
-     const fetchYears = async () => {
-       try {
-         const response = await fetch("http://127.0.0.1:8000/module/years/");
-         const data = await response.json();
-         setYears(data);
-         console.log("Years fetched:", data);
-       } catch (error) {
-         console.error("Error fetching years:", error);
-       }
-     };
+  useEffect(() => {
+    // Fetch the list of years from the backend
+    const fetchYears = async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/module/years/");
+        const data = await response.json();
+        setYears(data);
+        console.log("Years fetched:", data);
+      } catch (error) {
+        console.error("Error fetching years:", error);
+      }
+    };
 
-     fetchYears();
-     fetchData();
-     fetchProf()
-   }, []);
+    fetchYears();
+    fetchData();
+    fetchProf();
+  }, []);
 
-     const fetchData = async () => {
-       try {
-         // Make API call using fetch
-         const response = await fetch("http://127.0.0.1:8000/module/");
-         if (!response.ok) {
-           throw new Error("Failed to fetch data");
-         }
-         const data = await response.json(); // Parse JSON response
-         console.log("Fetched data:", data);
+  const fetchData = async () => {
+    try {
+      // Make API call using fetch
+      const response = await fetch("http://127.0.0.1:8000/module/");
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+      const data = await response.json(); // Parse JSON response
+      console.log("Fetched data:", data);
 
-         // Process the data and create rows
-        //  , index
-         const processedData = data.map((item, index) => {
-           return createData(
-             index + 1,
-             item.id,
-             item.nom,
+      // Process the data and create rows
+      //  , index
+      const processedData = data.map((item, index) => {
+        return createData(
+          index + 1,
+          item.id,
+          item.nom,
 
-             item.professor,
+          item.professor,
 
-             item.year,
-             item.coef,
+          item.year,
+          item.coef,
 
-             item.description
-           );
-         });
+          item.description
+        );
+      });
 
-         console.log("processed data ",processedData);
+      console.log("processed data ", processedData);
 
-         // Update state with the fetched rows
-         setRows(processedData);
-       } catch (error) {
-         console.error("Error fetching data:", error);
-       }
-     };
+      // Update state with the fetched rows
+      setRows(processedData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
-     const fetchProf = async () => {
-       try {
-         // Make API call using fetch
-         const response = await fetch("http://127.0.0.1:8000/professor/");
-         if (!response.ok) {
-           throw new Error("Failed to fetch data");
-         }
-         const data = await response.json(); // Parse JSON response
-         console.log("Fetched professors:", data);
-         setProfs(data);
+  const fetchProf = async () => {
+    try {
+      // Make API call using fetch
+      const response = await fetch("http://127.0.0.1:8000/professor/");
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+      const data = await response.json(); // Parse JSON response
+      console.log("Fetched professors:", data);
+      setProfs(data);
 
+      // Process the data and create rows
+      //  const processedData = data.map((item, index) => {
+      //    return createData(
+      //      index + 1,
+      //      item.email,
+      //      item.matricule,
+      //      item.name,
+      //      item.description
+      //    );
+      //  });
 
-         // Process the data and create rows
-        //  const processedData = data.map((item, index) => {
-        //    return createData(
-        //      index + 1,
-        //      item.email,
-        //      item.matricule,
-        //      item.name,
-        //      item.description
-        //    );
-        //  });
+      //  console.log(processedData);
 
-        //  console.log(processedData);
-
-        //  // Update state with the fetched rows
-        //  setRows(processedData);
-       } catch (error) {
-         console.error("Error fetching data:", error);
-       }
-     };
+      //  // Update state with the fetched rows
+      //  setRows(processedData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   const handleOptionSelect = (option) => {
     if (option === "insertion par lot") {
@@ -364,7 +369,6 @@ function ModulePage() {
     //     console.error("Error fetching data:", error);
     //   }
     // };
-
   };
 
   return (
@@ -449,7 +453,7 @@ function ModulePage() {
               >
                 <TableCell component="th" scope="row">
                   {row.id}
-                </TableCell> 
+                </TableCell>
                 {/* <TableCell style={{ textAlign: "center" }}>{row.id}</TableCell> */}
                 <TableCell style={{ textAlign: "center" }}>
                   {row.name}
@@ -463,7 +467,7 @@ function ModulePage() {
                 <TableCell style={{ textAlign: "center" }}>
                   {row.coefficient}
                 </TableCell>
-                 {/* <TableCell style={{ textAlign: "center" }}>
+                {/* <TableCell style={{ textAlign: "center" }}>
                   {row.description}
                 </TableCell>  */}
 

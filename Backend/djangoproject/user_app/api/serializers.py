@@ -209,10 +209,12 @@ from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.contrib.auth.password_validation import validate_password
-
+from django.contrib.auth import authenticate
 from user_app.models import MyUser, File
 from professor_app.api.serializers import ProfessorSerializer
+import logging
 
+logger = logging.getLogger(__name__)
 
 class ProfessorUploadSerializer(serializers.Serializer):
     file = serializers.FileField()
@@ -240,13 +242,15 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = MyUser
-        fields = ['id', 'email', 'name', 'matricule', 'professor_details']
+        fields = ['id', 'email', 'name', 'matricule', 'professor_details', "password"]
+        extra_kwargs = {
+            'password': {'write_only':True}
+        }
 
     def create_user(self, validated_data):
         password = validated_data.pop('password')
         hashed_password = make_password(password)
         return MyUser.objects.create(password=hashed_password, **validated_data)
-
 
 class UserTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -257,6 +261,7 @@ class UserTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['is_professor'] = user.is_professor
         token['is_superuser'] = user.is_superuser
         return token
+    
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
