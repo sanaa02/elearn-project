@@ -485,10 +485,13 @@ class RegistrationView(generics.CreateAPIView):
         password_length = 12 
         password = get_random_string(length=password_length)
         validate_password(password)
-        hashed_password = make_password(password)
         
+        user = serializer.save(matricule=matricule, name=name)
+        user.set_password(password)
+        user.save()
         
-        user = serializer.save(password=hashed_password, matricule=matricule, name=name)
+        # hashed_password = make_password(password)
+        # user = serializer.save(password=hashed_password, matricule=matricule, name=name)
         if role == 'student': 
             student = Student(user=user, year=year)
             student.save()

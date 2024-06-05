@@ -51,7 +51,9 @@ class UploadProfessorView(generics.CreateAPIView):
                 password = ''.join(random.choices(string.ascii_letters + string.digits, k=12))
                 
                 # Create a new MyUser instance
-                user = MyUser.objects.create_user(email=email, password=password, is_professor=True)
+                user = MyUser.objects.create_user(email=email,  is_professor=True)
+                user.set_password(password) 
+                user.save()
                 
                 # Create a new professor instance associated with the user
                 professor = Professor(user=user)
