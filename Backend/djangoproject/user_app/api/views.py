@@ -1,29 +1,29 @@
+<<<<<<< HEAD
 import string
 import random
 from django.http import HttpResponse, JsonResponse
 import io, csv, pandas as pd
+=======
+import random
+import string
+from django.http import HttpResponse, JsonResponse
+import pandas as pd
+>>>>>>> ferielmch
 from rest_framework.exceptions import ParseError
-from django.core.files.base import ContentFile
 from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser, FormParser
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, status
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.contrib.auth import authenticate
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
-from rest_framework import status
-from django.shortcuts import render
 from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework import serializers, viewsets
-from user_app.api.serializers import UserTokenObtainPairSerializer, UserSerializer, RegistrationSerializer, FileUploadSerializer
-from user_app.models import MyUser, File
-from rest_framework.decorators import action
 from django.core.files.storage import FileSystemStorage
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.hashers import make_password
 from django.utils.crypto import get_random_string
 from django.contrib.auth.password_validation import validate_password
+<<<<<<< HEAD
 from student_app.models import Student
 from professor_app.models import Professor
 # Create your views here.
@@ -31,6 +31,16 @@ from professor_app.models import Professor
   
 class UploadFileView(generics.CreateAPIView):
     serializer_class = FileUploadSerializer
+=======
+from user_app.models import MyUser, File
+from user_app.api.serializers import UserTokenObtainPairSerializer, UserSerializer, RegistrationSerializer, FileUploadSerializer
+from student_app.models import Student
+from professor_app.models import Professor
+import csv
+class UploadFileView(generics.CreateAPIView):
+    serializer_class = FileUploadSerializer
+    parser_classes = [MultiPartParser, FormParser]
+>>>>>>> ferielmch
 
     def post(self, request, *args, **kwargs):
         file = request.FILES.get('file')
@@ -51,7 +61,10 @@ class UploadFileView(generics.CreateAPIView):
                 elif role == 'student':
                     user = MyUser(email=email, password=hashed_password, is_student=True)
                 else:
+<<<<<<< HEAD
                     # Skip rows with invalid role values
+=======
+>>>>>>> ferielmch
                     continue
 
                 user.save()
@@ -76,15 +89,24 @@ class UploadFileView(generics.CreateAPIView):
 
         return response
 
+<<<<<<< HEAD
   
  
 class UserTokenObtainPairView(TokenObtainPairView):
     serializer_class = UserTokenObtainPairSerializer
    
+=======
+
+class UserTokenObtainPairView(TokenObtainPairView):
+    serializer_class = UserTokenObtainPairSerializer
+
+
+>>>>>>> ferielmch
 class RegistrationView(generics.CreateAPIView):
     queryset = MyUser.objects.all()
     permission_classes = (AllowAny,)
     serializer_class = RegistrationSerializer
+<<<<<<< HEAD
     def perform_update(self, serializer):
         # Check if the user has permission to modify another user's information
         if self.request.user.is_staff or self.request.user == self.get_object():
@@ -108,12 +130,23 @@ class RegistrationView(generics.CreateAPIView):
     #     return Response(response_data, status=status.HTTP_201_CREATED)    
     def create(self, request, *args, **kwargs):
         print(request.data)
+=======
+
+    def perform_update(self, serializer):
+        if self.request.user.is_staff or self.request.user == self.get_object():
+            serializer.save()
+        else:
+            raise PermissionDenied("You do not have permission to modify this user's information.")
+
+    def create(self, request, *args, **kwargs):
+>>>>>>> ferielmch
         role = request.data.get('role')
         matricule = request.data.get('matricule')
         name = request.data.get('name')
         year = request.data.get('year')
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+<<<<<<< HEAD
         
         password_length = 12 
         password = get_random_string(length=password_length)
@@ -153,11 +186,45 @@ def list_users(request):
 
     
 @api_view (['GET'])
+=======
+
+        password_length = 12
+        password = get_random_string(length=password_length)
+        validate_password(password)
+        hashed_password = make_password(password)
+
+        user = serializer.save(password=hashed_password, matricule=matricule, name=name)
+        if role == 'student':
+            student = Student(user=user, year=year)
+            student.save()
+        elif role == 'professor':
+            professor = Professor(user=user)
+            professor.save()
+
+        response_data = {
+            "email": user.email,
+            "role": role,
+            "password": password
+        }
+
+        return Response(response_data, status=status.HTTP_201_CREATED)
+
+
+@api_view(['GET'])
+def list_users(request):
+    users = MyUser.objects.all().values('id', 'email', 'is_professor', 'is_student')
+    serialized_users = list(users)
+    return Response(serialized_users)
+
+
+@api_view(['GET'])
+>>>>>>> ferielmch
 def getRoutes(request):
     routes = [
         '/api/token/',
         '/api/register/',
         '/api/token/refresh/',
+<<<<<<< HEAD
     ]
     return Response(routes)
     
@@ -280,3 +347,25 @@ def testEndPoint(request):
 #            return Response("Users created successfully", status=status.HTTP_201_CREATED)
 #         except KeyError:
 #                 raise ParseError("The 'file' field is missing from the request data.")
+=======
+        '/upload-file/',
+        '/list-users/',
+        '/test/',
+    ]
+    return Response(routes)
+
+
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
+def testEndPoint(request):
+    if request.method == 'GET':
+        data = f"Congratulations {request.user}, your API just responded to GET request"
+        return Response({'response': data}, status=status.HTTP_200_OK)
+
+    elif request.method == 'POST':
+        text = request.data.get('text', '')
+        data = f"Congratulations your API just responded to POST request with text: {text}"
+        return Response({'response': data}, status=status.HTTP_200_OK)
+
+    return Response({}, status=status.HTTP_400_BAD_REQUEST)
+>>>>>>> ferielmch

@@ -1,9 +1,19 @@
 
 
+
+
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 import './Components/About'
+import './App.css';
+import './Components/About'
 import AdminPage from './Components/pages/admin/AdminPage'; 
+import TeacherPage from './Components/pages/Enseignant/Enseignant';
+// <<<<<<< HEAD
+import StudentPage from '../src/Components/pages/Student/StudentPage'; 
+// =======
+
+// >>>>>>> sanaa-admin
 import TeacherPage from './Components/pages/Enseignant/Enseignant';
 // <<<<<<< HEAD
 import StudentPage from '../src/Components/pages/Student/StudentPage'; 
@@ -37,6 +47,8 @@ function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<WelcomePage />} />
+        <Route path="/admin" element={<AdminPage />}>
         <Route path="/" element={<WelcomePage />} />
         <Route path="/admin" element={<AdminPage />}>
           <Route path="Adminhome" element={<Adminhome />} />

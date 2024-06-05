@@ -12,12 +12,20 @@ from user_app.permissions import IsStudent, IsProfessor,IsAdmin
 from rest_framework.response import Response
 from rest_framework import status
 from django.conf import settings
+<<<<<<< HEAD
 
+=======
+from rest_framework.authentication import TokenAuthentication
+>>>>>>> ferielmch
 class RessourceListCreateAPIView(generics.ListCreateAPIView):
     queryset = Ressource.objects.all()
     serializer_class = RessourceSerializer
     permission_classes = [permissions.IsAuthenticated]
+<<<<<<< HEAD
 
+=======
+    authentication_classes = [TokenAuthentication]
+>>>>>>> ferielmch
     def get_queryset(self):
         module_id = self.kwargs['module_id']
         return self.queryset.filter(module_id=module_id)
@@ -166,4 +174,18 @@ class HomeworkCreateView(generics.CreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def perform_create(self, serializer):
+<<<<<<< HEAD
         serializer.save(student=self.request.user)  # Automatically save the logged-in user as the student
+=======
+        serializer.save(student=self.request.user) 
+
+
+class ProfessorHomeworkConsultView(generics.ListAPIView):
+    serializer_class = HomeworkSerializer
+    permission_classes = [IsProfessor] 
+
+    def get_queryset(self):
+        user = self.request.user
+        professor_profile = user.profile
+        return Homework.objects.filter(ressource__module__professor=professor_profile)
+>>>>>>> ferielmch

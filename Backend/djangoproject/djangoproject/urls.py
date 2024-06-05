@@ -1,30 +1,25 @@
-"""djangoproject URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/2.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from user_app.api.views import UploadFileView, UserTokenObtainPairView, RegistrationView, list_users, getRoutes, testEndPoint
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('account/', include('user_app.api.urls')),
     path('forum/', include('forums_app.api.urls')),
     path('module/', include('module_app.api.urls')),
-    path('ressources/', include('ressources_app.api.urls')), 
+    path('ressources/', include('ressources_app.api.urls')),
     path('professor/', include('professor_app.api.urls')),
     path('student/', include('student_app.api.urls')),
-     
+    path('token/', UserTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('register/', RegistrationView.as_view(), name='auth_register'),
+    path('upload-file/', UploadFileView.as_view(), name='upload_file'),
+    path('list-users/', list_users, name='list_users'),
+    path('routes/', getRoutes, name='routes'),
+    path('test/', testEndPoint, name='test'),
 ]
-urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
