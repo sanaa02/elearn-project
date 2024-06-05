@@ -9,10 +9,14 @@
     margin-bottom: 20px;
     margin-top: 90px;
     color: #000066;
+    font-size: 15px;
+}
+.title-quizzes h2{
+    font-size: 25px;
 }
 .Box-quizzes{
     width: 350px;
-
+    box-shadow: 0 0 1px 1px #c8e4ec;
     background: white;
     border-radius: 10px;
     margin: 10px;
@@ -44,7 +48,9 @@
 .box-title{
     display: flex;
 }
-
+.box-title h3{
+    font-size: 15px;
+}
 
 
 
@@ -115,3 +121,10 @@ width: 100px;
 .button-box :first-child{
     margin-right: -1px;
 }
+.note-cell {
+    background-color: #2DA771; 
+    color: black; 
+    padding: 8px; 
+    border-radius: 4px; 
+    font-weight: bold;
+  }

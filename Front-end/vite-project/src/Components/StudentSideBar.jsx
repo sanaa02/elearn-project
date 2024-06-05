@@ -4,6 +4,7 @@ import {
   CssBaseline,
   AppBar,
   Box,
+  Menu,
   Drawer,
   IconButton,
   List,
@@ -19,6 +20,7 @@ import {
   Backdrop,
   TextField,
   Avatar,
+  MenuItem,
   InputAdornment,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -48,6 +50,22 @@ const StudentSideBar = () => {
     localStorage.getItem("avatar") || "img4.png"
   );
   const [location, setLocation] = useState("");
+  const [notifications] = useState([]); 
+
+ 
+  
+
+  const [notificationMenuAnchor, setNotificationMenuAnchor] = useState(null);
+  const handleNotificationClick = (event) => {
+    setNotificationMenuAnchor(event.currentTarget);
+  };
+
+  const handleNotificationClose = () => {
+    setNotificationMenuAnchor(null);
+  };
+
+
+
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -289,9 +307,25 @@ const StudentSideBar = () => {
     aria-label="notifications"
     sx={{ mr: '20px' }}
   >
-    <Badge badgeContent={4} color="error">
-      <NotificationsIcon />
-    </Badge>
+     <Badge badgeContent={notifications.length} color="error" onClick={handleNotificationClick}>
+              <NotificationsIcon style={{ color: '#000066', cursor: 'pointer' }} />
+            </Badge>
+            <Menu
+              anchorEl={notificationMenuAnchor}
+              open={Boolean(notificationMenuAnchor)}
+              onClose={handleNotificationClose}
+              keepMounted
+            >
+              {notifications.length === 0 ? (
+                <MenuItem onClick={handleNotificationClose}>Pas de nouvelles notifications</MenuItem>
+              ) : (
+                notifications.map((notification) => (
+                  <MenuItem key={notification.id} onClick={handleNotificationClose}>
+                    {notification.message}
+                  </MenuItem>
+                ))
+              )}
+            </Menu>
   </IconButton>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Button

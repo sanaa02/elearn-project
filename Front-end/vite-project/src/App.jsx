@@ -30,6 +30,9 @@ import ListForum from './Components/pages/Enseignant/ListForum'
 import ListForumStudent from './Components/pages/Student/ListForumStudent'
 import ForumS from './Components/pages/Student/ForumStudent'
 import QuizS from './Components/pages/Student/QuizS'
+import Evaluation from './Components/pages/Enseignant/Evaluation';
+import ConsulterDevoir from './Components/pages/Enseignant/ConsulterDevoir';
+import ConsulterQuiz from './Components/pages/Enseignant/ConsulterQuiz';
 function App() {
   return (
     <Router>
@@ -44,6 +47,9 @@ function App() {
         </Route>
         
         <Route path="/Enseignant" element={<TeacherPage />}>
+          <Route path="Evaluation" element={<Evaluation />} />
+          <Route path="Evaluation/devoirs/:devoirId" element={<ConsulterDevoir />} /> 
+          <Route path="Evaluation/quizzes/:quizId" element={<ConsulterQuiz />} /> 
           <Route path="Modules" element={<Modules />} />
           <Route path="Modules/:moduleId/Chapitres" element={<Chapitres />} />
           <Route path="Modules/:moduleId/Chapitres/:chapterId" element={<Ressources />} />
