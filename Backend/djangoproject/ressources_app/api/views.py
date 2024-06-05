@@ -28,7 +28,7 @@ class RessourceListCreateAPIView(generics.ListCreateAPIView):
 
 class RessourceListView(APIView):
     permission_classes = [permissions.IsAuthenticated]
-
+    authentication_classes = [TokenAuthentication]
     def get(self, request):
         try:
             student = request.user.profile
@@ -46,20 +46,20 @@ class RessourceDetailView(generics.RetrieveAPIView):
     queryset = Ressource.objects.all()
     serializer_class = RessourceSerializer
     permission_classes = [permissions.IsAuthenticated]
-
+    authentication_classes = [TokenAuthentication]
 
 class RessourceRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Ressource.objects.all()
     serializer_class = RessourceSerializer
     permission_classes = [permissions.IsAuthenticated]
-
+    authentication_classes = [TokenAuthentication] 
     def get_queryset(self):
         module_id = self.kwargs['module_id']
         return self.queryset.filter(module_id=module_id)
 
 class ResourceDownloadView(APIView):
     permission_classes = [permissions.IsAuthenticated]
-
+    authentication_classes = [TokenAuthentication]
     def get(self, request, resource_id):
         resource = Ressource.objects.filter(id=resource_id).first()
         if not resource:
@@ -83,7 +83,7 @@ class QuizQuestionListCreateAPIView(generics.ListCreateAPIView):
     queryset = QuizQuestion.objects.all()
     serializer_class = QuizQuestionSerializer
     permission_classes = [permissions.IsAuthenticated]
-
+    authentication_classes = [TokenAuthentication]
     def get_queryset(self):
         module_id = self.kwargs['module_id']
         return self.queryset.filter(resource__module_id=module_id)
@@ -100,7 +100,7 @@ class QuizQuestionRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPI
     queryset = QuizQuestion.objects.all()
     serializer_class = QuizQuestionSerializer
     permission_classes = [permissions.IsAuthenticated]
-
+    authentication_classes = [TokenAuthentication]
     def get_object(self):
         module_id = self.kwargs.get('module_id')
         quiz_question_id = self.kwargs.get('pk')
@@ -119,7 +119,7 @@ class QuizOptionListCreateAPIView(generics.ListCreateAPIView):
     queryset = QuizOption.objects.all()
     serializer_class = QuizOptionSerializer
     permission_classes = [permissions.IsAuthenticated]
-
+    authentication_classes = [TokenAuthentication]
     def get_queryset(self):
         quiz_question_id = self.kwargs.get('quiz_question_id')
         return self.queryset.filter(question_id=quiz_question_id)
@@ -139,7 +139,7 @@ class QuizOptionRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIVi
     queryset = QuizOption.objects.all()
     serializer_class = QuizOptionSerializer
     permission_classes = [permissions.IsAuthenticated]
-
+    authentication_classes = [TokenAuthentication]
     def get_object(self):
         quiz_question_id = self.kwargs.get('quiz_question_id')
         quiz_option_id = self.kwargs.get('pk')
@@ -158,13 +158,13 @@ class QuizQuestionView(generics.RetrieveAPIView):
     queryset = QuizQuestion.objects.all()
     serializer_class = QuizQuestionSerializer
     permission_classes = [permissions.IsAuthenticated]
-
+    authentication_classes = [TokenAuthentication]
 
 class HomeworkCreateView(generics.CreateAPIView):
     queryset = Homework.objects.all()
     serializer_class = HomeworkSerializer
     permission_classes = [permissions.IsAuthenticated]
-
+    authentication_classes = [TokenAuthentication]
     def perform_create(self, serializer):
         serializer.save(student=self.request.user) 
 
@@ -172,7 +172,7 @@ class HomeworkCreateView(generics.CreateAPIView):
 class ProfessorHomeworkConsultView(generics.ListAPIView):
     serializer_class = HomeworkSerializer
     permission_classes = [IsProfessor] 
-
+    authentication_classes = [TokenAuthentication]
     def get_queryset(self):
         user = self.request.user
         professor_profile = user.profile
